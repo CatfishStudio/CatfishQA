@@ -1,0 +1,5 @@
+C:\Program Code\Git\QA\Admin\AdminQA\bin\Debug\AdminQA.exe
+C:\Program Code\Git\QA\Admin\AdminQA\bin\Debug\AdminQA.pdb
+C:\Program Code\Git\QA\Admin\AdminQA\obj\Debug\AdminQA.csprojResolveAssemblyReference.cache
+C:\Program Code\Git\QA\Admin\AdminQA\obj\Debug\AdminQA.exe
+C:\Program Code\Git\QA\Admin\AdminQA\obj\Debug\AdminQA.pdb
