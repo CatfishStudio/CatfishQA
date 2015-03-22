@@ -12,9 +12,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("AdminQA")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Catfish Studio")]
 [assembly: AssemblyProduct("AdminQA")]
-[assembly: AssemblyCopyright("Copyright 2015")]
+[assembly: AssemblyCopyright("Copyright 2015 Somov Evgeniy")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

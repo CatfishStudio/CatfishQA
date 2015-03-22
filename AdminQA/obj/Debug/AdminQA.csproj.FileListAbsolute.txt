@@ -3,3 +3,13 @@ C:\Program Code\Git\QA\Admin\AdminQA\bin\Debug\AdminQA.pdb
 C:\Program Code\Git\QA\Admin\AdminQA\obj\Debug\AdminQA.csprojResolveAssemblyReference.cache
 C:\Program Code\Git\QA\Admin\AdminQA\obj\Debug\AdminQA.exe
 C:\Program Code\Git\QA\Admin\AdminQA\obj\Debug\AdminQA.pdb
+C:\Program Code\Git\QA\AdminQA\bin\Debug\AdminQA.exe
+C:\Program Code\Git\QA\AdminQA\bin\Debug\AdminQA.pdb
+C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.csprojResolveAssemblyReference.cache
+C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.MainForm.resources
+C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.csproj.GenerateResource.Cache
+C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.exe
+C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.pdb
+C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.Forms.CreateConfig.resources
+C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.Forms.Administrator.resources
+C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.Service.FormServiceCalculator.resources
