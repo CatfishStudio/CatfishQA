@@ -187,7 +187,7 @@ namespace AdminQA.Forms
 				MySql_Connection.Close();
 			}catch(Exception ex){
 				MySql_Connection.Close();
-				MessageBox.Show("Программа не нашла базу данных "  + Config.DataBase +  " и будет закрыта.\nУдалите файл Config.cfg, запустите администратор и создайте новую базу.", "Сообщение", MessageBoxButtons.OK);
+				MessageBox.Show("Нет соединения с базой данных "  + Config.DataBase +  " программа будет закрыта.\nУбедитесь что сервер отвечает и у вас есть интернет.\nПроверьте наличие данной базы данных на сервере.", "Сообщение", MessageBoxButtons.OK);
 				Application.Exit();
 			}
 			return true;

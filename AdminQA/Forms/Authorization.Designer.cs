@@ -84,6 +84,7 @@ namespace AdminQA.Forms
 			this.button1.TabIndex = 4;
 			this.button1.Text = "ОК";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button1Click);
 			// 
 			// button2
 			// 
@@ -93,6 +94,7 @@ namespace AdminQA.Forms
 			this.button2.TabIndex = 5;
 			this.button2.Text = "Отмена";
 			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
 			// Authorization
 			// 
@@ -111,6 +113,7 @@ namespace AdminQA.Forms
 			this.Name = "Authorization";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Авторизация";
+			this.Load += new System.EventHandler(this.AuthorizationLoad);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}

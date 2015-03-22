@@ -64,11 +64,11 @@ namespace AdminQA
 				
 				
 				/*Создание таблицы "Пользователи" (users)
-				 * id_user				- идентификатор
-				 * user_name			- имя пользователя
-				 * user_pass			- пароль
-				 * user_right			- права
-				 * user_additionally	- дополнительно
+				 * users_system				- идентификатор
+				 * users_system_name		- имя пользователя
+				 * users_system_login		- логин пользователя
+				 * users_system_pass		- пароль
+				 * users_system_status		- права
 				 */
 				_SqlCommand = "CREATE TABLE users_system (users_system_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 					"users_system_name VARCHAR(250) DEFAULT '' UNIQUE, " +
