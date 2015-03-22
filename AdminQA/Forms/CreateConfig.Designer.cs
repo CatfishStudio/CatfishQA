@@ -45,10 +45,14 @@ namespace AdminQA.Forms
 			this.label1 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.groupBox1.SuspendLayout();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -142,14 +146,6 @@ namespace AdminQA.Forms
 			this.label2.TabIndex = 1;
 			this.label2.Text = "database=";
 			// 
-			// richTextBox1
-			// 
-			this.richTextBox1.Location = new System.Drawing.Point(172, 31);
-			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(186, 98);
-			this.richTextBox1.TabIndex = 8;
-			this.richTextBox1.Text = "";
-			// 
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -172,11 +168,50 @@ namespace AdminQA.Forms
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
+			// panel1
+			// 
+			this.panel1.Controls.Add(this.label6);
+			this.panel1.Controls.Add(this.label5);
+			this.panel1.Location = new System.Drawing.Point(0, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(419, 203);
+			this.panel1.TabIndex = 9;
+			this.panel1.Visible = false;
+			// 
+			// label6
+			// 
+			this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.label6.Location = new System.Drawing.Point(36, 89);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(329, 29);
+			this.label6.TabIndex = 1;
+			this.label6.Text = "Проверка соединения.";
+			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// label5
+			// 
+			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.label5.Location = new System.Drawing.Point(36, 34);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(329, 29);
+			this.label5.TabIndex = 0;
+			this.label5.Text = "Пожалуйста подождите!";
+			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// richTextBox1
+			// 
+			this.richTextBox1.Location = new System.Drawing.Point(30, 23);
+			this.richTextBox1.Name = "richTextBox1";
+			this.richTextBox1.Size = new System.Drawing.Size(194, 132);
+			this.richTextBox1.TabIndex = 10;
+			this.richTextBox1.Text = "";
+			// 
 			// CreateConfig
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(421, 204);
+			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
@@ -192,9 +227,13 @@ namespace AdminQA.Forms
 			this.Load += new System.EventHandler(this.CreateConfigLoad);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
 		private System.Windows.Forms.RichTextBox richTextBox1;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Label label2;

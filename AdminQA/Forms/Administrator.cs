@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using AdminQA.Service;
+using MySql.Data.MySqlClient;
 
 namespace AdminQA.Forms
 {
@@ -106,7 +107,7 @@ namespace AdminQA.Forms
 		};
 		
 		
-		void DecodeFileConfig()
+		bool DecodeFileConfig()
 		{
 				RichTextBox rtb = new RichTextBox();
 				rtb.LoadFile(Config.fileConfig, RichTextBoxStreamType.PlainText);
@@ -171,6 +172,25 @@ namespace AdminQA.Forms
 					}
 				}
 				//MessageBox.Show("Server[" + Config.Server + "]  DataBase[" + Config.DataBase + "]  Uid[" + Config.Uid + "]  Pwd["+ Config.Pwd +"]");
+				return true;
+		}
+		
+		
+		/* Проверка соединения */
+		bool CheckConnect()
+		{
+			MySqlConnection MySql_Connection = new MySqlConnection();
+			//проверка подключения к базе данных
+			try{
+				MySql_Connection.ConnectionString = "server=" + Config.Server + ";database=" + Config.DataBase + ";uid=" + Config.Uid + ";pwd=" + Config.Pwd + ";";
+				MySql_Connection.Open();
+				MySql_Connection.Close();
+			}catch(Exception ex){
+				MySql_Connection.Close();
+				MessageBox.Show("Программа не нашла базу данных "  + Config.DataBase +  " и будет закрыта.\nУдалите файл Config.cfg, запустите администратор и создайте новую базу.", "Сообщение", MessageBoxButtons.OK);
+				Application.Exit();
+			}
+			return true;
 		}
 		
 		
@@ -181,7 +201,15 @@ namespace AdminQA.Forms
 			{
 				MessageBox.Show("Фыйл конфигурации не найден, перезапустите администратор!", "Сообщение");
 			}else{
-				DecodeFileConfig();
+				if(DecodeFileConfig())
+				{
+					// показываем окно авторизации если база данных существует
+					if(CheckConnect())
+					{
+						Authorization authorization = new Authorization();
+						authorization.ShowDialog();
+					}
+				}
 			}
 		}
 		
@@ -216,6 +244,37 @@ namespace AdminQA.Forms
 			Close();
 		}
 		
+		/* Пользователи */
+		void ПользователиToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			
+		}
 		
+		void ToolStripButton1Click(object sender, EventArgs e)
+		{
+			
+		}
+		
+		
+		/* О программе*/
+		void ShowAbout()
+		{
+			if(Classes.ClassForms.formAbout == false)
+			{
+				About about = new About();
+				about.MdiParent = this;
+				about.Show();
+			}
+		}
+		
+		void ОПрограммеToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			ShowAbout();
+		}
+		
+		void ToolStripButton5Click(object sender, EventArgs e)
+		{
+			ShowAbout();
+		}
 	}
 }

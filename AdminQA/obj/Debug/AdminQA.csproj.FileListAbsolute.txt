@@ -13,3 +13,7 @@ C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.pdb
 C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.Forms.CreateConfig.resources
 C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.Forms.Administrator.resources
 C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.Service.FormServiceCalculator.resources
+C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.Forms.About.resources
+C:\Program Code\Git\QA\AdminQA\obj\Debug\AdminQA.Forms.Authorization.resources
+C:\Program Code\Git\QA\AdminQA\bin\Debug\AdminQA.exe.config
+C:\Program Code\Git\QA\AdminQA\bin\Debug\MySql.Data.dll

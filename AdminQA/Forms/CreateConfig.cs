@@ -10,6 +10,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace AdminQA.Forms
 {
@@ -138,12 +139,55 @@ namespace AdminQA.Forms
 					}
 				}
 			}
-			richTextBox1.Text = textincode;
-			richTextBox1.SaveFile(Config.fileConfig, RichTextBoxStreamType.PlainText);
-			_parentForm.ShowAdmin();
-			fileSave = true;
-			Close();
+			CheckConnect(textincode);
 		}
+		
+		/* Проверка соединения */
+		void CheckConnect(String saveText)
+		{
+			MySqlConnection MySql_Connection = new MySqlConnection();
+			//проверка подключения к базе данных
+			try{
+				panel1.Visible = true;
+				this.Update();
+				MySql_Connection.ConnectionString = "server=" + textBox1.Text + ";database=" + textBox2.Text + ";uid=" + textBox3.Text + ";pwd=" + textBox4.Text + ";";
+				MySql_Connection.Open();
+				MySql_Connection.Close();
+				panel1.Visible = false;
+				
+				richTextBox1.Text = saveText;
+				richTextBox1.SaveFile(Config.fileConfig, RichTextBoxStreamType.PlainText);
+				_parentForm.ShowAdmin();
+				fileSave = true;
+				Close();
+			}catch(Exception ex){
+				MySql_Connection.Close();
+				panel1.Visible = false;
+				if(MessageBox.Show("Программа не нашла базу данных "  + textBox2.Text +  "\nСоздать новую базу данных под именем " + textBox2.Text + " ?", "Вопрос", MessageBoxButtons.YesNo) == DialogResult.Yes)
+				{
+					panel1.Visible = true;
+					ClassCreateTableInBase CreateTableInBase = new ClassCreateTableInBase();
+					CreateTableInBase.Server = textBox1.Text;
+					CreateTableInBase.DataBase = textBox2.Text;
+					CreateTableInBase.UserID = textBox3.Text;
+					CreateTableInBase.Pass = textBox4.Text;
+					if(CreateTableInBase.CreateTables()){
+						MessageBox.Show("Конфигурация успешно создана.", "Сообщение:");
+						richTextBox1.Text = saveText;
+						richTextBox1.SaveFile(Config.fileConfig, RichTextBoxStreamType.PlainText);
+						_parentForm.ShowAdmin();
+						fileSave = true;
+						Close();
+					}else{
+						MessageBox.Show("Ошибка!!! Конфигурация не создана.", "Сообщение:");
+						panel1.Visible = false;
+					}
+				}else{
+					Application.Exit();
+				}
+			}
+		}
+		
 		
 		void CreateConfigLoad(object sender, EventArgs e)
 		{

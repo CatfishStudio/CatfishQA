@@ -30,6 +30,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>packages\MySql.Data.6.9.6\lib\net20\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -38,10 +41,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ClassConversion.cs" />
+    <Compile Include="Classes\ClassForms.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Forms\About.cs" />
+    <Compile Include="Forms\About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Administrator.cs" />
     <Compile Include="Forms\Administrator.Designer.cs">
       <DependentUpon>Administrator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Authorization.cs" />
+    <Compile Include="Forms\Authorization.Designer.cs">
+      <DependentUpon>Authorization.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\CreateConfig.cs" />
     <Compile Include="Forms\CreateConfig.Designer.cs">
@@ -51,6 +63,9 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MySQL\ClassCreateTableInBase.cs" />
+    <Compile Include="MySQL\ClassMySQL_Full.cs" />
+    <Compile Include="MySQL\ClassMySQL_Short.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\FormServiceCalculator.cs" />
@@ -59,8 +74,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Administrator.resx">
       <DependentUpon>Administrator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Authorization.resx">
+      <DependentUpon>Authorization.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateConfig.resx">
       <DependentUpon>CreateConfig.cs</DependentUpon>
@@ -76,6 +97,11 @@
     <Folder Include="Forms" />
     <Folder Include="Service" />
     <Folder Include="Classes" />
+    <Folder Include="MySQL" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

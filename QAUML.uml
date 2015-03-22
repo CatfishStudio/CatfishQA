@@ -31,7 +31,7 @@
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="zDlaB6At5Ey+zyA0qKBrngAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="3Rquvyk5CUOdn4GlTMV8dwAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">USERS_PROGRAM</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">users_system</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="Hg6CQS9k+kSyyfSpZRUiEgAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -843,7 +843,7 @@
 </XPD:OBJ>
 <XPD:ATTR name="#OwnedElements" type="integer">26</XPD:ATTR>
 <XPD:OBJ name="OwnedElements[0]" type="UMLClass" guid="nejFEv3XT0uLuJY817TdtgAA">
-<XPD:ATTR name="Name" type="string">USERS_PROGRAM</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">users_system</XPD:ATTR>
 <XPD:REF name="Namespace">vMTdTOLE10G/m9+B0P8gOAAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">8zL4lvKcuk6TvqknXM/oswAA</XPD:REF>
@@ -860,23 +860,23 @@
 <XPD:REF name="Generalizations[1]">9LIEUJXN0k6eKl4s+gbPgAAA</XPD:REF>
 <XPD:ATTR name="#Attributes" type="integer">5</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="9J8ZHY1jwUaNRUVueYClbwAA">
-<XPD:ATTR name="Name" type="string">users_program_id (уникальный, счетчик, ключ)</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">users_system_id (уникальный, счетчик, ключ)</XPD:ATTR>
 <XPD:REF name="Owner">nejFEv3XT0uLuJY817TdtgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[1]" type="UMLAttribute" guid="qYiiYAhZvkiPsmygE2cJmQAA">
-<XPD:ATTR name="Name" type="string">users_program_name (текст, уникальный)</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">users_system_name (текст, уникальный)</XPD:ATTR>
 <XPD:REF name="Owner">nejFEv3XT0uLuJY817TdtgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[2]" type="UMLAttribute" guid="XULcAmUCY0usJvLGwGtWFAAA">
-<XPD:ATTR name="Name" type="string">users_program_login (текст, уникальный)</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">users_system_login (текст, уникальный)</XPD:ATTR>
 <XPD:REF name="Owner">nejFEv3XT0uLuJY817TdtgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[3]" type="UMLAttribute" guid="8ZV6vjKuUUK65BF9ntGz4QAA">
-<XPD:ATTR name="Name" type="string">users_program_pass (текст)</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">users_system_pass (текст)</XPD:ATTR>
 <XPD:REF name="Owner">nejFEv3XT0uLuJY817TdtgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[4]" type="UMLAttribute" guid="HEAO2UQ230CoW4zxRb3kVwAA">
-<XPD:ATTR name="Name" type="string">users_program_status (число</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">users_system_status (число</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">1-админ, 0-юзер)</XPD:ATTR>
 <XPD:REF name="Owner">nejFEv3XT0uLuJY817TdtgAA</XPD:REF>
 </XPD:OBJ>
@@ -1265,8 +1265,8 @@
 <XPD:REF name="Participant">xHBKi7TYgkKlQmryGF96ZQAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">IypxVgigREOAb0QPFlyrdgAA</XPD:REF>
-<XPD:REF name="Views[1]">OIylS/lGy02yPGHHbfC26AAA</XPD:REF>
-<XPD:REF name="Views[2]">af2PCMKumUyq9TC/QGuwVwAA</XPD:REF>
+<XPD:REF name="Views[1]">af2PCMKumUyq9TC/QGuwVwAA</XPD:REF>
+<XPD:REF name="Views[2]">OIylS/lGy02yPGHHbfC26AAA</XPD:REF>
 <XPD:REF name="Views[3]">8jMfTLe6eUyja0P0OE5nCgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Connections[1]" type="UMLAssociationEnd" guid="VC/+xWk87kO0yLRgjWBNHAAA">
@@ -1275,8 +1275,8 @@
 <XPD:REF name="Participant">o+YUIHvi2Eme9Kkyz0nZjQAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">WbnO7x8fIUS24IhF/tbsUwAA</XPD:REF>
-<XPD:REF name="Views[1]">ZFn5ZaASZUCP4XjgtkLiAAAA</XPD:REF>
-<XPD:REF name="Views[2]">awz29JQ+d0ym/JNFSvDjgwAA</XPD:REF>
+<XPD:REF name="Views[1]">awz29JQ+d0ym/JNFSvDjgwAA</XPD:REF>
+<XPD:REF name="Views[2]">ZFn5ZaASZUCP4XjgtkLiAAAA</XPD:REF>
 <XPD:REF name="Views[3]">rMZ3Ul43qUSuHpdautNk5AAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
