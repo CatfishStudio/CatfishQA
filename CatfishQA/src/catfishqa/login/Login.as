@@ -14,6 +14,7 @@ package catfishqa.login
 	import catfishqa.mysql.Query;
 	import catfishqa.resource.Resource;
 	import catfishqa.json.JSON;
+	import catfishqa.events.Navigation;
 	
 	/**
 	 * ...
@@ -49,7 +50,6 @@ package catfishqa.login
 		{
 			super();
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -141,7 +141,8 @@ package catfishqa.login
 		{
 			if (selectUserLogin == _comboBox1.text && selectUserPass == _textBox1.text)
 			{
-				_label4.text = "Вошли!!!";
+				if (selectUserAdmin == "1") dispatchEvent(new Navigation(Navigation.CHANGE_SCREEN, { id: Resource.ADMIN }, true));
+				else dispatchEvent(new Navigation(Navigation.CHANGE_SCREEN, { id: Resource.CLIENT }, true));
 			}else {
 				_label4.text = "Ошибка!!! Вы ввели не верный пароль!";
 			}
