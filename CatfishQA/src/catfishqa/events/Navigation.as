@@ -2,10 +2,6 @@ package catfishqa.events
 {
 	import flash.events.Event;
 	
-	/**
-	 * ...
-	 * @author Catfish Studio Games
-	 */
 	public class Navigation extends Event 
 	{
 		public static const CHANGE_SCREEN:String = "changeScreen";

@@ -10,7 +10,7 @@
 	<copyright></copyright> 
 	
 	<initialWindow> 
-		<title>CatfishQA</title> 
+		<title>Информационная система QA</title> 
 		<content>CatfishQA.swf</content> 
 		<systemChrome>standard</systemChrome> 
 		<transparent>false</transparent> 

@@ -31,7 +31,7 @@
 		/*Соединение с базой данных*/
 		mysql_select_db($database, $db);
 		
-		/*Создание таблицы Кафедры (chairs) ================================= */
+		/*Создание таблицы Системные пользователи (system_users) ================================= */
 		$query = mysql_query("CREATE TABLE system_users (
 			system_users_id int(2) NOT NULL AUTO_INCREMENT,
 			system_users_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -66,7 +66,37 @@
 		/*==================================================================*/
 	
 	
-	
+		/*Создание таблицы История обновлений (history_update) ================================= */
+		$query = mysql_query("CREATE TABLE history_update (
+			history_update_id int(2) NOT NULL AUTO_INCREMENT,
+			history_update_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			history_update_datetime varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			PRIMARY KEY (history_update_id),
+			UNIQUE KEY history_update_name (history_update_name)
+		)", $db);
+		/* Проверка успешности выполнения */
+		if(!$query){
+			echo "<br><br>ERROR!!! Table \"history_update\" - error! ";
+			echo "<br><br>Error: ", mysql_error();
+			$query = mysql_query("DROP DATABASE ".$database, $db);
+			exit;
+		}else{
+			echo "<br><br>Create table \"history_update\" - complete!";
+		}
+		
+		$query = mysql_query("INSERT INTO history_update (history_update_id, history_update_name, history_update_datetime) VALUES
+			(1, 'system_users', '".date("Y-m-d H:i:s")."'),
+			(2, 'history_update', '".date("Y-m-d H:i:s")."')", $db);
+		/* Проверка успешности выполнения */
+		if(!$query){
+			echo "<br><br>ERROR!!! Add item in table \"history_update\" - error! ";
+			echo "<br><br>Error: ", mysql_error();
+			$query = mysql_query("DROP DATABASE ".$database, $db);
+			exit;
+		}else{
+			echo "<br><br>Add item in table \"history_update\" - complete!";
+		}
+		/*==================================================================*/
 	
 		echo "<br><br>Configuration created!";
 	}

@@ -1,4 +1,4 @@
-package catfishqa.buttons 
+package catfishqa.systemUsers 
 {
 	import fl.controls.Button;
 	import fl.controls.listClasses.ICellRenderer;
@@ -6,17 +6,17 @@ package catfishqa.buttons
 	import flash.events.Event;  
     import flash.events.MouseEvent; 
 	
-	import catfishqa.resource.Resource;
+	import catfishqa.server.Server;
 	
-	public class ButtonCellEdit extends Button implements ICellRenderer 
+	public class ButtonCellDelete extends Button implements ICellRenderer 
 	{
 		private var _listData:ListData;  
         private var _data:Object;  
 		
-		public function ButtonCellEdit() 
+		public function ButtonCellDelete() 
 		{
 			super();
-			label = "Изменить.";
+			label = "Удалить.";
 			addEventListener(MouseEvent.CLICK, onButtonClick); 
 		}
 		
@@ -52,7 +52,7 @@ package catfishqa.buttons
           
         public function onButtonClick(event:MouseEvent):void 
         {  
-            trace(Resource.systemUsersArray[_listData.index].Имя);
+            trace(Server.systemUsersArray[_listData.index].Имя);
         }  
 		
 	}

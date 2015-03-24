@@ -20,13 +20,8 @@ package catfishqa
 	import catfishqa.windows.UserLogin;
 	import catfishqa.systemUsers.SystemUser;
 	
-	/**
-	 * ...
-	 * @author Catfish Studio Games
-	 */
 	public class Main extends Sprite 
 	{
-		//private var _userLogin:UserLogin;
 		private var _login:Login;
 		private var _admin:Admin;
 		private var _client:Client;

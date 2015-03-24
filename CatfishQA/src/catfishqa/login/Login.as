@@ -13,6 +13,7 @@ package catfishqa.login
 	
 	import catfishqa.mysql.Query;
 	import catfishqa.resource.Resource;
+	import catfishqa.server.Server;
 	import catfishqa.json.JSON;
 	import catfishqa.events.Navigation;
 	
@@ -58,7 +59,7 @@ package catfishqa.login
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
 			_query = new Query();
-			_query.performRequest(Resource.server + "system_users_get.php?client=1");
+			_query.performRequest(Server.serverPath + "system_users_get.php?client=1");
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		
