@@ -12,10 +12,13 @@ package catfishqa
 	
 	import catfishqa.resource.Resource;
 	import catfishqa.events.Navigation;
-	import catfishqa.windows.UserLogin;
+	
 	import catfishqa.login.Login;
 	import catfishqa.admin.Admin;
 	import catfishqa.client.Client;
+	
+	import catfishqa.windows.UserLogin;
+	import catfishqa.systemUsers.SystemUser;
 	
 	/**
 	 * ...
@@ -23,10 +26,11 @@ package catfishqa
 	 */
 	public class Main extends Sprite 
 	{
-		private var _userLogin:UserLogin;
+		//private var _userLogin:UserLogin;
 		private var _login:Login;
 		private var _admin:Admin;
 		private var _client:Client;
+		private var _systemUsers:SystemUser;
 		
 		public function Main() 
 		{
@@ -57,7 +61,7 @@ package catfishqa
 		
 		private function LoginClose():void
 		{
-			removeChild(_login);
+			if(getChildByName(Resource.LOGIN)) removeChild(_login);
 		}
 		
 		private function AdminShow():void
@@ -68,7 +72,7 @@ package catfishqa
 		
 		private function AdminClose():void
 		{
-			removeChild(_admin);
+			if(getChildByName(Resource.ADMIN)) removeChild(_admin);
 		}
 		
 		private function ClientShow():void
@@ -79,9 +83,16 @@ package catfishqa
 		
 		private function ClientClose():void
 		{
-			removeChild(_client);
+			if(getChildByName(Resource.CLIENT)) removeChild(_client);
 		}
 		
+		
+		private function SystemUsersShow():void
+		{
+			_systemUsers = new SystemUser();
+		}
+		
+			
 		
 		private function onChangeScreen(event:Navigation):void 
 		{
@@ -101,6 +112,19 @@ package catfishqa
 					break;
 				}
 				
+				case Resource.EXIT_SYSTEM: 
+				{
+					AdminClose();
+					ClientClose();
+					LoginShow();
+					break;
+				}
+				
+				case Resource.SYSTEM_USERS: 
+				{
+					SystemUsersShow();
+					break;
+				}
 				
 				default:
 				{

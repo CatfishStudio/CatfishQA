@@ -49,6 +49,7 @@ package catfishqa.login
 		public function Login() 
 		{
 			super();
+			name = Resource.LOGIN;
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
@@ -57,7 +58,7 @@ package catfishqa.login
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
 			_query = new Query();
-			_query.performRequest(Resource.server + "users_login.php?client=1");
+			_query.performRequest(Resource.server + "system_users_get.php?client=1");
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		

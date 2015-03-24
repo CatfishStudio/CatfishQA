@@ -11,6 +11,8 @@ package catfishqa.admin
 	import fl.data.DataProvider; 
 	import fl.events.ComponentEvent;
 	
+	import catfishqa.events.Navigation;
+	import catfishqa.resource.Resource;
 	
 	/**
 	 * ...
@@ -49,6 +51,7 @@ package catfishqa.admin
 		public function Admin() 
 		{
 			super();
+			name = Resource.ADMIN;
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
@@ -175,7 +178,7 @@ package catfishqa.admin
 		
 		private function onButton1MouseClick(e:MouseEvent):void 
 		{
-			
+			dispatchEvent(new Navigation(Navigation.CHANGE_SCREEN, { id: Resource.SYSTEM_USERS }, true));
 		}
 		
 		private function onButton2MouseClick(e:MouseEvent):void 
@@ -215,7 +218,7 @@ package catfishqa.admin
 				
 		private function onButton9MouseClick(e:MouseEvent):void 
 		{
-			
+			dispatchEvent(new Navigation(Navigation.CHANGE_SCREEN, { id: Resource.EXIT_SYSTEM }, true));
 		}
 		
 		

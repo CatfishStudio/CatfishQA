@@ -45,7 +45,7 @@ package catfishqa.windows
 			_htmlLoader.width = newWindow.stage.stageWidth;
 			_htmlLoader.height = newWindow.stage.stageHeight;
 			newWindow.stage.addChild(_htmlLoader);
-			_htmlLoader.load(new URLRequest(Resource.server + "users.php"));
+			_htmlLoader.load(new URLRequest(Resource.server + "system_users_get.php?client=1"));
 			
 			//activate and show the new window 
 			newWindow.activate(); 
