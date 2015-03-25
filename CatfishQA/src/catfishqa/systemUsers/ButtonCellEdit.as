@@ -52,7 +52,7 @@ package catfishqa.systemUsers
           
         public function onButtonClick(event:MouseEvent):void 
         {  
-            trace(Server.systemUsersArray[_listData.index].Имя);
+            //событие
         }  
 		
 	}

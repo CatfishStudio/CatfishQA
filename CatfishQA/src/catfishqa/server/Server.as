@@ -25,10 +25,6 @@ package catfishqa.server
 		
 		
 		
-		/* МАССИВЫ ТАБЛИЦ */
-		public static var systemUsersArray:Array = []; // Таблица базы данных system_users
-		
-		
 		
 		private static var dispatcher:EventDispatcher = new EventDispatcher();
 		

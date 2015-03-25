@@ -1,8 +1,10 @@
 package catfishqa.systemUsers 
 {
 	import fl.controls.DataGrid;
-	import fl.controls.ScrollBar;
 	import fl.data.DataProvider; 
+	
+	import fl.events.ListEvent;
+	
 	import fl.controls.dataGridClasses.DataGridColumn;
 	import fl.controls.listClasses.CellRenderer;
 	import fl.controls.ScrollPolicy;
@@ -20,8 +22,6 @@ package catfishqa.systemUsers
 	
 	import flash.utils.Timer;
 	import flash.events.TimerEvent; 
-	
-	//import flash.net.URLRequest;
 	
 	import catfishqa.mysql.Query;
 	import catfishqa.resource.Resource;
@@ -43,6 +43,7 @@ package catfishqa.systemUsers
 		private var _query:Query;
 		private var _timer:Timer = new Timer(5000, 1);
 		
+		public var systemUsersArray:Array = []; // Таблица базы данных system_users
 		
 		public function SystemUser() 
 		{
@@ -115,7 +116,9 @@ package catfishqa.systemUsers
 		
 		private function onButtonMouseClick(e:MouseEvent):void 
 		{
-			_newWindow.close();
+			
+			//_newWindow.close();
+		
 		}
 		/* ================================================================*/
 		
@@ -129,7 +132,7 @@ package catfishqa.systemUsers
 		
 		private function onQueryComplete(event:Object):void 
 		{
-			Server.systemUsersArray = [];
+			systemUsersArray = [];
 			
 			var json_str:String = (_query.getResult as String);
 			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
@@ -137,11 +140,13 @@ package catfishqa.systemUsers
 			{
 				for (var k:Object in json_data[i].user) 
 				{
-					Server.systemUsersArray.push( { ID:json_data[i].user[k].system_users_id, 
+					systemUsersArray.push( { ID:json_data[i].user[k].system_users_id, 
 					Имя:json_data[i].user[k].system_users_name, 
 					Логин:json_data[i].user[k].system_users_login,
 					Пароль:json_data[i].user[k].system_users_pass,
-					Администратор:json_data[i].user[k].system_users_admin
+					Администратор:json_data[i].user[k].system_users_admin,
+					Изменить: (ButtonCellEdit),
+					Удалить: (ButtonCellDelete)
 					} );
 				}
 			}
@@ -156,9 +161,18 @@ package catfishqa.systemUsers
 		{
 			_dataGrid = new DataGrid();
 			
-			_dataGrid.dataProvider = new DataProvider(Server.systemUsersArray); 
+			_dataGrid.addEventListener(ListEvent.ITEM_CLICK, onClick);
 			
-			_dataGrid.columns = [ "ID", "Имя", "Логин", "Пароль", "Администратор"];
+			_dataGrid.columns = [ "ID", "Имя", "Логин", "Пароль", "Администратор", "Изменить", "Удалить"];
+			
+			var indexCellButton:Number = _dataGrid.getColumnIndex("Изменить");
+            _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellEdit;
+			indexCellButton = _dataGrid.getColumnIndex("Удалить");
+            _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellDelete;
+           	
+			
+			_dataGrid.dataProvider = new DataProvider(systemUsersArray); 
+			
 			_dataGrid.setSize(650, 300);
 			_dataGrid.move(10, 40);
 			_dataGrid.rowHeight = 20;
@@ -168,7 +182,8 @@ package catfishqa.systemUsers
 			_dataGrid.columns[2].width = 150;
 			_dataGrid.columns[3].width = 50;
 			_dataGrid.columns[4].width = 50;
-			
+			_dataGrid.columns[5].width = 80;
+			_dataGrid.columns[6].width = 80;
 			
 			_dataGrid.resizableColumns = true; 
 			_dataGrid.selectable = false;
@@ -178,7 +193,8 @@ package catfishqa.systemUsers
 			_dataGrid.verticalScrollPolicy = ScrollPolicy.AUTO; // полоса прокрутки
 			_dataGrid.horizontalScrollPolicy = ScrollPolicy.AUTO; // полоса прокрутки
 			//_dataGrid.rowCount = _dataGrid.length;
-				
+			
+			/*
 			var btnCol:DataGridColumn = new DataGridColumn("...");
 			btnCol.cellRenderer = ButtonCellEdit;
 			btnCol.editable = false;
@@ -190,10 +206,19 @@ package catfishqa.systemUsers
 			btnCol.editable = false;
 			_dataGrid.addColumn(btnCol);
 			_dataGrid.columns[6].width = 80;
+			*/
 			
 			_newWindow.stage.addChild(_dataGrid);
 			
 			TimerStart();
+		}
+		
+		private function onClick(e:ListEvent):void 
+		{
+			var dg:DataGrid = e.target as DataGrid;
+			//trace(dg1.getColumnAt(dg1.getColumnIndex('ID')).dataField);
+			trace(dg.columns[e.columnIndex].headerText);
+			trace(dg.dataProvider.getItemAt(e.index).ID);
 		}
 		/* ================================================================*/
 		
@@ -208,7 +233,7 @@ package catfishqa.systemUsers
 		
 		private function onUpdateDataGridComplete(e:Event):void 
 		{
-			Server.systemUsersArray = [];
+			systemUsersArray = [];
 			
 			var json_str:String = (_query.getResult as String);
 			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
@@ -216,7 +241,7 @@ package catfishqa.systemUsers
 			{
 				for (var k:Object in json_data[i].user) 
 				{
-					Server.systemUsersArray.push( { ID:json_data[i].user[k].system_users_id, 
+					systemUsersArray.push( { ID:json_data[i].user[k].system_users_id, 
 					Имя:json_data[i].user[k].system_users_name, 
 					Логин:json_data[i].user[k].system_users_login,
 					Пароль:json_data[i].user[k].system_users_pass,
@@ -225,7 +250,7 @@ package catfishqa.systemUsers
 				}
 			}
 			
-			_dataGrid.dataProvider = new DataProvider(Server.systemUsersArray);
+			_dataGrid.dataProvider = new DataProvider(systemUsersArray);
 			
 			_timer.start();
 		}

@@ -8,7 +8,7 @@ package catfishqa.systemUsers
 	
 	import catfishqa.server.Server;
 	
-	public class ButtonCellDelete extends Button implements ICellRenderer 
+	public class ButtonCellDelete extends Button  implements ICellRenderer 
 	{
 		private var _listData:ListData;  
         private var _data:Object;  
@@ -39,8 +39,8 @@ package catfishqa.systemUsers
         {  
             _listData = value;  
         }  
-  
-        override public function get selected():Boolean   
+		
+		override public function get selected():Boolean   
         {  
             return _selected;  
         }  
@@ -48,11 +48,11 @@ package catfishqa.systemUsers
         override public function set selected(value:Boolean):void   
         {  
               
-        }  
+        }
           
         public function onButtonClick(event:MouseEvent):void 
         {  
-            trace(Server.systemUsersArray[_listData.index].Имя);
+            //событие
         }  
 		
 	}

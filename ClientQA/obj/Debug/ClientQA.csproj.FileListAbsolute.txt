@@ -1,5 +1,0 @@
-C:\Program Code\Git\QA\Client\ClientQA\bin\Debug\ClientQA.exe
-C:\Program Code\Git\QA\Client\ClientQA\bin\Debug\ClientQA.pdb
-C:\Program Code\Git\QA\Client\ClientQA\obj\Debug\ClientQA.csprojResolveAssemblyReference.cache
-C:\Program Code\Git\QA\Client\ClientQA\obj\Debug\ClientQA.exe
-C:\Program Code\Git\QA\Client\ClientQA\obj\Debug\ClientQA.pdb
