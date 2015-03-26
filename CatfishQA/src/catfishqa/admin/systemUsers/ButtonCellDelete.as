@@ -1,4 +1,4 @@
-package catfishqa.systemUsers 
+package catfishqa.admin.systemUsers 
 {
 	import fl.controls.Button;
 	import fl.controls.listClasses.ICellRenderer;
@@ -8,15 +8,15 @@ package catfishqa.systemUsers
 	
 	import catfishqa.server.Server;
 	
-	public class ButtonCellEdit extends Button implements ICellRenderer 
+	public class ButtonCellDelete extends Button  implements ICellRenderer 
 	{
 		private var _listData:ListData;  
         private var _data:Object;  
 		
-		public function ButtonCellEdit() 
+		public function ButtonCellDelete() 
 		{
 			super();
-			label = "Изменить.";
+			label = "Удалить.";
 			addEventListener(MouseEvent.CLICK, onButtonClick); 
 		}
 		
@@ -39,8 +39,8 @@ package catfishqa.systemUsers
         {  
             _listData = value;  
         }  
-  
-        override public function get selected():Boolean   
+		
+		override public function get selected():Boolean   
         {  
             return _selected;  
         }  
@@ -48,7 +48,7 @@ package catfishqa.systemUsers
         override public function set selected(value:Boolean):void   
         {  
               
-        }  
+        }
           
         public function onButtonClick(event:MouseEvent):void 
         {  

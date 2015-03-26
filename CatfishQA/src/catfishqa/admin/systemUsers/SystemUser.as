@@ -1,4 +1,4 @@
-package catfishqa.systemUsers 
+package catfishqa.admin.systemUsers 
 {
 	import fl.controls.DataGrid;
 	import fl.data.DataProvider; 
@@ -24,15 +24,17 @@ package catfishqa.systemUsers
 	import flash.events.TimerEvent; 
 	
 	import catfishqa.mysql.Query;
-	import catfishqa.resource.Resource;
 	import catfishqa.server.Server;
 	import catfishqa.server.ServerEvents;
+	import catfishqa.resource.Resource;
 	import catfishqa.json.JSON;
-	//import catfishqa.events.Navigation;
 	
-	import catfishqa.systemUsers.ButtonCellEdit;
-	import catfishqa.systemUsers.ButtonCellDelete;
+	import catfishqa.admin.systemUsers.ButtonCellEdit;
+	import catfishqa.admin.systemUsers.ButtonCellDelete;
 	
+	import catfishqa.admin.systemUserNew.SystemUserNew;
+	import catfishqa.admin.systemUserEdit.SystemUserEdit;
+	import catfishqa.admin.systemUserRemove.SystemUserRemove;
 	
 	public class SystemUser extends NativeWindowInitOptions 
 	{
@@ -41,7 +43,7 @@ package catfishqa.systemUsers
 		private var _button:Button = new Button();
 		
 		private var _query:Query;
-		private var _timer:Timer = new Timer(5000, 1);
+		private var _timer:Timer = new Timer(2000, 1);
 		
 		public var systemUsersArray:Array = []; // Таблица базы данных system_users
 		
@@ -70,7 +72,7 @@ package catfishqa.systemUsers
 			
 			ButtonAdd(); // Создать кнопку "добавить пользователя"
 			
-			QueryInDataBase(); // Запрос к базе данных с дальнейшим созданием таблицы DataGrid
+			QuerySelect(); // Запрос к базе данных с дальнейшим созданием таблицы DataGrid
 		}
 		
 		private function onClose(e:Event):void 
@@ -116,17 +118,15 @@ package catfishqa.systemUsers
 		
 		private function onButtonMouseClick(e:MouseEvent):void 
 		{
-			
-			//_newWindow.close();
-		
+			new SystemUserNew();
 		}
 		/* ================================================================*/
 		
 		/* Получить данные с сервера ======================================*/
-		private function QueryInDataBase():void
+		private function QuerySelect():void
 		{
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_get.php?client=1");
+			_query.performRequest(Server.serverPath + "system_users_select.php?client=1");
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		
@@ -140,11 +140,13 @@ package catfishqa.systemUsers
 			{
 				for (var k:Object in json_data[i].user) 
 				{
-					systemUsersArray.push( { ID:json_data[i].user[k].system_users_id, 
+					systemUsersArray.push( { 
+					N:i+1,
+					ID:json_data[i].user[k].system_users_id, 
 					Имя:json_data[i].user[k].system_users_name, 
 					Логин:json_data[i].user[k].system_users_login,
 					Пароль:json_data[i].user[k].system_users_pass,
-					Администратор:json_data[i].user[k].system_users_admin,
+					Администратор:json_data[i].user[k].system_users_admin == 1 ? "Да" : "Нет",
 					Изменить: (ButtonCellEdit),
 					Удалить: (ButtonCellDelete)
 					} );
@@ -163,7 +165,7 @@ package catfishqa.systemUsers
 			
 			_dataGrid.addEventListener(ListEvent.ITEM_CLICK, onClick);
 			
-			_dataGrid.columns = [ "ID", "Имя", "Логин", "Пароль", "Администратор", "Изменить", "Удалить"];
+			_dataGrid.columns = [ "N", "Имя", "Логин", "Пароль", "Администратор", "Изменить", "Удалить"];
 			
 			var indexCellButton:Number = _dataGrid.getColumnIndex("Изменить");
             _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellEdit;
@@ -216,9 +218,29 @@ package catfishqa.systemUsers
 		private function onClick(e:ListEvent):void 
 		{
 			var dg:DataGrid = e.target as DataGrid;
-			//trace(dg1.getColumnAt(dg1.getColumnIndex('ID')).dataField);
-			trace(dg.columns[e.columnIndex].headerText);
-			trace(dg.dataProvider.getItemAt(e.index).ID);
+			////////////////////trace(dg1.getColumnAt(dg1.getColumnIndex('ID')).dataField);
+			//trace(dg.columns[e.columnIndex].headerText);
+			//trace(dg.dataProvider.getItemAt(e.index).ID);
+			
+			if (Resource.myStatus == Resource.ADMIN)
+			{
+				if (dg.columns[e.columnIndex].headerText == "Изменить")
+				{
+					var data:Array = [];
+					data.push({
+						ID:dg.dataProvider.getItemAt(e.index).ID, 
+						Имя:dg.dataProvider.getItemAt(e.index).Имя, 
+						Логин:dg.dataProvider.getItemAt(e.index).Логин,
+						Пароль:dg.dataProvider.getItemAt(e.index).Пароль,
+						Администратор:dg.dataProvider.getItemAt(e.index).Администратор == "Да" ? "1" : "0"
+					});
+					new SystemUserEdit(data);
+				}
+				if (dg.columns[e.columnIndex].headerText == "Удалить")
+				{
+					new SystemUserRemove(dg.dataProvider.getItemAt(e.index).ID);
+				}
+			}
 		}
 		/* ================================================================*/
 		
@@ -227,7 +249,7 @@ package catfishqa.systemUsers
 		private function UpdateDataGrid():void
 		{
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_get.php?client=1");
+			_query.performRequest(Server.serverPath + "system_users_select.php?client=1");
 			_query.addEventListener("complete", onUpdateDataGridComplete);
 		}
 		
@@ -241,11 +263,15 @@ package catfishqa.systemUsers
 			{
 				for (var k:Object in json_data[i].user) 
 				{
-					systemUsersArray.push( { ID:json_data[i].user[k].system_users_id, 
+					systemUsersArray.push( { 
+					N:i+1,
+					ID:json_data[i].user[k].system_users_id, 
 					Имя:json_data[i].user[k].system_users_name, 
 					Логин:json_data[i].user[k].system_users_login,
 					Пароль:json_data[i].user[k].system_users_pass,
-					Администратор:json_data[i].user[k].system_users_admin
+					Администратор:json_data[i].user[k].system_users_admin == 1 ? "Да" : "Нет",
+					Изменить: (ButtonCellEdit),
+					Удалить: (ButtonCellDelete)
 					} );
 				}
 			}

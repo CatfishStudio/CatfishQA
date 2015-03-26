@@ -16,6 +16,7 @@ package catfishqa.login
 	import catfishqa.server.Server;
 	import catfishqa.json.JSON;
 	import catfishqa.events.Navigation;
+	import catfishqa.windows.MessageBox;
 	
 	/**
 	 * ...
@@ -31,7 +32,6 @@ package catfishqa.login
 		private var _comboBox1:ComboBox = new ComboBox();
 		private var _button1:Button = new Button();
 		private var _button2:Button = new Button();
-		private var _label4:Label = new Label();
 		
 		private var _query:Query;
 		
@@ -59,7 +59,7 @@ package catfishqa.login
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_get.php?client=1");
+			_query.performRequest(Server.serverPath + "system_users_select.php?client=1");
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		
@@ -132,11 +132,6 @@ package catfishqa.login
 			_button2.addEventListener(MouseEvent.CLICK, onButton2MouseClick);
 			this.addChild(_button2);
 			
-			_label4.text = ""; 
-			_label4.x = 40;
-			_label4.y = 300;
-			_label4.width = 200;
-			addChild(_label4);
 		}
 		
 		private function onButton1MouseClick(e:MouseEvent):void 
@@ -146,7 +141,7 @@ package catfishqa.login
 				if (selectUserAdmin == "1") dispatchEvent(new Navigation(Navigation.CHANGE_SCREEN, { id: Resource.ADMIN }, true));
 				else dispatchEvent(new Navigation(Navigation.CHANGE_SCREEN, { id: Resource.CLIENT }, true));
 			}else {
-				_label4.text = "Ошибка!!! Вы ввели не верный пароль!";
+				new MessageBox("Ошибка!!! Вы ввели не верный пароль!", "Сообщение");
 			}
 		}
 		
@@ -157,7 +152,6 @@ package catfishqa.login
 			selectUserPass = usersArray[0].data;
 			selectUserAdmin = usersArray[0].status;
 			_textBox1.text = "";
-			_label4.text = "";
 		}
 		
 		private function changeHandlerComboBox1(e:Event):void 

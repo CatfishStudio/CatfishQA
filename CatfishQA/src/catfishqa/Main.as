@@ -18,7 +18,7 @@ package catfishqa
 	import catfishqa.client.Client;
 	
 	import catfishqa.windows.UserLogin;
-	import catfishqa.systemUsers.SystemUser;
+	import catfishqa.admin.systemUsers.SystemUser;
 	
 	public class Main extends Sprite 
 	{
@@ -97,6 +97,7 @@ package catfishqa
 				{
 					LoginClose();
 					AdminShow();
+					Resource.myStatus = Resource.ADMIN;
 					break;
 				}
 				
@@ -104,6 +105,7 @@ package catfishqa
 				{
 					LoginClose();
 					ClientShow();
+					Resource.myStatus = Resource.USER;
 					break;
 				}
 				

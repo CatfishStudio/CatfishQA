@@ -14,11 +14,13 @@ package catfishqa.resource
 				
 		public static const LOGIN:String = "login";
 		public static const ADMIN:String = "admin";
+		public static const USER:String = "user";
 		public static const CLIENT:String = "client";
 		public static const EXIT_SYSTEM:String = "exitSystem";
 		public static const SYSTEM_USERS:String = "systemUsers";
 		
-		
+		/* ПРАВА ПОЛЬЗОВАТЕЛЯ */
+		public static var myStatus:String = "";
 	}
 
 }
