@@ -148,13 +148,16 @@ package catfishqa.admin.systemUserEdit
 		
 		private function onButton1MouseClick(e:MouseEvent):void 
 		{
+			var sqlCommand:String = "UPDATE system_users SET "
+								+ "system_users_name = '" + _textBox1.text + "', "
+								+ "system_users_login = '" + _textBox2.text + "', "
+								+ "system_users_pass = '" + _textBox3.text + "', "
+								+ "system_users_admin = '" + _comboBox1.selectedItem.data + "' "
+								+ "WHERE system_users_id = " + _data[0].ID;
+			
+			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_update.php?client=1"
-			+ "&system_users_id=" + _data[0].ID
-			+ "&system_users_name=" + _textBox1.text 
-			+ "&system_users_login=" + _textBox2.text 
-			+ "&system_users_pass=" + _textBox3.text 
-			+ "&system_users_admin=" + _comboBox1.selectedItem.data);
+			_query.performRequest(Server.serverPath + "system_users_set.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		

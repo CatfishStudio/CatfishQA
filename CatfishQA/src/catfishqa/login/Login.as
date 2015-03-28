@@ -58,8 +58,10 @@ package catfishqa.login
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
+			var sqlCommand:String = "SELECT * FROM system_users";
+			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_select.php?client=1");
+			_query.performRequest(Server.serverPath + "system_users_get.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		

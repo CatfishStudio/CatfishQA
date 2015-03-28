@@ -139,8 +139,16 @@ package catfishqa.admin.systemUserNew
 		
 		private function onButton1MouseClick(e:MouseEvent):void 
 		{
+			var sqlCommand:String = "INSERT INTO system_users "
+								+ "(system_users_name, system_users_login, system_users_pass, system_users_admin) VALUES ("
+								+ "'" + _textBox1.text + "', "
+								+ "'" + _textBox2.text + "', "
+								+ "'" + _textBox3.text + "', "
+								+ "'" + _comboBox1.selectedItem.data + "')"
+								
+			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_insert.php?client=1&system_users_name=" + _textBox1.text + "&system_users_login=" + _textBox2.text + "&system_users_pass=" + _textBox3.text + "&system_users_admin=" + _comboBox1.selectedItem.data);
+			_query.performRequest(Server.serverPath + "system_users_set.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		

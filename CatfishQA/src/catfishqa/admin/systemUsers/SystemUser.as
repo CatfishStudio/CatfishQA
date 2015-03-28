@@ -125,8 +125,10 @@ package catfishqa.admin.systemUsers
 		/* Получить данные с сервера ======================================*/
 		private function QuerySelect():void
 		{
+			var sqlCommand:String = "SELECT * FROM system_users";
+			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_select.php?client=1");
+			_query.performRequest(Server.serverPath + "system_users_get.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		
@@ -248,8 +250,10 @@ package catfishqa.admin.systemUsers
 		/* ОБНОВЛЕНИЕ DATAGRID (получаем обновленные данные с сервера) === */
 		private function UpdateDataGrid():void
 		{
+			var sqlCommand:String = "SELECT * FROM system_users";
+			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_select.php?client=1");
+			_query.performRequest(Server.serverPath + "system_users_get.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onUpdateDataGridComplete);
 		}
 		

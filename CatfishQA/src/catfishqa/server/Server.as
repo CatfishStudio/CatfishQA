@@ -49,7 +49,7 @@ package catfishqa.server
 			if (tableName == SYSTEM_USERS)
 			{
 				_query = new Query();
-				_query.performRequest(serverPath + "history_update_select.php?client=1&tableName=" + SYSTEM_USERS);
+				_query.performRequest(serverPath + "history_update_get.php?client=1&tableName=" + SYSTEM_USERS);
 				_query.addEventListener("complete", onQuerySystemUsersComplete);
 			}
 		}

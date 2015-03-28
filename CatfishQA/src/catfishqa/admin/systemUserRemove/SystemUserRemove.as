@@ -73,8 +73,10 @@ package catfishqa.admin.systemUserRemove
 		
 		private function onButton1MouseClick(e:MouseEvent):void 
 		{
+			var sqlCommand:String = "DELETE FROM system_users WHERE system_users_id = " + _id;
+			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_delete.php?client=1&system_users_id=" + _id);
+			_query.performRequest(Server.serverPath + "system_users_set.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		
