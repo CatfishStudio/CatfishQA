@@ -59,29 +59,29 @@ package catfishqa.admin
 		
 		private function adminShow():void
 		{
-			_button1.label = "Системные пользователи";
+			_button1.label = "Пользователи";
 			_button1.x = 20; _button1.y = 115;
 			_button1.width = 200;
 			_button1.addEventListener(MouseEvent.CLICK, onButton1MouseClick);
 			addChild(_button1);
 			
-			_label1.text = "Системные пользователи - раздел пользователей данной системы. \nВы можите добавлять, изменять, и удалять системных пользователей в этом разделе."; 
+			_label1.text = "Пользователи - раздел пользователей данной системы. \nВы можите добавлять, изменять, и удалять системных пользователей в этом разделе."; 
 			_label1.x = 250;
 			_label1.y = 110;
 			_label1.width = 500;
 			_label1.height = 100;
 			addChild(_label1);
 			
-			_button2.label = "Группы пользователей";
+			_button2.label = "Команды";
 			_button2.x = 20; _button2.y = 155;
 			_button2.width = 200;
 			_button2.addEventListener(MouseEvent.CLICK, onButton2MouseClick);
 			addChild(_button2);
 			
-			_label2.text = "Группы пользователей - раздел пользователей относительно определённого проекта. \nГаждая группа сотрудников крепится к определённому проекту с определёнными правами."; 
+			_label2.text = "Команды - раздел групп пользователей каждый из которых имеет свой набор прав. \nКаждая группа это отдельная команда сотрудников за которой закрепляется определённый проект."; 
 			_label2.x = 250;
 			_label2.y = 150;
-			_label2.width = 500;
+			_label2.width = 550;
 			_label2.height = 100;
 			addChild(_label2);
 			
@@ -179,7 +179,7 @@ package catfishqa.admin
 		
 		private function onButton2MouseClick(e:MouseEvent):void 
 		{
-			
+			dispatchEvent(new Navigation(Navigation.CHANGE_SCREEN, { id: Resource.TEAM }, true));
 		}
 		
 		private function onButton3MouseClick(e:MouseEvent):void 

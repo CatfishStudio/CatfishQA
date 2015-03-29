@@ -19,13 +19,18 @@ package catfishqa
 	
 	import catfishqa.windows.UserLogin;
 	import catfishqa.admin.systemUsers.SystemUser;
+	import catfishqa.admin.team.Team;
 	
 	public class Main extends Sprite 
 	{
 		private var _login:Login;
+		
 		private var _admin:Admin;
-		private var _client:Client;
 		private var _systemUsers:SystemUser;
+		private var _team:Team;
+		
+		private var _client:Client;
+		
 		
 		public function Main() 
 		{
@@ -87,6 +92,11 @@ package catfishqa
 			_systemUsers = new SystemUser();
 		}
 		
+		private function TeamShow():void
+		{
+			_team = new Team();
+		}
+		
 			
 		
 		private function onChangeScreen(event:Navigation):void 
@@ -98,6 +108,18 @@ package catfishqa
 					LoginClose();
 					AdminShow();
 					Resource.myStatus = Resource.ADMIN;
+					break;
+				}
+				
+				case Resource.SYSTEM_USERS: 
+				{
+					SystemUsersShow();
+					break;
+				}
+				
+				case Resource.TEAM: 
+				{
+					TeamShow();
 					break;
 				}
 				
@@ -117,11 +139,7 @@ package catfishqa
 					break;
 				}
 				
-				case Resource.SYSTEM_USERS: 
-				{
-					SystemUsersShow();
-					break;
-				}
+				
 				
 				default:
 				{

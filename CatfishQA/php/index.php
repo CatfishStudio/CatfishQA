@@ -56,9 +56,9 @@
 			/*Соединение с базой данных*/
 			mysql_select_db($database, $db);
 		
-			/*Создание таблицы Системные пользователи (system_users) ================================= */
+			/*Создание таблицы Системные пользователи (system_users) ========= */
 			$query = mysql_query("CREATE TABLE system_users (
-				system_users_id int(2) NOT NULL AUTO_INCREMENT,
+				system_users_id int(3) NOT NULL AUTO_INCREMENT,
 				system_users_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 				system_users_login varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 				system_users_pass varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -90,6 +90,69 @@
 			}
 			/*==================================================================*/
 	
+			
+			/*Создание таблицы Команда Группы (team_groups) =========== */
+			$query = mysql_query("CREATE TABLE team_groups (
+				team_groups_id int(3) NOT NULL AUTO_INCREMENT,
+				team_groups_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				PRIMARY KEY (team_groups_id),
+				UNIQUE KEY team_groups_name (team_groups_name)
+			)", $db);
+			/* Проверка успешности выполнения */
+			if(!$query){
+				echo "<br><br>ERROR!!! Table \"team_groups\" - error! ";
+				echo "<br><br>Error: ", mysql_error();
+				$query = mysql_query("DROP DATABASE ".$database, $db);
+				exit;
+			}else{
+				echo "<br><br>Create table \"team_groups\" - complete!";
+			}
+			/*==================================================================*/
+			
+			/*Создание таблицы Команда Пользователи (team_users) =========== */
+			$query = mysql_query("CREATE TABLE team_users (
+				team_users_id int(5) NOT NULL AUTO_INCREMENT,
+				team_users_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				team_users_login varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				
+				team_users_projects_new int(1) NOT NULL DEFAULT '0',
+				team_users_projects_edit_my int(1) NOT NULL DEFAULT '0',
+				team_users_projects_edit_notmy int(1) NOT NULL DEFAULT '0',
+				team_users_projects_read int(1) NOT NULL DEFAULT '0',
+				team_users_projects_remove_my int(1) NOT NULL DEFAULT '0',
+				team_users_projects_remove_notmy int(1) NOT NULL DEFAULT '0',
+				
+				team_users_roadmap_new int(1) NOT NULL DEFAULT '0',
+				team_users_roadmap_edit_my int(1) NOT NULL DEFAULT '0',
+				team_users_roadmap_edit_notmy int(1) NOT NULL DEFAULT '0',
+				team_users_roadmap_read int(1) NOT NULL DEFAULT '0',
+				team_users_roadmap_remove_my int(1) NOT NULL DEFAULT '0',
+				team_users_roadmap_remove_notmy int(1) NOT NULL DEFAULT '0',
+				
+				team_users_planning_new int(1) NOT NULL DEFAULT '0',
+				team_users_planning_edit_my int(1) NOT NULL DEFAULT '0',
+				team_users_planning_edit_notmy int(1) NOT NULL DEFAULT '0',
+				team_users_planning_read int(1) NOT NULL DEFAULT '0',
+				team_users_planning_remove_my int(1) NOT NULL DEFAULT '0',
+				team_users_planning_remove_notmy int(1) NOT NULL DEFAULT '0',
+				
+				team_users_groups_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				
+				PRIMARY KEY (team_users_id)
+			)", $db);
+			/* Проверка успешности выполнения */
+			if(!$query){
+				echo "<br><br>ERROR!!! Table \"team_users\" - error! ";
+				echo "<br><br>Error: ", mysql_error();
+				$query = mysql_query("DROP DATABASE ".$database, $db);
+				exit;
+			}else{
+				echo "<br><br>Create table \"team_users\" - complete!";
+			}
+			/*==================================================================*/
+			
+			
+			
 	
 			/*Создание таблицы История обновлений (history_update) ================================= */
 			$query = mysql_query("CREATE TABLE history_update (
@@ -111,7 +174,8 @@
 		
 			$query = mysql_query("INSERT INTO history_update (history_update_id, history_update_name, history_update_datetime) VALUES
 				(1, 'system_users', '".date("Y-m-d H:i:s")."'),
-				(2, 'history_update', '".date("Y-m-d H:i:s")."')", $db);
+				(2, 'team_groups', '".date("Y-m-d H:i:s")."'),
+				(3, 'team_users', '".date("Y-m-d H:i:s")."')", $db);
 			/* Проверка успешности выполнения */
 			if(!$query){
 				echo "<br><br>ERROR!!! Add item in table \"history_update\" - error! ";
