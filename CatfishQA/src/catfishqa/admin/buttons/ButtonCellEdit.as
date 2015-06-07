@@ -1,4 +1,4 @@
-package catfishqa.admin.systemUsers 
+package catfishqa.admin.buttons 
 {
 	import fl.controls.Button;
 	import fl.controls.listClasses.ICellRenderer;

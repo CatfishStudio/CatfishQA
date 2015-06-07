@@ -144,7 +144,7 @@ package catfishqa.admin.systemUserNew
 								+ "'" + _textBox1.text + "', "
 								+ "'" + _textBox2.text + "', "
 								+ "'" + _textBox3.text + "', "
-								+ "'" + _comboBox1.selectedItem.data + "')"
+								+ "'" + _comboBox1.selectedItem.data + "')";
 								
 			
 			_query = new Query();

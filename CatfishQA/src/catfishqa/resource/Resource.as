@@ -12,7 +12,9 @@ package catfishqa.resource
 		[Embed(source = '../../../images/background.png')]
 		public static var ImageBackground:Class;
 		[Embed(source = '../../../images/group.png')]
-		public static var ImageGroupIcon:Class;
+		public static var ImageGroupUserIcon:Class;
+		[Embed(source = '../../../images/user.png')]
+		public static var ImageUserIcon:Class;
 				
 		public static const LOGIN:String = "login";
 		public static const ADMIN:String = "admin";

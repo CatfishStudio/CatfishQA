@@ -34,6 +34,8 @@ package catfishqa.admin.team
 	import catfishqa.admin.teamGroupsNew.TempGroupNew;
 	import catfishqa.admin.teamGroupsEdit.TeamGroupEdit;
 	import catfishqa.admin.teamGroupsRemove.TeamGroupRemove;
+	import catfishqa.admin.buttons.ButtonCellEdit;
+	import catfishqa.admin.buttons.ButtonCellDelete;
 	
 	public class Team extends NativeWindowInitOptions 
 	{
@@ -69,8 +71,8 @@ package catfishqa.admin.team
      
 			_newWindow = new NativeWindow(this); 
 			_newWindow.title = "Команды"; 
-			_newWindow.width = 700; 
-			_newWindow.height = 450; 
+			_newWindow.width = 850; 
+			_newWindow.height = 550; 
 			_newWindow.stage.color = 0xDDDDDD;
 			_newWindow.alwaysInFront = true; // всегда поверх других окон
 			
@@ -117,6 +119,12 @@ package catfishqa.admin.team
 		}
 		
 		
+		/* =================================================================
+		 * 
+		 *  ЛИСТ
+		 * 
+		 * ================================================================*/
+		
 		/* Получить данные с сервера ======================================*/
 		private function QueryTeamGroupsSelect():void
 		{
@@ -124,10 +132,10 @@ package catfishqa.admin.team
 			
 			_query = new Query();
 			_query.performRequest(Server.serverPath + "team_groups_get.php?client=1&sqlcommand=" + sqlCommand);
-			_query.addEventListener("complete", onQueryComplete);
+			_query.addEventListener("complete", onQueryTeamGroupComplete);
 		}
 		
-		private function onQueryComplete(event:Object):void 
+		private function onQueryTeamGroupComplete(event:Object):void 
 		{
 			_tempGroupsArray = [];
 			
@@ -153,7 +161,7 @@ package catfishqa.admin.team
 		/* КОМАНДА ГРУППЫ ФОРМА ===========================================*/
 		private function groupShow():void
 		{
-			var bGroupIcon:Bitmap = new Resource.ImageGroupIcon();
+			var bGroupIcon:Bitmap = new Resource.ImageGroupUserIcon();
 			bGroupIcon.x = 10;
 			bGroupIcon.y = 5;
 			_newWindow.stage.addChild(bGroupIcon);
@@ -197,11 +205,11 @@ package catfishqa.admin.team
 		{
 			_list = new List();
 			_list.addEventListener(ListEvent.ITEM_CLICK, onListClick);
-			_list.setSize(225, 350);
+			_list.setSize(225, 450);
 			_list.move(10, 60);
 			_list.rowHeight = 20;
 			_list.selectable = false;
-			_list.verticalScrollPolicy = ScrollPolicy.AUTO;
+			_list.verticalScrollPolicy = ScrollPolicy.ON;
 			_list.dataProvider = new DataProvider(_tempGroupsArray);
 			_newWindow.stage.addChild(_list);
 			
@@ -209,7 +217,7 @@ package catfishqa.admin.team
 			_tempGroupsSelectName = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).label;
 			_label1.text = "Группа: " + _tempGroupsSelectName;
 			
-			TimerStart();
+			QueryTeamUsersSelect();
 		}
 		
 		private function UpdateList():void
@@ -270,6 +278,146 @@ package catfishqa.admin.team
 			_label1.text = "Группа: " + _tempGroupsSelectName;
 		}
 		/* ================================================================*/
+		
+		
+		/* ================================================================
+		 * 
+		 *  ТАБЛИЦА
+		 * 
+		 * ================================================================*/
+		
+		
+		/* Получить данные с сервера ======================================*/
+		private function QueryTeamUsersSelect():void
+		{
+			var sqlCommand:String = "SELECT * FROM team_users WHERE team_users_groups_name = '" + _tempGroupsSelectName + "'";
+			
+			_query = new Query();
+			_query.performRequest(Server.serverPath + "team_users_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.addEventListener("complete", onQueryTeamUserComplete);
+		}
+		
+		private function onQueryTeamUserComplete(event:Object):void 
+		{
+			_tempUsersArray = [];
+			
+			var json_str:String = (_query.getResult as String);
+			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
+			for (var i:Object in json_data) 
+			{
+				for (var k:Object in json_data[i].team) 
+				{
+					_tempUsersArray.push( { 
+						//Icon: (IconCell),
+						N:i+1,
+						ID:json_data[i].team[k].team_users_id,
+						Name:json_data[i].team[k].team_users_name,
+						Login:json_data[i].team[k].team_users_login,
+						Изменить: (ButtonCellEdit),
+						Удалить: (ButtonCellDelete),
+						ProjectsNew:json_data[i].team[k].team_users_projects_new,
+						ProjectsEditMy:json_data[i].team[k].team_users_projects_edit_my,
+						ProjectsEditNotmy:json_data[i].team[k].team_users_projects_edit_notmy,
+						ProjectsRead:json_data[i].team[k].team_users_projects_read,
+						ProjectsRemoveMy:json_data[i].team[k].team_users_projects_remove_my,
+						ProjectsRemoveNotmy:json_data[i].team[k].team_users_projects_remove_notmy,
+						RoadmapNew:json_data[i].team[k].team_users_roadmap_new,
+						RoadmapEditMy:json_data[i].team[k].team_users_roadmap_edit_my,
+						RoadmapEditNotmy:json_data[i].team[k].team_users_roadmap_edit_notmy,
+						RoadmapRead:json_data[i].team[k].team_users_roadmap_read,
+						RoadmapRemoveMy:json_data[i].team[k].team_users_roadmap_remove_my,
+						RoadmapRemoveNotmy:json_data[i].team[k].team_users_roadmap_remove_notmy,
+						PlanningNew:json_data[i].team[k].team_users_planning_new,
+						PlanningEditMy:json_data[i].team[k].team_users_planning_edit_my,
+						PlanningEditNotmy:json_data[i].team[k].team_users_planning_edit_notmy,
+						PlanningRead:json_data[i].team[k].team_users_planning_read,
+						PlanningRemoveMy:json_data[i].team[k].team_users_planning_remove_my,
+						PlanningRemoveNotmy:json_data[i].team[k].team_users_planning_remove_notmy,
+						GroupName:json_data[i].team[k].team_users_groups_name 
+					} );
+					
+				}
+			}
+			CreateDataGrid();
+		}
+		/* ================================================================*/
+		
+		/* ТАБЛИЦА СОТРУДНИКОВ КОМАНДЫ ====================================*/
+		private function CreateDataGrid():void
+		{
+			_dataGrid = new DataGrid();
+			
+			_dataGrid.addEventListener(ListEvent.ITEM_CLICK, onDataGridClick);
+			
+			_dataGrid.columns = [ "...", "N", "ID", "Name", "Login", "Изменить", "Удалить"];
+			
+			var indexCellButton:Number = _dataGrid.getColumnIndex("Изменить");
+            _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellEdit;
+			indexCellButton = _dataGrid.getColumnIndex("Удалить");
+            _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellDelete;
+           	
+			
+			_dataGrid.dataProvider = new DataProvider(_tempUsersArray); 
+			
+			_dataGrid.setSize(640, 450);
+			_dataGrid.move(240, 60);
+			_dataGrid.rowHeight = 20;
+			
+			_dataGrid.columns[0].width = 25;
+			_dataGrid.columns[1].width = 50;
+			_dataGrid.columns[2].width = 50;
+			_dataGrid.columns[3].width = 150;
+			_dataGrid.columns[4].width = 150;
+			_dataGrid.columns[5].width = 80;
+			_dataGrid.columns[6].width = 80;
+			
+			_dataGrid.resizableColumns = true; 
+			_dataGrid.selectable = false;
+			_dataGrid.editable = false;
+			
+			
+			_dataGrid.verticalScrollPolicy = ScrollPolicy.AUTO; // полоса прокрутки
+			_dataGrid.horizontalScrollPolicy = ScrollPolicy.AUTO; // полоса прокрутки
+			
+			_newWindow.stage.addChild(_dataGrid);
+			
+			TimerStart();
+		}
+		
+		private function onDataGridClick(e:ListEvent):void 
+		{
+			var dg:DataGrid = e.target as DataGrid;
+			if (Resource.myStatus == Resource.ADMIN)
+			{
+				if (dg.columns[e.columnIndex].headerText == "Изменить")
+				{
+					var data:Array = [];
+					data.push({
+						ID:dg.dataProvider.getItemAt(e.index).ID, 
+						Имя:dg.dataProvider.getItemAt(e.index).Имя, 
+						Логин:dg.dataProvider.getItemAt(e.index).Логин,
+						Пароль:dg.dataProvider.getItemAt(e.index).Пароль,
+						Администратор:dg.dataProvider.getItemAt(e.index).Администратор == "Да" ? "1" : "0"
+					});
+					//new SystemUserEdit(data);
+				}
+				if (dg.columns[e.columnIndex].headerText == "Удалить")
+				{
+					//new SystemUserRemove(dg.dataProvider.getItemAt(e.index).ID);
+				}
+			}
+		}
+		/* ================================================================*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		/* ТАЙМЕР (запрос к серверу на получение обновлённых данных) ======*/

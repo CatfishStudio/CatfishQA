@@ -70,6 +70,7 @@
   <library>
     <asset path="images\background.png" />
     <asset path="images\group.png" />
+    <asset path="images\user.png" />
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>

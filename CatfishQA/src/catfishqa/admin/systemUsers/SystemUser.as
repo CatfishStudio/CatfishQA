@@ -29,8 +29,8 @@ package catfishqa.admin.systemUsers
 	import catfishqa.resource.Resource;
 	import catfishqa.json.JSON;
 	
-	import catfishqa.admin.systemUsers.ButtonCellEdit;
-	import catfishqa.admin.systemUsers.ButtonCellDelete;
+	import catfishqa.admin.buttons.ButtonCellEdit;
+	import catfishqa.admin.buttons.ButtonCellDelete;
 	
 	import catfishqa.admin.systemUserNew.SystemUserNew;
 	import catfishqa.admin.systemUserEdit.SystemUserEdit;
@@ -112,11 +112,11 @@ package catfishqa.admin.systemUsers
 			_button.label = "Добавить пользователя";
 			_button.x = 10; _button.y = 10;
 			_button.width = 200;
-			_button.addEventListener(MouseEvent.CLICK, onButtonMouseClick);
+			_button.addEventListener(MouseEvent.CLICK, onButtonAddMouseClick);
 			_newWindow.stage.addChild(_button);
 		}
 		
-		private function onButtonMouseClick(e:MouseEvent):void 
+		private function onButtonAddMouseClick(e:MouseEvent):void 
 		{
 			new SystemUserNew();
 		}
