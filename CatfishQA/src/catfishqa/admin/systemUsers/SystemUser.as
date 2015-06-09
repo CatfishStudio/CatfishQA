@@ -15,6 +15,7 @@ package catfishqa.admin.systemUsers
 	import flash.display.NativeWindowInitOptions;
 	import flash.display.NativeWindowSystemChrome;
 	import flash.display.NativeWindowType;
+	import flash.events.NativeWindowBoundsEvent;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
@@ -67,6 +68,7 @@ package catfishqa.admin.systemUsers
 			_newWindow.activate();
 			
 			_newWindow.addEventListener(Event.CLOSE, onClose);
+			_newWindow.addEventListener(NativeWindowBoundsEvent.RESIZE, onResize);
 			
 			Server.addEventListener(ServerEvents.TABLE_UPDATE, onServerEvents);
 			
@@ -80,6 +82,11 @@ package catfishqa.admin.systemUsers
 			_timer.stop();
 			_timer = null;
 			Server.removeEventListener(ServerEvents.TABLE_UPDATE, onServerEvents);
+		}
+		
+		private function onResize(e:NativeWindowBoundsEvent):void 
+		{
+			_dataGrid.setSize(_newWindow.width - 50, _newWindow.height - 110);
 		}
 		
 		private function onServerEvents(event:ServerEvents):void 
@@ -167,7 +174,7 @@ package catfishqa.admin.systemUsers
 			
 			_dataGrid.addEventListener(ListEvent.ITEM_CLICK, onClick);
 			
-			_dataGrid.columns = [ "N", "Имя", "Логин", "Пароль", "Администратор", "Изменить", "Удалить"];
+			_dataGrid.columns = [ "N", "Имя", "Логин", "Пароль", "Администратор", "Изменить", "Удалить", "..."];
 			
 			var indexCellButton:Number = _dataGrid.getColumnIndex("Изменить");
             _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellEdit;
@@ -177,14 +184,14 @@ package catfishqa.admin.systemUsers
 			
 			_dataGrid.dataProvider = new DataProvider(systemUsersArray); 
 			
-			_dataGrid.setSize(650, 300);
+			_dataGrid.setSize(_newWindow.width - 50, _newWindow.height - 100);
 			_dataGrid.move(10, 40);
 			_dataGrid.rowHeight = 20;
 			
 			_dataGrid.columns[0].width = 25;
 			_dataGrid.columns[1].width = 200;
 			_dataGrid.columns[2].width = 150;
-			_dataGrid.columns[3].width = 50;
+			_dataGrid.columns[3].width = 65;
 			_dataGrid.columns[4].width = 50;
 			_dataGrid.columns[5].width = 80;
 			_dataGrid.columns[6].width = 80;

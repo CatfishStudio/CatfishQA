@@ -21,6 +21,7 @@ package catfishqa.resource
 		public static const USER:String = "user";
 		public static const CLIENT:String = "client";
 		public static const EXIT_SYSTEM:String = "exitSystem";
+		public static const PATH:String = "path";
 		
 		public static const SYSTEM_USERS:String = "systemUsers"; // окно системные пользователи
 		public static const TEAM:String = "team"; // окно команды (группы пользователей)

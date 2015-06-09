@@ -12,7 +12,7 @@ package catfishqa.server
 		private static var _query:Query;
 				
 		/* ПУТЬ К СЕРВЕРУ */
-		public static var serverPath:String = "http://localhost/cf/catfishqa/"; //"http://catfishstudio.besaba.com/catfishqa/";
+		public static var serverPath:String =  ""; //"http://localhost/cf/catfishqa/"; //"http://catfishstudio.besaba.com/catfishqa/";
 		
 		/* КОНСТАНТЫ */
 		public static const SYSTEM_USERS:String = "system_users"; // имя таблицы (Системные пользователи)

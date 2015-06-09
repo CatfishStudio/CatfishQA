@@ -18,6 +18,7 @@ package catfishqa.admin.team
 	import flash.display.NativeWindowInitOptions;
 	import flash.display.NativeWindowSystemChrome;
 	import flash.display.NativeWindowType;
+	import flash.events.NativeWindowBoundsEvent;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
@@ -71,8 +72,8 @@ package catfishqa.admin.team
      
 			_newWindow = new NativeWindow(this); 
 			_newWindow.title = "Команды"; 
-			_newWindow.width = 850; 
-			_newWindow.height = 550; 
+			_newWindow.width = 880; 
+			_newWindow.height = 560; 
 			_newWindow.stage.color = 0xDDDDDD;
 			_newWindow.alwaysInFront = true; // всегда поверх других окон
 			
@@ -81,6 +82,7 @@ package catfishqa.admin.team
 			_newWindow.activate();
 			
 			_newWindow.addEventListener(Event.CLOSE, onClose);
+			_newWindow.addEventListener(NativeWindowBoundsEvent.RESIZE, onResize);
 			
 			Server.addEventListener(ServerEvents.TABLE_UPDATE, onServerEvents);
 			
@@ -93,6 +95,13 @@ package catfishqa.admin.team
 			_timer = null;
 			Server.removeEventListener(ServerEvents.TABLE_UPDATE, onServerEvents);
 		}
+		
+		private function onResize(e:NativeWindowBoundsEvent):void 
+		{
+			_list.setSize(225, _newWindow.height - 110);
+			_dataGrid.setSize(_newWindow.width - 265, _newWindow.height - 110);
+		}
+		
 		
 		private function onServerEvents(event:ServerEvents):void 
 		{
@@ -205,7 +214,7 @@ package catfishqa.admin.team
 		{
 			_list = new List();
 			_list.addEventListener(ListEvent.ITEM_CLICK, onListClick);
-			_list.setSize(225, 450);
+			_list.setSize(225, _newWindow.height - 110); 
 			_list.move(10, 60);
 			_list.rowHeight = 20;
 			_list.selectable = false;
@@ -349,7 +358,7 @@ package catfishqa.admin.team
 			
 			_dataGrid.addEventListener(ListEvent.ITEM_CLICK, onDataGridClick);
 			
-			_dataGrid.columns = [ "...", "N", "ID", "Name", "Login", "Изменить", "Удалить"];
+			_dataGrid.columns = [ "...", "N", "ID", "Name", "Login", "Изменить", "Удалить", "..."];
 			
 			var indexCellButton:Number = _dataGrid.getColumnIndex("Изменить");
             _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellEdit;
@@ -359,13 +368,13 @@ package catfishqa.admin.team
 			
 			_dataGrid.dataProvider = new DataProvider(_tempUsersArray); 
 			
-			_dataGrid.setSize(640, 450);
+			_dataGrid.setSize(_newWindow.width - 265, _newWindow.height - 110);
 			_dataGrid.move(240, 60);
 			_dataGrid.rowHeight = 20;
 			
 			_dataGrid.columns[0].width = 25;
 			_dataGrid.columns[1].width = 50;
-			_dataGrid.columns[2].width = 50;
+			_dataGrid.columns[2].width = 80;
 			_dataGrid.columns[3].width = 150;
 			_dataGrid.columns[4].width = 150;
 			_dataGrid.columns[5].width = 80;
