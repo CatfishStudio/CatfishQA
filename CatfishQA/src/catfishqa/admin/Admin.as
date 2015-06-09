@@ -65,7 +65,7 @@ package catfishqa.admin
 			_button1.addEventListener(MouseEvent.CLICK, onButton1MouseClick);
 			addChild(_button1);
 			
-			_label1.text = "Пользователи - раздел пользователей данной системы. \nВы можите добавлять, изменять, и удалять системных пользователей в этом разделе."; 
+			_label1.text = "Пользователи - раздел пользователей данной системы. \nВы можете добавлять, изменять и удалять системных пользователей в этом разделе."; 
 			_label1.x = 250;
 			_label1.y = 110;
 			_label1.width = 500;
@@ -104,7 +104,7 @@ package catfishqa.admin
 			_button4.addEventListener(MouseEvent.CLICK, onButton4MouseClick);
 			addChild(_button4);
 			
-			_label4.text = "Роадмап - раздел запланированных спринтов. \nВ данном разделе вы можите ознакомиться о процессе выполнения определённого спринта."; 
+			_label4.text = "Роадмап - раздел запланированных спринтов. \nВ данном разделе вы можете ознакомиться с процессом выполнения определённого спринта."; 
 			_label4.x = 250;
 			_label4.y = 230;
 			_label4.width = 500;
@@ -130,7 +130,7 @@ package catfishqa.admin
 			_button6.addEventListener(MouseEvent.CLICK, onButton6MouseClick);
 			addChild(_button6);
 			
-			_label6.text = "Чек-листы - раздел чек-листов относительно проекта. \nДанных раздел содержит перечень чек-листов определённого проекта."; 
+			_label6.text = "Чек-листы - раздел чек-листов относительно проекта. \nДанный раздел содержит перечень чек-листов определённого проекта."; 
 			_label6.x = 250;
 			_label6.y = 310;
 			_label6.width = 500;
@@ -143,7 +143,7 @@ package catfishqa.admin
 			_button7.addEventListener(MouseEvent.CLICK, onButton7MouseClick);
 			addChild(_button7);
 			
-			_label7.text = "Тест-кейсы - раздел тест-кейсов относительно пунктов чек-листа. \nДанных раздел содержит перечень тест-кейсов определённых пунктов чек-листа."; 
+			_label7.text = "Тест-кейсы - раздел тест-кейсов относительно пунктов чек-листа. \nДанный раздел содержит перечень тест-кейсов определённых пунктов чек-листа."; 
 			_label7.x = 250;
 			_label7.y = 350;
 			_label7.width = 500;

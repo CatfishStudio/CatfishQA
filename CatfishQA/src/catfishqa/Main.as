@@ -68,10 +68,6 @@ package catfishqa
 				streamW.writeUTFBytes("http://localhost/cf/catfishqa/");
 				streamW.close();
 				
-				streamW.open(file, FileMode.READ);
-				Server.serverPath = streamW.readUTFBytes(file.size);
-				streamW.close();
-				
 				return false;
 			}else {
 				var streamR:FileStream = new FileStream();
@@ -108,6 +104,17 @@ package catfishqa
 		private function onSystemFilePathClose(event:Event):void
 		{
 			_systemFilePath.removeEventListener(Event.CLOSE, onSystemFilePathClose);
+			
+			//var file:File = File.documentsDirectory.resolvePath("path_qa.txt");
+			var file:File = File.desktopDirectory.resolvePath("path_qa.txt");
+			if (file.exists == true)
+			{
+				var streamW:FileStream = new FileStream();
+				streamW.open(file, FileMode.READ);
+				Server.serverPath = streamW.readUTFBytes(file.size);
+				streamW.close();
+			}
+			
 			SystemFilePathClose();
 			LoginShow();
 		}

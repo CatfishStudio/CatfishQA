@@ -37,6 +37,7 @@ package catfishqa.admin.team
 	import catfishqa.admin.teamGroupsRemove.TeamGroupRemove;
 	import catfishqa.admin.buttons.ButtonCellEdit;
 	import catfishqa.admin.buttons.ButtonCellDelete;
+	import catfishqa.admin.teamUserNew.TeamUserNew;
 	
 	public class Team extends NativeWindowInitOptions 
 	{
@@ -53,7 +54,7 @@ package catfishqa.admin.team
 		private var _button2:Button;
 		private var _button3:Button;
 		
-		
+		private var _buttonAdd:Button = new Button();
 		private var _dataGrid:DataGrid;
 		
 			
@@ -222,8 +223,12 @@ package catfishqa.admin.team
 			_list.dataProvider = new DataProvider(_tempGroupsArray);
 			_newWindow.stage.addChild(_list);
 			
-			_tempGroupsSelectID = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).ID;
-			_tempGroupsSelectName = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).label;
+			
+			if (_list.dataProvider.length > 0)
+			{
+				_tempGroupsSelectID = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).ID;
+				_tempGroupsSelectName = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).label;
+			}
 			_label1.text = "Группа: " + _tempGroupsSelectName;
 			
 			QueryTeamUsersSelect();
@@ -263,7 +268,7 @@ package catfishqa.admin.team
 		
 		private function onButton2Click(e:MouseEvent):void 
 		{
-			if (Resource.myStatus == Resource.ADMIN)
+			if (Resource.myStatus == Resource.ADMIN && _tempGroupsSelectName != null)
 			{
 				var data:Array = [];
 				data.push({
@@ -276,7 +281,7 @@ package catfishqa.admin.team
 		
 		private function onButton3Click(e:MouseEvent):void 
 		{
-			if (Resource.myStatus == Resource.ADMIN) new TeamGroupRemove(_tempGroupsSelectID.toString(), _tempGroupsSelectName);
+			if (Resource.myStatus == Resource.ADMIN && _tempGroupsSelectName != null) new TeamGroupRemove(_tempGroupsSelectID.toString(), _tempGroupsSelectName);
 		}
 		
 		private function onListClick(e:ListEvent):void 
@@ -347,7 +352,31 @@ package catfishqa.admin.team
 					
 				}
 			}
+		
+			ButtonAdd();
 			CreateDataGrid();
+		}
+		/* ================================================================*/
+		
+		/* Кнопка =================================================================*/
+		private function ButtonAdd():void
+		{
+			var buserIcon:Bitmap = new Resource.ImageUserIcon();
+			buserIcon.x = 245;
+			buserIcon.y = 35;
+			_newWindow.stage.addChild(buserIcon);
+			
+			_buttonAdd.label = "Добавить в команду";
+			_buttonAdd.x = 270; 
+			_buttonAdd.y = 30;
+			_buttonAdd.width = 150;
+			_buttonAdd.addEventListener(MouseEvent.CLICK, onButtonAddMouseClick);
+			_newWindow.stage.addChild(_buttonAdd);
+		}
+		
+		private function onButtonAddMouseClick(e:MouseEvent):void 
+		{
+			new TeamUserNew();
 		}
 		/* ================================================================*/
 		

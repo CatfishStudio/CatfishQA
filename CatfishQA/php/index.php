@@ -12,7 +12,7 @@
 		echo "<h2>Create database:</h2>";
 		echo "<form action='index.php?create=database' method='post'>";
 		echo "<label for='server'>Server:</label><br><input type='text' name='server' id='server' value='localhost'><br>";
-		echo "<label for='database'>Database:</label><br><input type='text' name='database' id='database' value='catfishqa'><br>";
+		echo "<label for='database'>Database:</label><br><input type='text' name='database' id='database' value='qa'><br>";
 		echo "<label for='Uid'>uid:</label><br><input type='text' name='uid' id='uid' value='root'><br>";
 		echo "<label for='pass'>Pass:</label><br><input type='password' name='pass' id='pass' value=''><br>";
 		echo "<br><input type='submit' value='Create database' id='bottonGo'>";
@@ -21,7 +21,7 @@
 		echo "<h2>Create tables:</h2>";
 		echo "<form action='index.php?create=tables' method='post'>";
 		echo "<label for='server'>Server:</label><br><input type='text' name='server' id='server' value='localhost'><br>";
-		echo "<label for='database'>Database:</label><br><input type='text' name='database' id='database' value='catfishqa'><br>";
+		echo "<label for='database'>Database:</label><br><input type='text' name='database' id='database' value='qa'><br>";
 		echo "<label for='Uid'>uid:</label><br><input type='text' name='uid' id='uid' value='root'><br>";
 		echo "<label for='pass'>Pass:</label><br><input type='password' name='pass' id='pass' value=''><br>";
 		echo "<br><input type='submit' value='Create tables' id='bottonGo'>";
@@ -91,7 +91,7 @@
 			/*==================================================================*/
 	
 			
-			/*Создание таблицы Команда Группы (team_groups) =========== */
+			/*Создание таблицы Команда Группы (team_groups) =================== */
 			$query = mysql_query("CREATE TABLE team_groups (
 				team_groups_id int(3) NOT NULL AUTO_INCREMENT,
 				team_groups_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -109,35 +109,14 @@
 			}
 			/*==================================================================*/
 			
-			/*Создание таблицы Команда Пользователи (team_users) =========== */
+			
+			/*Создание таблицы Команда Пользователи (team_users) ============== */
 			$query = mysql_query("CREATE TABLE team_users (
 				team_users_id int(5) NOT NULL AUTO_INCREMENT,
 				team_users_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 				team_users_login varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-				
-				team_users_projects_new int(1) NOT NULL DEFAULT '0',
-				team_users_projects_edit_my int(1) NOT NULL DEFAULT '0',
-				team_users_projects_edit_notmy int(1) NOT NULL DEFAULT '0',
-				team_users_projects_read int(1) NOT NULL DEFAULT '0',
-				team_users_projects_remove_my int(1) NOT NULL DEFAULT '0',
-				team_users_projects_remove_notmy int(1) NOT NULL DEFAULT '0',
-				
-				team_users_roadmap_new int(1) NOT NULL DEFAULT '0',
-				team_users_roadmap_edit_my int(1) NOT NULL DEFAULT '0',
-				team_users_roadmap_edit_notmy int(1) NOT NULL DEFAULT '0',
-				team_users_roadmap_read int(1) NOT NULL DEFAULT '0',
-				team_users_roadmap_remove_my int(1) NOT NULL DEFAULT '0',
-				team_users_roadmap_remove_notmy int(1) NOT NULL DEFAULT '0',
-				
-				team_users_planning_new int(1) NOT NULL DEFAULT '0',
-				team_users_planning_edit_my int(1) NOT NULL DEFAULT '0',
-				team_users_planning_edit_notmy int(1) NOT NULL DEFAULT '0',
-				team_users_planning_read int(1) NOT NULL DEFAULT '0',
-				team_users_planning_remove_my int(1) NOT NULL DEFAULT '0',
-				team_users_planning_remove_notmy int(1) NOT NULL DEFAULT '0',
-				
+				team_users_rights varchar(1) NOT NULL DEFAULT 'r',
 				team_users_groups_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-				
 				PRIMARY KEY (team_users_id)
 			)", $db);
 			/* Проверка успешности выполнения */
