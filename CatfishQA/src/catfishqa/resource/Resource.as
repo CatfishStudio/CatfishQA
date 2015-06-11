@@ -9,8 +9,8 @@ package catfishqa.resource
 	
 	public class Resource 
 	{
-		[Embed(source = '../../../images/background.png')]
-		public static var ImageBackground:Class;
+		[Embed(source = '../../../images/qa.png')]
+		public static var ImageQA:Class;
 		[Embed(source = '../../../images/group.png')]
 		public static var ImageGroupUserIcon:Class;
 		[Embed(source = '../../../images/user.png')]

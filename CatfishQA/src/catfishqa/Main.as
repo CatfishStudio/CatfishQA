@@ -14,8 +14,10 @@ package catfishqa
 	import fl.data.DataProvider; 
 	import fl.events.ComponentEvent;
 	
+	import catfishqa.background.GradientBG;
 	import catfishqa.resource.Resource;
 	import catfishqa.events.Navigation;
+	import catfishqa.windows.MessageBox;
 	
 	import catfishqa.login.Login;
 	import catfishqa.admin.Admin;
@@ -29,6 +31,8 @@ package catfishqa
 	
 	public class Main extends Sprite 
 	{
+		private var _gradientBG:GradientBG;
+		
 		private var _login:Login;
 		private var _systemFilePath:SystemFilePath;
 		
@@ -42,6 +46,7 @@ package catfishqa
 		public function Main() 
 		{
 			addEventListener(Navigation.CHANGE_SCREEN, onChangeScreen);
+			stage.nativeWindow.addEventListener(Event.RESIZE, onNativeWindowResize);
 			
 			ShowBackground();
 			
@@ -49,12 +54,30 @@ package catfishqa
 			else SystemFilePathShow();
 		}
 		
+		private function onNativeWindowResize(e:Event):void 
+		{
+			if (_gradientBG != null)
+			{
+				if (_gradientBG.w < stage.nativeWindow.width) _gradientBG.x = (_gradientBG.w - stage.nativeWindow.width) / 2;
+				else _gradientBG.x = 0;
+				_gradientBG.w = stage.nativeWindow.width;
+				_gradientBG.h = stage.nativeWindow.height;
+				_gradientBG.Update();
+			}
+		}
+		
 		private function ShowBackground():void
 		{
-			var bitmapBG:Bitmap = new Resource.ImageBackground();
-			bitmapBG.smoothing = true;
-			addChild(bitmapBG);
-			bitmapBG = null;
+			_gradientBG = new GradientBG(stage.nativeWindow.width, stage.nativeWindow.height);
+			addChild(_gradientBG);
+			
+			var bitmapQA:Bitmap = new Resource.ImageQA();
+			bitmapQA.smoothing = true;
+			bitmapQA.x = 350;
+			bitmapQA.y = 50;
+			addChild(bitmapQA);
+			bitmapQA = null;
+			
 		}
 		
 		private function SystemFile():Boolean
@@ -82,8 +105,8 @@ package catfishqa
 		private function LoginShow():void
 		{
 			_login = new Login();
-			_login.x = 260;
-			_login.y = 25;
+			_login.x = 270;
+			_login.y = 100;
 			addChild(_login);
 		}
 		

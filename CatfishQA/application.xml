@@ -12,7 +12,7 @@
     <visible>true</visible>
     <minimizable>true</minimizable>
     <maximizable>true</maximizable>
-    <resizable>true</resizable>
+    <resizable>false</resizable>
     <fullScreen>true</fullScreen>
   </initialWindow>
   <!-- 

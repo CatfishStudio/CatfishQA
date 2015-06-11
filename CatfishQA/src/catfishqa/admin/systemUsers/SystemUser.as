@@ -43,7 +43,6 @@ package catfishqa.admin.systemUsers
 		private var _dataGrid:DataGrid;
 		private var _button:Button = new Button();
 		
-		private var _query:Query;
 		private var _timer:Timer = new Timer(2000, 1);
 		
 		public var systemUsersArray:Array = []; // Таблица базы данных system_users
@@ -132,8 +131,8 @@ package catfishqa.admin.systemUsers
 		/* Получить данные с сервера ======================================*/
 		private function QuerySelect():void
 		{
+			var _query:Query;
 			var sqlCommand:String = "SELECT * FROM system_users";
-			
 			_query = new Query();
 			_query.performRequest(Server.serverPath + "system_users_get.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
@@ -143,7 +142,7 @@ package catfishqa.admin.systemUsers
 		{
 			systemUsersArray = [];
 			
-			var json_str:String = (_query.getResult as String);
+			var json_str:String = (event.target.getResult as String);
 			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
 			for (var i:Object in json_data) 
 			{
@@ -257,18 +256,19 @@ package catfishqa.admin.systemUsers
 		/* ОБНОВЛЕНИЕ DATAGRID (получаем обновленные данные с сервера) === */
 		private function UpdateDataGrid():void
 		{
+			_timer.stop();
+			var _query:Query;
 			var sqlCommand:String = "SELECT * FROM system_users";
-			
 			_query = new Query();
 			_query.performRequest(Server.serverPath + "system_users_get.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onUpdateDataGridComplete);
 		}
 		
-		private function onUpdateDataGridComplete(e:Event):void 
+		private function onUpdateDataGridComplete(event:Event):void 
 		{
 			systemUsersArray = [];
 			
-			var json_str:String = (_query.getResult as String);
+			var json_str:String = (event.target.getResult as String);
 			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
 			for (var i:Object in json_data) 
 			{

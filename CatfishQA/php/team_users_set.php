@@ -16,7 +16,7 @@
 			mysql_close();
 			exit;
 		}else {
-			$query = mysql_query("UPDATE history_update SET history_update_datetime = '".date("Y-m-d H:i:s")."' WHERE history_update_id = 2", $db);
+			$query = mysql_query("UPDATE history_update SET history_update_datetime = '".date("Y-m-d H:i:s")."' WHERE history_update_id = 3", $db);
 			if(!$query) 
 			{
 				echo "UPDATE [history_update]: Error: ".mysql_error();

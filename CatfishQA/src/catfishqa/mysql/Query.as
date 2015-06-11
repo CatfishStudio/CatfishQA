@@ -4,6 +4,8 @@ package catfishqa.mysql
 	import flash.net.URLRequest;
 	import flash.events.Event;
 	
+	import catfishqa.windows.MessageBox;
+	
 	/**
 	 * ...
 	 * @author Catfish Studio Games
@@ -21,15 +23,29 @@ package catfishqa.mysql
 		
 		public function performRequest(filePHP:String):void
 		{
-			var request:URLRequest = new URLRequest(filePHP);
-			addEventListener(Event.COMPLETE, onComplete);
-			load(request);
+			try
+			{
+				var request:URLRequest = new URLRequest(filePHP);
+				addEventListener(Event.COMPLETE, onComplete);
+				load(request);
+			}
+			catch (error:Error)
+			{
+				new MessageBox(error.message, "Сообщение");
+			}
 		}
 
 
 		private function onComplete(e:Event):void
 		{
-			result = data;
+			try
+			{
+				result = data;
+			}
+			catch (error:Error)
+			{
+				new MessageBox(error.message, "Сообщение");
+			}
 		}
 		
 		public function get getResult():*

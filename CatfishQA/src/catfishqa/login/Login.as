@@ -3,6 +3,7 @@ package catfishqa.login
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextFormat;
 	
 	import fl.controls.Button;
 	import fl.controls.TextInput;
@@ -25,6 +26,8 @@ package catfishqa.login
 	
 	public class Login extends Sprite 
 	{
+		private var _background:Sprite = new Sprite();
+		
 		private var _label1:Label = new Label();
 		private var _label2:Label = new Label();
 		private var _textBox1:TextInput = new TextInput();
@@ -58,11 +61,17 @@ package catfishqa.login
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
-			var sqlCommand:String = "SELECT * FROM system_users";
-			
-			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_get.php?client=1&sqlcommand=" + sqlCommand);
-			_query.addEventListener("complete", onQueryComplete);
+			try
+			{
+				var sqlCommand:String = "SELECT * FROM system_users";
+				_query = new Query();
+				_query.performRequest(Server.serverPath + "system_users_get.php?client=1&sqlcommand=" + sqlCommand);
+				_query.addEventListener("complete", onQueryComplete);
+			}
+			catch (error:Error)
+			{
+				new MessageBox(error.message, "Сообщение");
+			}
 		}
 		
 		private function onQueryComplete(event:Object):void 
@@ -94,19 +103,29 @@ package catfishqa.login
 		
 		private function loginShow():void
 		{
-			_label1.text = "Инициализация:"; 
+			_background.graphics.lineStyle(1,0xffffff);
+			_background.graphics.beginFill(0xffffff);
+			_background.graphics.drawRect(0,100,270,150);
+			_background.graphics.endFill();
+			_background.alpha = 0.2;
+			addChild(_background);
+			
+			_label1.text = "Инициализация:";
 			_label1.x = 10;
 			_label1.y = 110;
+			_label1.width = 200;
+			_label1.setStyle("textFormat", new TextFormat("Arial", 16, 0xffffff));
 			addChild(_label1);
 			
 			
 			_label2.text = "Логин:"; 
 			_label2.x = 10;
 			_label2.y = 140;
+			_label2.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			addChild(_label2);
 			
 			_comboBox1.x = 60; _comboBox1.y = 140;
-			_comboBox1.dropdownWidth = 210; 
+			_comboBox1.dropdownWidth = 200; 
 			_comboBox1.width = 200;  
 			_comboBox1.selectedIndex = 0;
 			_comboBox1.dataProvider = new DataProvider(usersArray); 
@@ -116,6 +135,7 @@ package catfishqa.login
 			_label3.text = "Пароль:"; 
 			_label3.x = 10;
 			_label3.y = 180;
+			_label3.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			addChild(_label3);
 			
 			_textBox1.text = "";

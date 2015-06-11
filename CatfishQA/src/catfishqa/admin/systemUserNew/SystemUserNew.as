@@ -116,8 +116,8 @@ package catfishqa.admin.systemUserNew
 			_comboBox1.y = 130;
 			_comboBox1.dropdownWidth = 200; 
 			_comboBox1.width = 200;  
-			_comboBox1.selectedIndex = 0;
 			_comboBox1.dataProvider = new DataProvider(userType); 
+			_comboBox1.selectedIndex = 1;
 			//_comboBox1.addEventListener(Event.CHANGE, changeHandlerComboBox1); 
 			_newWindow.stage.addChild(_comboBox1);
 			

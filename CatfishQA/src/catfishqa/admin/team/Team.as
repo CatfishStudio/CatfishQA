@@ -42,10 +42,10 @@ package catfishqa.admin.team
 	public class Team extends NativeWindowInitOptions 
 	{
 		private var _newWindow:NativeWindow;
-		private var _query:Query;
 		private var _timer:Timer = new Timer(2000, 1);
 		
 		private var _tempGroupsArray:Array = [];
+		private var _tempUsersArray:Array = [];
 		private var _tempGroupsSelectID:int;
 		private var _tempGroupsSelectName:String;
 		private var _label1:Label;
@@ -57,12 +57,6 @@ package catfishqa.admin.team
 		private var _buttonAdd:Button = new Button();
 		private var _dataGrid:DataGrid;
 		
-			
-		
-		
-		private var _tempUsersArray:Array = [];
-		
-		
 		public function Team() 
 		{
 			super();
@@ -73,7 +67,7 @@ package catfishqa.admin.team
      
 			_newWindow = new NativeWindow(this); 
 			_newWindow.title = "Команды"; 
-			_newWindow.width = 880; 
+			_newWindow.width = 900; 
 			_newWindow.height = 560; 
 			_newWindow.stage.color = 0xDDDDDD;
 			_newWindow.alwaysInFront = true; // всегда поверх других окон
@@ -120,6 +114,18 @@ package catfishqa.admin.team
 					break;
 				}
 				
+				case Server.TEAM_USERS_UPDATE: 
+				{
+					UpdateDataGrid();
+					break;
+				}
+				
+				case Server.TEAM_USERS_NOT_UPDATE: 
+				{
+					_timer.start();
+					break;
+				}
+				
 				default:
 				{
 					break;
@@ -138,6 +144,7 @@ package catfishqa.admin.team
 		/* Получить данные с сервера ======================================*/
 		private function QueryTeamGroupsSelect():void
 		{
+			var _query:Query;
 			var sqlCommand:String = "SELECT * FROM team_groups";
 			
 			_query = new Query();
@@ -149,7 +156,7 @@ package catfishqa.admin.team
 		{
 			_tempGroupsArray = [];
 			
-			var json_str:String = (_query.getResult as String);
+			var json_str:String = (event.target.getResult as String);
 			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
 			for (var i:Object in json_data) 
 			{
@@ -236,24 +243,26 @@ package catfishqa.admin.team
 		
 		private function UpdateList():void
 		{
+			_timer.stop();
+			var _query:Query;
 			var sqlCommand:String = "SELECT * FROM team_groups";
 			_query = new Query();
 			_query.performRequest(Server.serverPath + "team_groups_get.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onUpdateListComplete);
 		}
 		
-		private function onUpdateListComplete(e:Event):void 
+		private function onUpdateListComplete(event:Event):void 
 		{
 			_tempGroupsArray = [];
-			var json_str:String = (_query.getResult as String);
+			var json_str:String = (event.target.getResult as String);
 			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
 			for (var i:Object in json_data) 
 			{
 				for (var k:Object in json_data[i].team) 
 				{
 					_tempGroupsArray.push( { 
-					label:json_data[i].team[k].team_groups_name,
-					ID:json_data[i].team[k].team_groups_id 
+						label:json_data[i].team[k].team_groups_name,
+						ID:json_data[i].team[k].team_groups_id 
 					} );
 				}
 			}
@@ -290,6 +299,7 @@ package catfishqa.admin.team
 			_tempGroupsSelectID = list.dataProvider.getItemAt(e.index).ID;
 			_tempGroupsSelectName = list.dataProvider.getItemAt(e.index).label;
 			_label1.text = "Группа: " + _tempGroupsSelectName;
+			UpdateDataGrid();
 		}
 		/* ================================================================*/
 		
@@ -304,8 +314,8 @@ package catfishqa.admin.team
 		/* Получить данные с сервера ======================================*/
 		private function QueryTeamUsersSelect():void
 		{
+			var _query:Query;
 			var sqlCommand:String = "SELECT * FROM team_users WHERE team_users_groups_name = '" + _tempGroupsSelectName + "'";
-			
 			_query = new Query();
 			_query.performRequest(Server.serverPath + "team_users_get.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryTeamUserComplete);
@@ -315,8 +325,9 @@ package catfishqa.admin.team
 		{
 			_tempUsersArray = [];
 			
-			var json_str:String = (_query.getResult as String);
+			var json_str:String = (event.target.getResult as String);
 			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
+			
 			for (var i:Object in json_data) 
 			{
 				for (var k:Object in json_data[i].team) 
@@ -325,28 +336,11 @@ package catfishqa.admin.team
 						//Icon: (IconCell),
 						N:i+1,
 						ID:json_data[i].team[k].team_users_id,
-						Name:json_data[i].team[k].team_users_name,
-						Login:json_data[i].team[k].team_users_login,
+						Имя:json_data[i].team[k].team_users_name,
+						Логин:json_data[i].team[k].team_users_login,
+						Права:json_data[i].team[k].team_users_rights,
 						Изменить: (ButtonCellEdit),
 						Удалить: (ButtonCellDelete),
-						ProjectsNew:json_data[i].team[k].team_users_projects_new,
-						ProjectsEditMy:json_data[i].team[k].team_users_projects_edit_my,
-						ProjectsEditNotmy:json_data[i].team[k].team_users_projects_edit_notmy,
-						ProjectsRead:json_data[i].team[k].team_users_projects_read,
-						ProjectsRemoveMy:json_data[i].team[k].team_users_projects_remove_my,
-						ProjectsRemoveNotmy:json_data[i].team[k].team_users_projects_remove_notmy,
-						RoadmapNew:json_data[i].team[k].team_users_roadmap_new,
-						RoadmapEditMy:json_data[i].team[k].team_users_roadmap_edit_my,
-						RoadmapEditNotmy:json_data[i].team[k].team_users_roadmap_edit_notmy,
-						RoadmapRead:json_data[i].team[k].team_users_roadmap_read,
-						RoadmapRemoveMy:json_data[i].team[k].team_users_roadmap_remove_my,
-						RoadmapRemoveNotmy:json_data[i].team[k].team_users_roadmap_remove_notmy,
-						PlanningNew:json_data[i].team[k].team_users_planning_new,
-						PlanningEditMy:json_data[i].team[k].team_users_planning_edit_my,
-						PlanningEditNotmy:json_data[i].team[k].team_users_planning_edit_notmy,
-						PlanningRead:json_data[i].team[k].team_users_planning_read,
-						PlanningRemoveMy:json_data[i].team[k].team_users_planning_remove_my,
-						PlanningRemoveNotmy:json_data[i].team[k].team_users_planning_remove_notmy,
 						GroupName:json_data[i].team[k].team_users_groups_name 
 					} );
 					
@@ -376,7 +370,7 @@ package catfishqa.admin.team
 		
 		private function onButtonAddMouseClick(e:MouseEvent):void 
 		{
-			new TeamUserNew();
+			new TeamUserNew(_tempGroupsSelectName);
 		}
 		/* ================================================================*/
 		
@@ -387,7 +381,7 @@ package catfishqa.admin.team
 			
 			_dataGrid.addEventListener(ListEvent.ITEM_CLICK, onDataGridClick);
 			
-			_dataGrid.columns = [ "...", "N", "ID", "Name", "Login", "Изменить", "Удалить", "..."];
+			_dataGrid.columns = [ "...", "N", "Имя", "Логин", "Права", "Изменить", "Удалить", "..."];
 			
 			var indexCellButton:Number = _dataGrid.getColumnIndex("Изменить");
             _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellEdit;
@@ -403,9 +397,9 @@ package catfishqa.admin.team
 			
 			_dataGrid.columns[0].width = 25;
 			_dataGrid.columns[1].width = 50;
-			_dataGrid.columns[2].width = 80;
+			_dataGrid.columns[2].width = 150;
 			_dataGrid.columns[3].width = 150;
-			_dataGrid.columns[4].width = 150;
+			_dataGrid.columns[4].width = 100;
 			_dataGrid.columns[5].width = 80;
 			_dataGrid.columns[6].width = 80;
 			
@@ -420,6 +414,45 @@ package catfishqa.admin.team
 			_newWindow.stage.addChild(_dataGrid);
 			
 			TimerStart();
+		}
+		
+		private function UpdateDataGrid():void
+		{
+			_timer.stop();
+			var _query:Query;
+			var sqlCommand:String = "SELECT * FROM team_users WHERE team_users_groups_name = '" + _tempGroupsSelectName + "'";
+			_query = new Query();
+			_query.performRequest(Server.serverPath + "team_users_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.addEventListener("complete", onUpdateDataGridComplete);
+		}
+		
+		private function onUpdateDataGridComplete(event:Event):void 
+		{
+			_tempUsersArray = [];
+			
+			var json_str:String = (event.target.getResult as String);
+			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
+			for (var i:Object in json_data) 
+			{
+				for (var k:Object in json_data[i].team) 
+				{
+					_tempUsersArray.push( { 
+						//Icon: (IconCell),
+						N:i+1,
+						ID:json_data[i].team[k].team_users_id,
+						Имя:json_data[i].team[k].team_users_name,
+						Логин:json_data[i].team[k].team_users_login,
+						Права:json_data[i].team[k].team_users_rights,
+						Изменить: (ButtonCellEdit),
+						Удалить: (ButtonCellDelete),
+						GroupName:json_data[i].team[k].team_users_groups_name  
+					} );
+					
+				}
+			}
+			
+			_dataGrid.dataProvider = new DataProvider(_tempUsersArray);
+			_timer.start();
 		}
 		
 		private function onDataGridClick(e:ListEvent):void 
@@ -457,7 +490,6 @@ package catfishqa.admin.team
 		
 		
 		
-		
 		/* ТАЙМЕР (запрос к серверу на получение обновлённых данных) ======*/
 		private function TimerStart():void
 		{
@@ -474,6 +506,7 @@ package catfishqa.admin.team
 		private function completeHandler(e:TimerEvent):void
 		{
 			Server.checkTableUpdate(Server.TEAM_GROUPS);
+			Server.checkTableUpdate(Server.TEAM_USERS);
 		} 
 		/* ================================================================*/
 	}
