@@ -38,6 +38,7 @@ package catfishqa.admin.team
 	import catfishqa.admin.buttons.ButtonCellEdit;
 	import catfishqa.admin.buttons.ButtonCellDelete;
 	import catfishqa.admin.teamUserNew.TeamUserNew;
+	import catfishqa.admin.teamUserEdit.TeamUserEdit;
 	
 	public class Team extends NativeWindowInitOptions 
 	{
@@ -69,7 +70,7 @@ package catfishqa.admin.team
 			_newWindow.title = "Команды"; 
 			_newWindow.width = 900; 
 			_newWindow.height = 560; 
-			_newWindow.stage.color = 0xDDDDDD;
+			_newWindow.stage.color = 0xA8ABC6;
 			_newWindow.alwaysInFront = true; // всегда поверх других окон
 			
 			_newWindow.stage.align = StageAlign.TOP_LEFT; 
@@ -338,10 +339,10 @@ package catfishqa.admin.team
 						ID:json_data[i].team[k].team_users_id,
 						Имя:json_data[i].team[k].team_users_name,
 						Логин:json_data[i].team[k].team_users_login,
-						Права:json_data[i].team[k].team_users_rights,
+						Права:json_data[i].team[k].team_users_rights == "r" ? "Чтение" : "Запись",
 						Изменить: (ButtonCellEdit),
 						Удалить: (ButtonCellDelete),
-						GroupName:json_data[i].team[k].team_users_groups_name 
+						Команда:json_data[i].team[k].team_users_groups_name 
 					} );
 					
 				}
@@ -442,10 +443,10 @@ package catfishqa.admin.team
 						ID:json_data[i].team[k].team_users_id,
 						Имя:json_data[i].team[k].team_users_name,
 						Логин:json_data[i].team[k].team_users_login,
-						Права:json_data[i].team[k].team_users_rights,
+						Права:json_data[i].team[k].team_users_rights == "r" ? "Чтение" : "Запись",
 						Изменить: (ButtonCellEdit),
 						Удалить: (ButtonCellDelete),
-						GroupName:json_data[i].team[k].team_users_groups_name  
+						Команда:json_data[i].team[k].team_users_groups_name  
 					} );
 					
 				}
@@ -467,14 +468,14 @@ package catfishqa.admin.team
 						ID:dg.dataProvider.getItemAt(e.index).ID, 
 						Имя:dg.dataProvider.getItemAt(e.index).Имя, 
 						Логин:dg.dataProvider.getItemAt(e.index).Логин,
-						Пароль:dg.dataProvider.getItemAt(e.index).Пароль,
-						Администратор:dg.dataProvider.getItemAt(e.index).Администратор == "Да" ? "1" : "0"
+						Права:dg.dataProvider.getItemAt(e.index).Права == "Чтение" ? "r" : "w",
+						Команда:dg.dataProvider.getItemAt(e.index).Команда
 					});
-					//new SystemUserEdit(data);
+					new TeamUserEdit(data);
 				}
 				if (dg.columns[e.columnIndex].headerText == "Удалить")
 				{
-					//new SystemUserRemove(dg.dataProvider.getItemAt(e.index).ID);
+					//new TeamUserRemove(dg.dataProvider.getItemAt(e.index).ID);
 				}
 			}
 		}

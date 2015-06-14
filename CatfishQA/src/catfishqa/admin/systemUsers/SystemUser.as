@@ -59,7 +59,7 @@ package catfishqa.admin.systemUsers
 			_newWindow.title = "Системные пользователи"; 
 			_newWindow.width = 700; 
 			_newWindow.height = 400; 
-			_newWindow.stage.color = 0xDDDDDD;
+			_newWindow.stage.color = 0xA8ABC6; //0xDDDDDD;
 			_newWindow.alwaysInFront = true; // всегда поверх других окон
 			
 			_newWindow.stage.align = StageAlign.TOP_LEFT; 
