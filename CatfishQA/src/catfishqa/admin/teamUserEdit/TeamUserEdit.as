@@ -17,6 +17,7 @@ package catfishqa.admin.teamUserEdit
 	import fl.controls.ComboBox;
 	import fl.controls.Label;
 	
+	import catfishqa.json.JSON;
 	import catfishqa.mysql.Query;
 	import catfishqa.server.Server;
 	import catfishqa.windows.MessageBox;
@@ -162,7 +163,7 @@ package catfishqa.admin.teamUserEdit
 			_comboBox1.width = 150;  
 			_comboBox1.selectedIndex = 0;
 			_comboBox1.dataProvider = new DataProvider(users);
-			_comboBox1.addEventListener(Event.CHANGE, onChangeComboBox); 
+			//_comboBox1.addEventListener(Event.CHANGE, onChangeComboBox); 
 			_newWindow.stage.addChild(_comboBox1);
 			
 			_label2.text = "Имя сотрудника:"; 
@@ -204,7 +205,7 @@ package catfishqa.admin.teamUserEdit
 			_comboBox4.dataProvider = new DataProvider(team); 
 			_newWindow.stage.addChild(_comboBox4);
 			
-			SelectTeam();
+			//SelectTeam();
 			
 			_label5.text = "Права:"; 
 			_label5.x = 10;
@@ -223,12 +224,12 @@ package catfishqa.admin.teamUserEdit
 			
 			_button1.label = "Сохранить";
 			_button1.x = 100; _button1.y = 220;
-			_button1.addEventListener(MouseEvent.CLICK, onButton1MouseClick);
+			//_button1.addEventListener(MouseEvent.CLICK, onButton1MouseClick);
 			_newWindow.stage.addChild(_button1);
 			
 			_button2.label = "Отмена";
 			_button2.x = 225; _button2.y = 220;
-			_button2.addEventListener(MouseEvent.CLICK, onButton2MouseClick);
+			//_button2.addEventListener(MouseEvent.CLICK, onButton2MouseClick);
 			_newWindow.stage.addChild(_button2);
 		}
 		

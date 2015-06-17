@@ -95,6 +95,7 @@
 			$query = mysql_query("CREATE TABLE team_groups (
 				team_groups_id int(3) NOT NULL AUTO_INCREMENT,
 				team_groups_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				team_groups_link_project varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 				PRIMARY KEY (team_groups_id),
 				UNIQUE KEY team_groups_name (team_groups_name)
 			)", $db);

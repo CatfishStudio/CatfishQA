@@ -49,6 +49,8 @@ package catfishqa.admin.team
 		private var _tempUsersArray:Array = [];
 		private var _tempGroupsSelectID:int;
 		private var _tempGroupsSelectName:String;
+		private var _tempGroupsSelectLink:String;
+		
 		private var _label1:Label;
 		private var _list:List;
 		private var _button1:Button;
@@ -166,7 +168,8 @@ package catfishqa.admin.team
 					_tempGroupsArray.push( { 
 					//iconSource:,
 					label:json_data[i].team[k].team_groups_name,
-					ID:json_data[i].team[k].team_groups_id 
+					ID:json_data[i].team[k].team_groups_id,
+					Link:json_data[i].team[k].team_groups_link_project
 					} );
 					
 				}
@@ -236,6 +239,7 @@ package catfishqa.admin.team
 			{
 				_tempGroupsSelectID = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).ID;
 				_tempGroupsSelectName = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).label;
+				_tempGroupsSelectLink = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).Link;
 			}
 			_label1.text = "Группа: " + _tempGroupsSelectName;
 			
@@ -263,7 +267,8 @@ package catfishqa.admin.team
 				{
 					_tempGroupsArray.push( { 
 						label:json_data[i].team[k].team_groups_name,
-						ID:json_data[i].team[k].team_groups_id 
+						ID:json_data[i].team[k].team_groups_id,
+						Link:json_data[i].team[k].team_groups_link_project
 					} );
 				}
 			}
@@ -283,7 +288,8 @@ package catfishqa.admin.team
 				var data:Array = [];
 				data.push({
 					ID:_tempGroupsSelectID, 
-					Name:_tempGroupsSelectName 
+					Name:_tempGroupsSelectName,
+					Link:_tempGroupsSelectLink
 				});
 				new TeamGroupEdit(data);
 			}
@@ -299,6 +305,7 @@ package catfishqa.admin.team
 			var list:List = e.target as List;
 			_tempGroupsSelectID = list.dataProvider.getItemAt(e.index).ID;
 			_tempGroupsSelectName = list.dataProvider.getItemAt(e.index).label;
+			_tempGroupsSelectLink = list.dataProvider.getItemAt(e.index).Link;
 			_label1.text = "Группа: " + _tempGroupsSelectName;
 			UpdateDataGrid();
 		}

@@ -30,7 +30,8 @@
 					."\"team\": ["
 					."{"
 						."\"team_groups_id\": "."\"".$row['team_groups_id']."\"".","
-						."\"team_groups_name\": "."\"".$row['team_groups_name']."\""
+						."\"team_groups_name\": "."\"".$row['team_groups_name']."\"".","
+						."\"team_groups_link_project\": "."\"".$row['team_groups_link_project']."\""
 					."}]}"; 
 				$index++;
 			}

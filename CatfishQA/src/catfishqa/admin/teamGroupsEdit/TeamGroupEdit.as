@@ -28,6 +28,8 @@ package catfishqa.admin.teamGroupsEdit
 		private var _newWindow:NativeWindow;
 		private var _label1:Label;
 		private var _textBox1:TextInput;
+		private var _label2:Label;
+		private var _textBox2:TextInput;
 		
 		private var _button1:Button;
 		private var _button2:Button;
@@ -73,6 +75,20 @@ package catfishqa.admin.teamGroupsEdit
 			_textBox1.width = 200;
 			_newWindow.stage.addChild(_textBox1);
 			
+			_label2 = new Label();
+			_label2.text = "Ссылка:"; 
+			_label2.x = 10;
+			_label2.y = 40;
+			_label2.width = 125;
+			_newWindow.stage.addChild(_label2);
+			
+			_textBox2 = new TextInput();
+			_textBox2.text = _data[0].Link;
+			_textBox2.x = 125; 
+			_textBox2.y = 40;
+			_textBox2.width = 200;
+			_newWindow.stage.addChild(_textBox2);
+			
 			_button1 = new Button();
 			_button1.label = "Сохранить";
 			_button1.x = 100; _button1.y = 80;
@@ -89,7 +105,8 @@ package catfishqa.admin.teamGroupsEdit
 		private function onButton1MouseClick(e:MouseEvent):void 
 		{
 			var sqlCommand:String = "UPDATE team_groups SET "
-								+ "team_groups_name = '" + _textBox1.text + "' "
+								+ "team_groups_name = '" + _textBox1.text + "', "
+								+ "team_groups_link_project = '" + _textBox2.text + "' "
 								+ "WHERE team_groups_id = " + _data[0].ID;
 			
 			_query = new Query();

@@ -1,7 +1,8 @@
 :user_configuration
 
 :: Path to Flex SDK
-set FLEX_SDK=C:\Users\Catfish\AppData\Local\FlashDevelop\Apps\flexairsdk\4.6.0+16.0.0
+::set FLEX_SDK=C:\Users\Catfish\AppData\Local\FlashDevelop\Apps\flexairsdk\4.6.0+16.0.0
+set FLEX_SDK=C:\Users\Catfish\AppData\Local\FlashDevelop\Apps\flexsdk\4.6.0
 
 
 :validation

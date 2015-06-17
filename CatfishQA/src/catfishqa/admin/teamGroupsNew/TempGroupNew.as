@@ -24,9 +24,11 @@ package catfishqa.admin.teamGroupsNew
 	public class TempGroupNew extends NativeWindowInitOptions 
 	{
 		private var _newWindow:NativeWindow;
+		
 		private var _label1:Label;
 		private var _textBox1:TextInput;
-		
+		private var _label2:Label;
+		private var _textBox2:TextInput;
 		private var _button1:Button;
 		private var _button2:Button;
 		
@@ -41,7 +43,7 @@ package catfishqa.admin.teamGroupsNew
 			type = NativeWindowType.NORMAL; 
      
 			_newWindow = new NativeWindow(this); 
-			_newWindow.title = "Новая группа"; 
+			_newWindow.title = "Новый проект"; 
 			_newWindow.width = 350; 
 			_newWindow.height = 150; 
 			_newWindow.stage.color = 0xDDDDDD;
@@ -57,7 +59,7 @@ package catfishqa.admin.teamGroupsNew
 		private function Show():void
 		{
 			_label1 = new Label();
-			_label1.text = "Имя группы:"; 
+			_label1.text = "Имя проекта:"; 
 			_label1.x = 10;
 			_label1.y = 10;
 			_label1.width = 125;
@@ -69,6 +71,21 @@ package catfishqa.admin.teamGroupsNew
 			_textBox1.y = 10;
 			_textBox1.width = 200;
 			_newWindow.stage.addChild(_textBox1);
+			
+			_label2 = new Label();
+			_label2.text = "Ссылка:"; 
+			_label2.x = 10;
+			_label2.y = 40;
+			_label2.width = 125;
+			_newWindow.stage.addChild(_label2);
+			
+			_textBox2 = new TextInput();
+			_textBox2.text = "";
+			_textBox2.x = 125; 
+			_textBox2.y = 40;
+			_textBox2.width = 200;
+			_newWindow.stage.addChild(_textBox2);
+			
 			
 			_button1 = new Button();
 			_button1.label = "Сохранить";
@@ -86,8 +103,9 @@ package catfishqa.admin.teamGroupsNew
 		private function onButton1MouseClick(e:MouseEvent):void 
 		{
 			var sqlCommand:String = "INSERT INTO team_groups "
-								+ "(team_groups_name) VALUES ("
-								+ "'" + _textBox1.text + "')"
+								+ "(team_groups_name, team_groups_link_project) VALUES ("
+								+ "'" + _textBox1.text + "', "
+								+ "'" + _textBox2.text + "')"
 								
 			
 			_query = new Query();

@@ -82,26 +82,26 @@ package catfishqa.admin
 			_label1.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			addChild(_label1);
 			
-			_button2.label = "Команды";
+			_button2.label = "Проекты и команды";
 			_button2.x = 20; _button2.y = 195;
 			_button2.width = 200;
 			_button2.addEventListener(MouseEvent.CLICK, onButton2MouseClick);
 			addChild(_button2);
 			
-			_label2.text = "Команды - раздел групп пользователей каждый из которых имеет свой набор прав. \nКаждая группа это команда сотрудников за которой закрепляется определённый проект."; 
+			_label2.text = "Раздел активных проектов и входещая в неё команда сотрудников. \nКаждому проекту соответствует своя группа сотрудников, тест-кейсы, чек-листы и прочее."; 
 			_label2.x = 250; _label2.y = 190;
 			_label2.width = 550;
 			_label2.height = 100;
 			_label2.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			addChild(_label2);
 			
-			_button3.label = "Проекты";
+			_button3.label = "...";
 			_button3.x = 20; _button3.y = 235;
 			_button3.width = 200;
 			_button3.addEventListener(MouseEvent.CLICK, onButton3MouseClick);
 			addChild(_button3);
 			
-			_label3.text = "Проекты - раздел активных проектов. \nКаждому проекту соответствует своя группа сотрудников, тест-кейсы, чек-листы и прочее."; 
+			_label3.text = "..."; 
 			_label3.x = 250; _label3.y = 230;
 			_label3.width = 500;
 			_label3.height = 100;
