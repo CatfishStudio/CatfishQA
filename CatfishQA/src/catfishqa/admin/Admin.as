@@ -95,78 +95,78 @@ package catfishqa.admin
 			_label2.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			addChild(_label2);
 			
-			_button3.label = "...";
+			_button3.label = "Роадмап";
 			_button3.x = 20; _button3.y = 235;
 			_button3.width = 200;
 			_button3.addEventListener(MouseEvent.CLICK, onButton3MouseClick);
 			addChild(_button3);
 			
-			_label3.text = "..."; 
+			_label3.text = "Роадмап - раздел запланированных спринтов. \nВ данном разделе вы можете ознакомиться с процессом выполнения определённого спринта."; 
 			_label3.x = 250; _label3.y = 230;
 			_label3.width = 500;
 			_label3.height = 100;
 			_label3.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			addChild(_label3);
 			
-			_button4.label = "Роадмап";
+			_button4.label = "Тест-план";
 			_button4.x = 20; _button4.y = 275;
 			_button4.width = 200;
 			_button4.addEventListener(MouseEvent.CLICK, onButton4MouseClick);
 			addChild(_button4);
 			
-			_label4.text = "Роадмап - раздел запланированных спринтов. \nВ данном разделе вы можете ознакомиться с процессом выполнения определённого спринта."; 
+			_label4.text = "Тест-план - раздел описания четкого плана на определённый спринт. \nВ данном разделе содержится информация о тех задачах которые необходимо выполнить на текущий спринт."; 
 			_label4.x = 250; _label4.y = 270;
 			_label4.width = 500;
 			_label4.height = 100;
 			_label4.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			addChild(_label4);
 			
-			_button5.label = "Планирование";
+			_button5.label = "Чек-листы";
 			_button5.x = 20; _button5.y = 315;
 			_button5.width = 200;
 			_button5.addEventListener(MouseEvent.CLICK, onButton5MouseClick);
 			addChild(_button5);
 			
-			_label5.text = "Планирование - раздел описания четкого плана на определённый спринт. \nВ данном разделе содержится информация о тех задачах которые необходимо выполнить на текущий спринт."; 
+			_label5.text = "Чек-листы - раздел чек-листов относительно проекта. \nДанный раздел содержит перечень чек-листов определённого проекта."; 
 			_label5.x = 250; _label5.y = 310;
 			_label5.width = 500;
 			_label5.height = 100;
 			_label5.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			addChild(_label5);
 			
-			_button6.label = "Чек-листы";
+			_button6.label = "Тест-кейсы";
 			_button6.x = 20; _button6.y = 355;
 			_button6.width = 200;
 			_button6.addEventListener(MouseEvent.CLICK, onButton6MouseClick);
 			addChild(_button6);
 			
-			_label6.text = "Чек-листы - раздел чек-листов относительно проекта. \nДанный раздел содержит перечень чек-листов определённого проекта."; 
+			_label6.text = "Тест-кейсы - раздел тест-кейсов относительно пунктов чек-листа. \nДанный раздел содержит перечень тест-кейсов определённых пунктов чек-листа."; 
 			_label6.x = 250; _label6.y = 350;
 			_label6.width = 500;
 			_label6.height = 100;
 			_label6.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			addChild(_label6);
 			
-			_button7.label = "Тест-кейсы";
+			_button7.label = "Тикеты";
 			_button7.x = 20; _button7.y = 395;
 			_button7.width = 200;
 			_button7.addEventListener(MouseEvent.CLICK, onButton7MouseClick);
 			addChild(_button7);
 			
-			_label7.text = "Тест-кейсы - раздел тест-кейсов относительно пунктов чек-листа. \nДанный раздел содержит перечень тест-кейсов определённых пунктов чек-листа."; 
+			_label7.text = "Тикеты - раздел содержит перечень тикетов. \nВ данном разделе содержатся тикеты определённого пункта чек-листа."; 
 			_label7.x = 250; _label7.y = 390;
 			_label7.width = 500;
 			_label7.height = 100;
 			_label7.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			addChild(_label7);
 			
-			_button8.label = "Тикеты";
+			_button8.label = "Отчеты";
 			_button8.x = 20; _button8.y = 435;
 			_button8.width = 200;
 			_button8.addEventListener(MouseEvent.CLICK, onButton8MouseClick);
 			addChild(_button8);
 			
-			_label8.text = "Тикеты - раздел содержит перечень тикетов. \nВ данном разделе содержатся тикеты определённого пункта чек-листа."; 
+			_label8.text = "Отчеты - "; 
 			_label8.x = 250; _label8.y = 430;
 			_label8.width = 500;
 			_label8.height = 100;

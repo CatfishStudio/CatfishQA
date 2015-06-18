@@ -1,4 +1,4 @@
-package catfishqa.admin.teamGroupsRemove 
+package catfishqa.admin.teamUserRemove 
 {
 	import flash.display.NativeWindow; 
 	import flash.display.NativeWindowDisplayState;
@@ -14,14 +14,13 @@ package catfishqa.admin.teamGroupsRemove
 	
 	import fl.controls.Button;
 	import fl.controls.TextInput;
-	import fl.controls.ComboBox;
 	import fl.controls.Label;
 	
 	import catfishqa.mysql.Query;
 	import catfishqa.server.Server;
 	import catfishqa.windows.MessageBox;
 	
-	public class TeamGroupRemove extends NativeWindowInitOptions 
+	public class TeamUserRemove extends NativeWindowInitOptions 
 	{
 		private var _newWindow:NativeWindow;
 		private var _query:Query;
@@ -30,21 +29,18 @@ package catfishqa.admin.teamGroupsRemove
 		private var _button2:Button = new Button();
 		
 		private var _id:String;
-		private var _groupName:String;
 		
-		public function TeamGroupRemove(id:String, groupName:String) 
+		public function TeamUserRemove(id:String, projectName:String, userName:String) 
 		{
 			super();
-			
 			_id = id;
-			_groupName = groupName;
 			
 			transparent = false; 
 			systemChrome = NativeWindowSystemChrome.STANDARD; 
 			type = NativeWindowType.UTILITY; 
      
 			_newWindow = new NativeWindow(this); 
-			_newWindow.title = "Удалить проект"; 
+			_newWindow.title = "Удалить участника проекта: " + projectName; 
 			_newWindow.width = 350; 
 			_newWindow.height = 150; 
 			_newWindow.stage.color = 0xDDDDDD;
@@ -54,9 +50,9 @@ package catfishqa.admin.teamGroupsRemove
 			_newWindow.stage.scaleMode = StageScaleMode.NO_SCALE; 
 			_newWindow.activate();
 			
-			_label1.text = "Удалить проект " + _groupName + " и всех участников?";
+			_label1.text = "Удалить " + userName + " из проекта " + projectName + "?";
 			_label1.wordWrap = true;
-			_label1.x = 10;
+			_label1.x = 80;
 			_label1.y = 20;
 			_label1.width = 300;
 			_label1.height = 100;
@@ -75,27 +71,14 @@ package catfishqa.admin.teamGroupsRemove
 		
 		private function onButton1MouseClick(e:MouseEvent):void 
 		{
-			var sqlCommand:String = "DELETE FROM team_groups WHERE team_groups_id = " + _id;
+			var sqlCommand:String = "DELETE FROM team_users WHERE team_users_id = " + _id;
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "team_groups_set.php?client=1&sqlcommand=" + sqlCommand);
-			_query.addEventListener("complete", onQuery1Complete);
+			_query.performRequest(Server.serverPath + "team_users_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.addEventListener("complete", onQueryComplete);
 		}
 		
-		private function onQuery1Complete(e:Event):void 
-		{
-			if ((_query.getResult as String) == "complete")
-			{
-				var sqlCommand:String = "DELETE FROM team_users WHERE (team_users_groups_name = '" + _groupName + "')";
-				_query = new Query();
-				_query.performRequest(Server.serverPath + "team_users_set.php?client=1&sqlcommand=" + sqlCommand);
-				_query.addEventListener("complete", onQuery2Complete);
-			}else {
-				new MessageBox((_query.getResult as String), "Сообщение");
-			}
-		}
-		
-		private function onQuery2Complete(e:Event):void
+		private function onQueryComplete(e:Event):void 
 		{
 			if ((_query.getResult as String) == "complete")
 			{
@@ -104,7 +87,6 @@ package catfishqa.admin.teamGroupsRemove
 				new MessageBox((_query.getResult as String), "Сообщение");
 			}
 		}
-		
 		
 		private function onButton2MouseClick(e:MouseEvent):void 
 		{

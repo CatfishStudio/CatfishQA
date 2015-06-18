@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- <application xmlns="http://ns.adobe.com/air/application/15.0"> -->
-<application xmlns="http://ns.adobe.com/air/application/3.1">
+<application xmlns="http://ns.adobe.com/air/application/15.0">
+<!-- <application xmlns="http://ns.adobe.com/air/application/3.1"> -->
   <id>catfishqa.CatfishQA</id>
   <versionNumber>1.0</versionNumber>
   <filename>CatfishQA</filename>

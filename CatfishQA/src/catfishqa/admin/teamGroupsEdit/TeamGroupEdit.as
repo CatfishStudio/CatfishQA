@@ -46,7 +46,7 @@ package catfishqa.admin.teamGroupsEdit
 			type = NativeWindowType.NORMAL; 
      
 			_newWindow = new NativeWindow(this); 
-			_newWindow.title = "Редактировать группу"; 
+			_newWindow.title = "Редактировать проект"; 
 			_newWindow.width = 350; 
 			_newWindow.height = 150; 
 			_newWindow.stage.color = 0xDDDDDD;

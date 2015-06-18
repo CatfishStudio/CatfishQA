@@ -39,6 +39,7 @@ package catfishqa.admin.team
 	import catfishqa.admin.buttons.ButtonCellDelete;
 	import catfishqa.admin.teamUserNew.TeamUserNew;
 	import catfishqa.admin.teamUserEdit.TeamUserEdit;
+	import catfishqa.admin.teamUserRemove.TeamUserRemove;
 	
 	public class Team extends NativeWindowInitOptions 
 	{
@@ -47,9 +48,9 @@ package catfishqa.admin.team
 		
 		private var _tempGroupsArray:Array = [];
 		private var _tempUsersArray:Array = [];
-		private var _tempGroupsSelectID:int;
-		private var _tempGroupsSelectName:String;
-		private var _tempGroupsSelectLink:String;
+		private var _tempGroupsSelectID:int = 0;
+		private var _tempGroupsSelectName:String = "";
+		private var _tempGroupsSelectLink:String = "";
 		
 		private var _label1:Label;
 		private var _list:List;
@@ -69,7 +70,7 @@ package catfishqa.admin.team
 			type = NativeWindowType.NORMAL; 
      
 			_newWindow = new NativeWindow(this); 
-			_newWindow.title = "Команды"; 
+			_newWindow.title = "Проекты и команды"; 
 			_newWindow.width = 900; 
 			_newWindow.height = 560; 
 			_newWindow.stage.color = 0xA8ABC6;
@@ -188,7 +189,7 @@ package catfishqa.admin.team
 			_newWindow.stage.addChild(bGroupIcon);
 			
 			_label1 = new Label();
-			_label1.text = "Группа: "; 
+			_label1.text = "Проект: "; 
 			_label1.x = 30;
 			_label1.y = 5;
 			_label1.width = 250;
@@ -240,8 +241,12 @@ package catfishqa.admin.team
 				_tempGroupsSelectID = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).ID;
 				_tempGroupsSelectName = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).label;
 				_tempGroupsSelectLink = _list.dataProvider.getItemAt(_list.dataProvider.length - 1).Link;
+			}else {
+				_tempGroupsSelectID = 0;
+				_tempGroupsSelectName = "";
+				_tempGroupsSelectLink = "";
 			}
-			_label1.text = "Группа: " + _tempGroupsSelectName;
+			_label1.text = "Проект: " + _tempGroupsSelectName;
 			
 			QueryTeamUsersSelect();
 		}
@@ -273,7 +278,28 @@ package catfishqa.admin.team
 				}
 			}
 			_list.dataProvider = new DataProvider(_tempGroupsArray);
+			
+			if (checkSelectGroup() == false)
+			{
+				_tempGroupsSelectID = 0;
+				_tempGroupsSelectName = "";
+				_tempGroupsSelectLink = "";
+			}
+			_label1.text = "Проект: " + _tempGroupsSelectName;
 			_timer.start();
+		}
+		
+		private function checkSelectGroup():Boolean
+		{
+			var n:int = _list.dataProvider.length;
+			for ( var i:int = 0; i < n; i++)
+			{
+				if (_tempGroupsSelectName == _list.dataProvider.getItemAt(i).label)
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		private function onButton1Click(e:MouseEvent):void 
@@ -283,7 +309,7 @@ package catfishqa.admin.team
 		
 		private function onButton2Click(e:MouseEvent):void 
 		{
-			if (Resource.myStatus == Resource.ADMIN && _tempGroupsSelectName != null)
+			if (Resource.myStatus == Resource.ADMIN && _tempGroupsSelectName != "")
 			{
 				var data:Array = [];
 				data.push({
@@ -297,7 +323,7 @@ package catfishqa.admin.team
 		
 		private function onButton3Click(e:MouseEvent):void 
 		{
-			if (Resource.myStatus == Resource.ADMIN && _tempGroupsSelectName != null) new TeamGroupRemove(_tempGroupsSelectID.toString(), _tempGroupsSelectName);
+			if (Resource.myStatus == Resource.ADMIN && _tempGroupsSelectName != "") new TeamGroupRemove(_tempGroupsSelectID.toString(), _tempGroupsSelectName);
 		}
 		
 		private function onListClick(e:ListEvent):void 
@@ -306,7 +332,7 @@ package catfishqa.admin.team
 			_tempGroupsSelectID = list.dataProvider.getItemAt(e.index).ID;
 			_tempGroupsSelectName = list.dataProvider.getItemAt(e.index).label;
 			_tempGroupsSelectLink = list.dataProvider.getItemAt(e.index).Link;
-			_label1.text = "Группа: " + _tempGroupsSelectName;
+			_label1.text = "Проект: " + _tempGroupsSelectName;
 			UpdateDataGrid();
 		}
 		/* ================================================================*/
@@ -378,7 +404,10 @@ package catfishqa.admin.team
 		
 		private function onButtonAddMouseClick(e:MouseEvent):void 
 		{
-			new TeamUserNew(_tempGroupsSelectName);
+			if (Resource.myStatus == Resource.ADMIN && _tempGroupsSelectName != "")
+			{
+				new TeamUserNew(_tempGroupsSelectName);
+			}
 		}
 		/* ================================================================*/
 		
@@ -478,24 +507,15 @@ package catfishqa.admin.team
 						Права:dg.dataProvider.getItemAt(e.index).Права == "Чтение" ? "r" : "w",
 						Команда:dg.dataProvider.getItemAt(e.index).Команда
 					});
-					new TeamUserEdit(data);
+					new TeamUserEdit(_tempGroupsSelectName, data);
 				}
 				if (dg.columns[e.columnIndex].headerText == "Удалить")
 				{
-					//new TeamUserRemove(dg.dataProvider.getItemAt(e.index).ID);
+					new TeamUserRemove(dg.dataProvider.getItemAt(e.index).ID, _tempGroupsSelectName, dg.dataProvider.getItemAt(e.index).Имя);
 				}
 			}
 		}
 		/* ================================================================*/
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		/* ТАЙМЕР (запрос к серверу на получение обновлённых данных) ======*/

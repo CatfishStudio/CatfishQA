@@ -56,9 +56,10 @@ package catfishqa.admin.teamUserEdit
 		
 		private var _query:Query;
 		
-		public function TeamUserEdit(data:Array) 
+		public function TeamUserEdit(teamSelect:String, data:Array) 
 		{
 			super();
+			_teamSelect = teamSelect;
 			_data = data;
 			
 			transparent = false; 
@@ -68,7 +69,7 @@ package catfishqa.admin.teamUserEdit
 			_newWindow = new NativeWindow(this); 
 			_newWindow.title = "Редактировать участника"; 
 			_newWindow.width = 350; 
-			_newWindow.height = 250; 
+			_newWindow.height = 300; 
 			_newWindow.stage.color = 0xDDDDDD;
 			_newWindow.alwaysInFront = true; // всегда поверх других окон
 			
@@ -163,7 +164,7 @@ package catfishqa.admin.teamUserEdit
 			_comboBox1.width = 150;  
 			_comboBox1.selectedIndex = 0;
 			_comboBox1.dataProvider = new DataProvider(users);
-			//_comboBox1.addEventListener(Event.CHANGE, onChangeComboBox); 
+			_comboBox1.addEventListener(Event.CHANGE, onChangeComboBox); 
 			_newWindow.stage.addChild(_comboBox1);
 			
 			_label2.text = "Имя сотрудника:"; 
@@ -205,7 +206,7 @@ package catfishqa.admin.teamUserEdit
 			_comboBox4.dataProvider = new DataProvider(team); 
 			_newWindow.stage.addChild(_comboBox4);
 			
-			//SelectTeam();
+			SelectTeam();
 			
 			_label5.text = "Права:"; 
 			_label5.x = 10;
@@ -224,13 +225,73 @@ package catfishqa.admin.teamUserEdit
 			
 			_button1.label = "Сохранить";
 			_button1.x = 100; _button1.y = 220;
-			//_button1.addEventListener(MouseEvent.CLICK, onButton1MouseClick);
+			_button1.addEventListener(MouseEvent.CLICK, onButton1MouseClick);
 			_newWindow.stage.addChild(_button1);
 			
 			_button2.label = "Отмена";
 			_button2.x = 225; _button2.y = 220;
-			//_button2.addEventListener(MouseEvent.CLICK, onButton2MouseClick);
+			_button2.addEventListener(MouseEvent.CLICK, onButton2MouseClick);
 			_newWindow.stage.addChild(_button2);
+		}
+		
+		private function SelectTeam():void
+		{
+			var n:int = team.length;
+			for (var i:int = 0; i < n; i++)
+			{
+				if (team[i].label == _teamSelect)
+				{
+					_comboBox4.selectedIndex = i;
+					break;
+				}
+			}
+		}
+		
+		private function onChangeComboBox(e:Event):void 
+		{
+			if ((e.target as ComboBox).name == "comboBox1") 
+			{
+				if (ComboBox(e.target).selectedItem.label == "...")
+				{
+					_textBox2.text = "";
+					_textBox3.text = "";
+				}else{
+					_textBox2.text = ComboBox(e.target).selectedItem.name;
+					_textBox3.text = ComboBox(e.target).selectedItem.login;
+				}
+			}
+			
+		}
+		
+		
+		
+		private function onButton1MouseClick(e:MouseEvent):void 
+		{
+			var sqlCommand:String = "UPDATE team_users SET "
+								+ "team_users_name = '" + _textBox2.text + "', "
+								+ "team_users_login = '" + _textBox3.text + "', "
+								+ "team_users_rights = '" + _comboBox5.selectedItem.data + "', "
+								+ "team_users_groups_name = '" + _comboBox4.selectedItem.label + "' "
+								+ "WHERE team_users_id = " + _data[0].ID;
+			
+			_query = new Query();
+			_query.performRequest(Server.serverPath + "team_users_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.addEventListener("complete", onQueryComplete);
+		}
+		
+		private function onQueryComplete(e:Event):void 
+		{
+			if ((_query.getResult as String) == "complete")
+			{
+				_newWindow.close();
+			}else {
+				new MessageBox((_query.getResult as String), "Сообщение");
+			}
+		}
+		
+		private function onButton2MouseClick(e:MouseEvent):void 
+		{
+			_newWindow.close();
 		}
 		
 	}

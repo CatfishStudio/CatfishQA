@@ -190,7 +190,7 @@ package catfishqa.admin.teamUserNew
 			_textBox3.width = 200;
 			_newWindow.stage.addChild(_textBox3);
 			
-			_label4.text = "Команда:"; 
+			_label4.text = "Проект:"; 
 			_label4.x = 10;
 			_label4.y = 130;
 			_label4.width = 125;

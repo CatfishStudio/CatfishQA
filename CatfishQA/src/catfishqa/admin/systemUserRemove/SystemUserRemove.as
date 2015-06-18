@@ -14,7 +14,6 @@ package catfishqa.admin.systemUserRemove
 	
 	import fl.controls.Button;
 	import fl.controls.TextInput;
-	import fl.controls.ComboBox;
 	import fl.controls.Label;
 	
 	import catfishqa.mysql.Query;
