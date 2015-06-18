@@ -59,9 +59,9 @@
 			/*Создание таблицы Системные пользователи (system_users) ========= */
 			$query = mysql_query("CREATE TABLE system_users (
 				system_users_id int(3) NOT NULL AUTO_INCREMENT,
-				system_users_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-				system_users_login varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-				system_users_pass varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				system_users_name varchar(255) NOT NULL,
+				system_users_login varchar(255) NOT NULL,
+				system_users_pass varchar(255) NOT NULL,
 				system_users_admin int(1) NOT NULL DEFAULT '0',
 				PRIMARY KEY (system_users_id),
 				UNIQUE KEY system_users_login (system_users_login)
@@ -94,8 +94,8 @@
 			/*Создание таблицы Команда Группы (team_groups) =================== */
 			$query = mysql_query("CREATE TABLE team_groups (
 				team_groups_id int(3) NOT NULL AUTO_INCREMENT,
-				team_groups_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-				team_groups_link_project varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				team_groups_name varchar(255) NOT NULL,
+				team_groups_link_project varchar(255) NOT NULL,
 				PRIMARY KEY (team_groups_id),
 				UNIQUE KEY team_groups_name (team_groups_name)
 			)", $db);
@@ -111,13 +111,13 @@
 			/*==================================================================*/
 			
 			
-			/*Создание таблицы Команда Пользователи (team_users) ============== */
+			/*Создание таблицы Проекты и поманды (team_users) ============== */
 			$query = mysql_query("CREATE TABLE team_users (
 				team_users_id int(5) NOT NULL AUTO_INCREMENT,
-				team_users_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-				team_users_login varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				team_users_name varchar(255) NOT NULL,
+				team_users_login varchar(255) NOT NULL,
 				team_users_rights varchar(1) NOT NULL DEFAULT 'r',
-				team_users_groups_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				team_users_groups_name varchar(255) NOT NULL,
 				PRIMARY KEY (team_users_id)
 			)", $db);
 			/* Проверка успешности выполнения */
@@ -130,6 +130,34 @@
 				echo "<br><br>Create table \"team_users\" - complete!";
 			}
 			/*==================================================================*/
+			
+			
+			/*Создание таблицы Роадмап (roadmap_projects) ============== */
+			$query = mysql_query("CREATE TABLE roadmap_projects (
+				roadmap_projects_id int(8) NOT NULL AUTO_INCREMENT,
+				roadmap_projects_release datetime NOT NULL,
+				roadmap_projects_version varchar(255) NOT NULL,
+				roadmap_projects_name varchar(255) NOT NULL,
+				roadmap_projects_link varchar(255) NOT NULL,
+				roadmap_projects_dev_begin datetime NOT NULL,
+				roadmap_projects_dev_end datetime NOT NULL,
+				roadmap_projects_qa_begin datetime NOT NULL,
+				roadmap_projects_qa_end datetime NOT NULL,
+				roadmap_projects_project varchar(255) NOT NULL,
+				PRIMARY KEY (roadmap_projects_id)
+			)", $db);
+			/* Проверка успешности выполнения */
+			if(!$query){
+				echo "<br><br>ERROR!!! Table \"roadmap_projects\" - error! ";
+				echo "<br><br>Error: ", mysql_error();
+				$query = mysql_query("DROP DATABASE ".$database, $db);
+				exit;
+			}else{
+				echo "<br><br>Create table \"roadmap_projects\" - complete!";
+			}
+			/*==================================================================*/
+			
+			
 			
 			
 			
@@ -155,7 +183,8 @@
 			$query = mysql_query("INSERT INTO history_update (history_update_id, history_update_name, history_update_datetime) VALUES
 				(1, 'system_users', '".date("Y-m-d H:i:s")."'),
 				(2, 'team_groups', '".date("Y-m-d H:i:s")."'),
-				(3, 'team_users', '".date("Y-m-d H:i:s")."')", $db);
+				(3, 'team_users', '".date("Y-m-d H:i:s")."'),
+				(4, 'roadmap_projects', '".date("Y-m-d H:i:s")."')", $db);
 			/* Проверка успешности выполнения */
 			if(!$query){
 				echo "<br><br>ERROR!!! Add item in table \"history_update\" - error! ";

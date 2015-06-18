@@ -24,7 +24,8 @@ package catfishqa.resource
 		public static const PATH:String = "path";
 		
 		public static const SYSTEM_USERS:String = "systemUsers"; // окно системные пользователи
-		public static const TEAM:String = "team"; // окно команды (группы пользователей)
+		public static const TEAM:String = "team"; // окно проектов и команд
+		public static const ROADMAP:String = "roadmap"; // окно роадмап
 		
 		/* ПРАВА ПОЛЬЗОВАТЕЛЯ */
 		public static var myStatus:String = "";

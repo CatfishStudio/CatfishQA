@@ -194,7 +194,7 @@ package catfishqa.admin
 		
 		private function onButton3MouseClick(e:MouseEvent):void 
 		{
-			
+			dispatchEvent(new Navigation(Navigation.CHANGE_SCREEN, { id: Resource.ROADMAP }, true));
 		}
 		
 		private function onButton4MouseClick(e:MouseEvent):void 

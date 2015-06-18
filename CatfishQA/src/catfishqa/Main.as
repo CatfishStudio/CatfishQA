@@ -28,6 +28,7 @@ package catfishqa
 	import catfishqa.windows.SystemFilePath;
 	import catfishqa.admin.systemUsers.SystemUser;
 	import catfishqa.admin.team.Team;
+	import catfishqa.client.roadmap.Roadmap;
 	
 	public class Main extends Sprite 
 	{
@@ -39,6 +40,7 @@ package catfishqa
 		private var _admin:Admin;
 		private var _systemUsers:SystemUser;
 		private var _team:Team;
+		private var _roadmap:Roadmap;
 		
 		private var _client:Client;
 		
@@ -181,7 +183,10 @@ package catfishqa
 			_team = new Team();
 		}
 		
-		
+		private function RoadmapShow():void
+		{
+			_roadmap = new Roadmap();
+		}
 		
 		private function onChangeScreen(event:Navigation):void 
 		{
@@ -212,6 +217,12 @@ package catfishqa
 					LoginClose();
 					ClientShow();
 					Resource.myStatus = Resource.USER;
+					break;
+				}
+				
+				case Resource.ROADMAP: 
+				{
+					RoadmapShow();
 					break;
 				}
 				
