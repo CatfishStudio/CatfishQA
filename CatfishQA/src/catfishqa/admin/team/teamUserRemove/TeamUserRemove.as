@@ -1,4 +1,4 @@
-package catfishqa.admin.systemUserRemove 
+package catfishqa.admin.team.teamUserRemove 
 {
 	import flash.display.NativeWindow; 
 	import flash.display.NativeWindowDisplayState;
@@ -20,7 +20,7 @@ package catfishqa.admin.systemUserRemove
 	import catfishqa.server.Server;
 	import catfishqa.windows.MessageBox;
 	
-	public class SystemUserRemove extends NativeWindowInitOptions 
+	public class TeamUserRemove extends NativeWindowInitOptions 
 	{
 		private var _newWindow:NativeWindow;
 		private var _query:Query;
@@ -30,10 +30,9 @@ package catfishqa.admin.systemUserRemove
 		
 		private var _id:String;
 		
-		public function SystemUserRemove(id:String) 
+		public function TeamUserRemove(id:String, projectName:String, userName:String) 
 		{
 			super();
-			
 			_id = id;
 			
 			transparent = false; 
@@ -41,7 +40,7 @@ package catfishqa.admin.systemUserRemove
 			type = NativeWindowType.UTILITY; 
      
 			_newWindow = new NativeWindow(this); 
-			_newWindow.title = "Удалить пользователя"; 
+			_newWindow.title = "Удалить участника проекта: " + projectName; 
 			_newWindow.width = 350; 
 			_newWindow.height = 150; 
 			_newWindow.stage.color = 0xDDDDDD;
@@ -51,7 +50,7 @@ package catfishqa.admin.systemUserRemove
 			_newWindow.stage.scaleMode = StageScaleMode.NO_SCALE; 
 			_newWindow.activate();
 			
-			_label1.text = "Удалить выбранную запись?";
+			_label1.text = "Удалить " + userName + " из проекта " + projectName + "?";
 			_label1.wordWrap = true;
 			_label1.x = 80;
 			_label1.y = 20;
@@ -72,10 +71,10 @@ package catfishqa.admin.systemUserRemove
 		
 		private function onButton1MouseClick(e:MouseEvent):void 
 		{
-			var sqlCommand:String = "DELETE FROM system_users WHERE system_users_id = " + _id;
+			var sqlCommand:String = "DELETE FROM team_users WHERE team_users_id = " + _id;
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "team_users_set.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		
@@ -93,6 +92,7 @@ package catfishqa.admin.systemUserRemove
 		{
 			_newWindow.close();
 		}
+		
 		
 	}
 

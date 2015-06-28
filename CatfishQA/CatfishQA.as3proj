@@ -72,6 +72,8 @@
     <asset path="images\group.png" />
     <asset path="images\user.png" />
     <asset path="images\qa.png" />
+    <asset path="images\database.png" />
+    <asset path="images\calendar.png" />
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>

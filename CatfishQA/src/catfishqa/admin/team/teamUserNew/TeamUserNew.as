@@ -1,4 +1,4 @@
-package catfishqa.admin.teamUserNew 
+package catfishqa.admin.team.teamUserNew 
 {
 	import flash.display.NativeWindow; 
 	import flash.display.NativeWindowDisplayState;

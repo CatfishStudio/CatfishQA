@@ -1,4 +1,4 @@
-package catfishqa.admin.systemUserEdit 
+package catfishqa.admin.systemUsers.systemUserEdit 
 {
 	import flash.display.NativeWindow; 
 	import flash.display.NativeWindowDisplayState;
@@ -63,7 +63,6 @@ package catfishqa.admin.systemUserEdit
 			_newWindow.height = 250; 
 			_newWindow.stage.color = 0xDDDDDD;
 			_newWindow.alwaysInFront = true; // всегда поверх других окон
-			
 			_newWindow.stage.align = StageAlign.TOP_LEFT; 
 			_newWindow.stage.scaleMode = StageScaleMode.NO_SCALE; 
 			_newWindow.activate();

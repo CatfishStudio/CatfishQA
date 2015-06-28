@@ -131,31 +131,52 @@
 			}
 			/*==================================================================*/
 			
-			
-			/*Создание таблицы Роадмап (roadmap_projects) ============== */
-			$query = mysql_query("CREATE TABLE roadmap_projects (
-				roadmap_projects_id int(8) NOT NULL AUTO_INCREMENT,
-				roadmap_projects_release datetime NOT NULL,
-				roadmap_projects_version varchar(255) NOT NULL,
-				roadmap_projects_name varchar(255) NOT NULL,
-				roadmap_projects_link varchar(255) NOT NULL,
-				roadmap_projects_dev_begin datetime NOT NULL,
-				roadmap_projects_dev_end datetime NOT NULL,
-				roadmap_projects_qa_begin datetime NOT NULL,
-				roadmap_projects_qa_end datetime NOT NULL,
-				roadmap_projects_project varchar(255) NOT NULL,
-				PRIMARY KEY (roadmap_projects_id)
+			/*Создание таблицы Роадмап (roadmap_sprints) ============== */
+			$query = mysql_query("CREATE TABLE roadmap_sprints (
+				roadmap_sprints_id int(8) NOT NULL AUTO_INCREMENT,
+				roadmap_sprints_date datetime NOT NULL,
+				roadmap_sprints_name varchar(255) NOT NULL,
+				roadmap_sprints_project varchar(255) NOT NULL,
+				PRIMARY KEY (roadmap_sprints_id)
 			)", $db);
 			/* Проверка успешности выполнения */
 			if(!$query){
-				echo "<br><br>ERROR!!! Table \"roadmap_projects\" - error! ";
+				echo "<br><br>ERROR!!! Table \"roadmap_sprints\" - error! ";
 				echo "<br><br>Error: ", mysql_error();
 				$query = mysql_query("DROP DATABASE ".$database, $db);
 				exit;
 			}else{
-				echo "<br><br>Create table \"roadmap_projects\" - complete!";
+				echo "<br><br>Create table \"roadmap_sprints\" - complete!";
+			}
+			
+			$query = mysql_query("CREATE TABLE roadmap_tasks (
+				roadmap_tasks_id int(8) NOT NULL AUTO_INCREMENT,
+				roadmap_tasks_release datetime NOT NULL,
+				roadmap_tasks_version varchar(255) NOT NULL,
+				roadmap_tasks_name varchar(255) NOT NULL,
+				roadmap_tasks_link varchar(255) NOT NULL,
+				roadmap_tasks_dev_begin datetime NOT NULL,
+				roadmap_tasks_dev_end datetime NOT NULL,
+				roadmap_tasks_qa_begin datetime NOT NULL,
+				roadmap_tasks_qa_end datetime NOT NULL,
+				roadmap_tasks_sprint_id varchar(255) NOT NULL,
+				PRIMARY KEY (roadmap_tasks_id)
+			)", $db);
+			/* Проверка успешности выполнения */
+			if(!$query){
+				echo "<br><br>ERROR!!! Table \"roadmap_tasks\" - error! ";
+				echo "<br><br>Error: ", mysql_error();
+				$query = mysql_query("DROP DATABASE ".$database, $db);
+				exit;
+			}else{
+				echo "<br><br>Create table \"roadmap_tasks\" - complete!";
 			}
 			/*==================================================================*/
+			
+			
+			
+			
+			
 			
 			
 			
@@ -184,7 +205,8 @@
 				(1, 'system_users', '".date("Y-m-d H:i:s")."'),
 				(2, 'team_groups', '".date("Y-m-d H:i:s")."'),
 				(3, 'team_users', '".date("Y-m-d H:i:s")."'),
-				(4, 'roadmap_projects', '".date("Y-m-d H:i:s")."')", $db);
+				(4, 'roadmap_sprints', '".date("Y-m-d H:i:s")."'),
+				(5, 'roadmap_tasks', '".date("Y-m-d H:i:s")."')", $db);
 			/* Проверка успешности выполнения */
 			if(!$query){
 				echo "<br><br>ERROR!!! Add item in table \"history_update\" - error! ";

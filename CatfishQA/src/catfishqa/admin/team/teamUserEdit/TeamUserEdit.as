@@ -1,4 +1,4 @@
-package catfishqa.admin.teamUserEdit 
+package catfishqa.admin.team.teamUserEdit 
 {
 	import flash.display.NativeWindow; 
 	import flash.display.NativeWindowDisplayState;

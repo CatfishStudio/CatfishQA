@@ -33,9 +33,9 @@ package catfishqa.admin.systemUsers
 	import catfishqa.admin.buttons.ButtonCellEdit;
 	import catfishqa.admin.buttons.ButtonCellDelete;
 	
-	import catfishqa.admin.systemUserNew.SystemUserNew;
-	import catfishqa.admin.systemUserEdit.SystemUserEdit;
-	import catfishqa.admin.systemUserRemove.SystemUserRemove;
+	import catfishqa.admin.systemUsers.systemUserNew.SystemUserNew;
+	import catfishqa.admin.systemUsers.systemUserEdit.SystemUserEdit;
+	import catfishqa.admin.systemUsers.systemUserRemove.SystemUserRemove;
 	
 	public class SystemUser extends NativeWindowInitOptions 
 	{

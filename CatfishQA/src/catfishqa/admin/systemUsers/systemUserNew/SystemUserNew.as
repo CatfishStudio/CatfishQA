@@ -1,4 +1,4 @@
-package catfishqa.admin.systemUserNew 
+package catfishqa.admin.systemUsers.systemUserNew 
 {
 	import flash.display.NativeWindow; 
 	import flash.display.NativeWindowDisplayState;

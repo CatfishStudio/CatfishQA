@@ -2,7 +2,6 @@ package catfishqa.admin.team
 {
 	import fl.controls.DataGrid;
 	import fl.data.DataProvider; 
-	import flash.display.Bitmap;
 	
 	import fl.events.ListEvent;
 	
@@ -23,6 +22,8 @@ package catfishqa.admin.team
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextFormat;
+	import flash.display.Bitmap;
 	
 	import flash.utils.Timer;
 	import flash.events.TimerEvent; 
@@ -32,14 +33,15 @@ package catfishqa.admin.team
 	import catfishqa.server.ServerEvents;
 	import catfishqa.resource.Resource;
 	import catfishqa.json.JSON;
-	import catfishqa.admin.teamGroupsNew.TempGroupNew;
-	import catfishqa.admin.teamGroupsEdit.TeamGroupEdit;
-	import catfishqa.admin.teamGroupsRemove.TeamGroupRemove;
+	import catfishqa.admin.team.teamGroupsNew.TempGroupNew;
+	import catfishqa.admin.team.teamGroupsEdit.TeamGroupEdit;
+	import catfishqa.admin.team.teamGroupsRemove.TeamGroupRemove;
 	import catfishqa.admin.buttons.ButtonCellEdit;
 	import catfishqa.admin.buttons.ButtonCellDelete;
-	import catfishqa.admin.teamUserNew.TeamUserNew;
-	import catfishqa.admin.teamUserEdit.TeamUserEdit;
-	import catfishqa.admin.teamUserRemove.TeamUserRemove;
+	import catfishqa.admin.team.teamUserNew.TeamUserNew;
+	import catfishqa.admin.team.teamUserEdit.TeamUserEdit;
+	import catfishqa.admin.team.teamUserRemove.TeamUserRemove;
+	import catfishqa.windows.htmlPage;
 	
 	public class Team extends NativeWindowInitOptions 
 	{
@@ -194,6 +196,7 @@ package catfishqa.admin.team
 			_label1.y = 5;
 			_label1.width = 250;
 			_label1.height = 20;
+			_label1.setStyle("textFormat", new TextFormat("Arial", 12, 0xffffff));
 			_newWindow.stage.addChild(_label1);
 			
 			_button1 = new Button();
@@ -227,6 +230,7 @@ package catfishqa.admin.team
 		{
 			_list = new List();
 			_list.addEventListener(ListEvent.ITEM_CLICK, onListClick);
+			_list.addEventListener(ListEvent.ITEM_DOUBLE_CLICK, onListDoubleClick);
 			_list.setSize(225, _newWindow.height - 110); 
 			_list.move(10, 60);
 			_list.rowHeight = 20;
@@ -334,6 +338,16 @@ package catfishqa.admin.team
 			_tempGroupsSelectLink = list.dataProvider.getItemAt(e.index).Link;
 			_label1.text = "Проект: " + _tempGroupsSelectName;
 			UpdateDataGrid();
+		}
+		
+		private function onListDoubleClick(e:ListEvent):void 
+		{
+			var list:List = e.target as List;
+			_tempGroupsSelectID = list.dataProvider.getItemAt(e.index).ID;
+			_tempGroupsSelectName = list.dataProvider.getItemAt(e.index).label;
+			_tempGroupsSelectLink = list.dataProvider.getItemAt(e.index).Link;
+			_label1.text = "Проект: " + _tempGroupsSelectName;
+			new htmlPage(_tempGroupsSelectLink);
 		}
 		/* ================================================================*/
 		

@@ -1,4 +1,4 @@
-package catfishqa.admin.teamGroupsEdit 
+package catfishqa.admin.team.teamGroupsNew 
 {
 	import flash.display.NativeWindow; 
 	import flash.display.NativeWindowDisplayState;
@@ -21,32 +21,29 @@ package catfishqa.admin.teamGroupsEdit
 	import catfishqa.server.Server;
 	import catfishqa.windows.MessageBox;
 	
-	public class TeamGroupEdit extends NativeWindowInitOptions 
+	public class TempGroupNew extends NativeWindowInitOptions 
 	{
-		private var _data:Array = [];
-		
 		private var _newWindow:NativeWindow;
+		
 		private var _label1:Label;
 		private var _textBox1:TextInput;
 		private var _label2:Label;
 		private var _textBox2:TextInput;
-		
 		private var _button1:Button;
 		private var _button2:Button;
 		
 		private var _query:Query;
 		
-		public function TeamGroupEdit(data:Array) 
+		public function TempGroupNew() 
 		{
 			super();
-			_data = data;
 			
 			transparent = false; 
 			systemChrome = NativeWindowSystemChrome.STANDARD; 
 			type = NativeWindowType.NORMAL; 
      
 			_newWindow = new NativeWindow(this); 
-			_newWindow.title = "Редактировать проект"; 
+			_newWindow.title = "Новый проект"; 
 			_newWindow.width = 350; 
 			_newWindow.height = 150; 
 			_newWindow.stage.color = 0xDDDDDD;
@@ -62,14 +59,14 @@ package catfishqa.admin.teamGroupsEdit
 		private function Show():void
 		{
 			_label1 = new Label();
-			_label1.text = "Имя группы:"; 
+			_label1.text = "Имя проекта:"; 
 			_label1.x = 10;
 			_label1.y = 10;
 			_label1.width = 125;
 			_newWindow.stage.addChild(_label1);
 			
 			_textBox1 = new TextInput();
-			_textBox1.text = _data[0].Name;
+			_textBox1.text = "";
 			_textBox1.x = 125; 
 			_textBox1.y = 10;
 			_textBox1.width = 200;
@@ -83,11 +80,12 @@ package catfishqa.admin.teamGroupsEdit
 			_newWindow.stage.addChild(_label2);
 			
 			_textBox2 = new TextInput();
-			_textBox2.text = _data[0].Link;
+			_textBox2.text = "";
 			_textBox2.x = 125; 
 			_textBox2.y = 40;
 			_textBox2.width = 200;
 			_newWindow.stage.addChild(_textBox2);
+			
 			
 			_button1 = new Button();
 			_button1.label = "Сохранить";
@@ -104,34 +102,18 @@ package catfishqa.admin.teamGroupsEdit
 		
 		private function onButton1MouseClick(e:MouseEvent):void 
 		{
-			var sqlCommand:String = "UPDATE team_groups SET "
-								+ "team_groups_name = '" + _textBox1.text + "', "
-								+ "team_groups_link_project = '" + _textBox2.text + "' "
-								+ "WHERE team_groups_id = " + _data[0].ID;
+			var sqlCommand:String = "INSERT INTO team_groups "
+								+ "(team_groups_name, team_groups_link_project) VALUES ("
+								+ "'" + _textBox1.text + "', "
+								+ "'" + _textBox2.text + "')"
+								
 			
 			_query = new Query();
 			_query.performRequest(Server.serverPath + "team_groups_set.php?client=1&sqlcommand=" + sqlCommand);
-			_query.addEventListener("complete", onQuery1Complete);
+			_query.addEventListener("complete", onQueryComplete);
 		}
 		
-		private function onQuery1Complete(e:Event):void 
-		{
-			
-			if ((_query.getResult as String) == "complete")
-			{
-				var sqlCommand:String = "UPDATE team_users SET "
-								+ "team_users_groups_name = '" + _textBox1.text + "' "
-								+ "WHERE team_users_groups_name = '" + _data[0].Name + "'";
-			
-				_query = new Query();
-				_query.performRequest(Server.serverPath + "team_users_set.php?client=1&sqlcommand=" + sqlCommand);
-				_query.addEventListener("complete", onQuery2Complete);
-			}else {
-				new MessageBox((_query.getResult as String), "Сообщение");
-			}
-		}
-		
-		private function onQuery2Complete(e:Event):void 
+		private function onQueryComplete(e:Event):void 
 		{
 			
 			if ((_query.getResult as String) == "complete")
@@ -146,6 +128,7 @@ package catfishqa.admin.teamGroupsEdit
 		{
 			_newWindow.close();
 		}
+		
 		
 	}
 

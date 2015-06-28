@@ -15,6 +15,10 @@ package catfishqa.resource
 		public static var ImageGroupUserIcon:Class;
 		[Embed(source = '../../../images/user.png')]
 		public static var ImageUserIcon:Class;
+		[Embed(source = '../../../images/database.png')]
+		public static var ImageUserDatabaseIcon:Class;
+		[Embed(source = '../../../images/calendar.png')]
+		public static var ImageUserCalendarIcon:Class;
 				
 		public static const LOGIN:String = "login";
 		public static const ADMIN:String = "admin";
