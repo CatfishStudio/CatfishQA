@@ -36,9 +36,13 @@ package catfishqa.admin.roadmap
 	import catfishqa.resource.Resource;
 	import catfishqa.json.JSON;
 	import catfishqa.windows.htmlPage;
+	import catfishqa.windows.MessageBox;
 	import catfishqa.admin.roadmap.roadmapSprintNew.RoadmapSprintNew;
 	import catfishqa.admin.roadmap.roadmapSprintRemove.RoadmapSprintRemove;
 	import catfishqa.admin.roadmap.roadmapSprintEdit.RoadmapSprintEdit;
+	import catfishqa.admin.roadmap.roadmapTaskNew.RoadmapTaskNew;
+	import catfishqa.admin.buttons.ButtonCellEdit;
+	import catfishqa.admin.buttons.ButtonCellDelete;
 	
 	public class Roadmap extends NativeWindowInitOptions 
 	{
@@ -104,8 +108,8 @@ package catfishqa.admin.roadmap
 		
 		private function onResize(e:NativeWindowBoundsEvent):void 
 		{
-			//_list.setSize(225, _newWindow.height - 110);
-			//_dataGrid.setSize(_newWindow.width - 265, _newWindow.height - 110);
+			_list.setSize(225, _newWindow.height - 135);
+			_dataGrid.setSize(_newWindow.width - 265, 200);
 		}
 		
 		private function onServerEvents(event:ServerEvents):void 
@@ -114,7 +118,7 @@ package catfishqa.admin.roadmap
 			{
 				case Server.ROADMAP_SPRINTS_UPDATE: 
 				{
-					//UpdateList();
+					UpdateList();
 					break;
 				}
 				
@@ -126,7 +130,7 @@ package catfishqa.admin.roadmap
 				
 				case Server.ROADMAP_TASKS_UPDATE: 
 				{
-					//UpdateDataGrid();
+					UpdateDataGrid();
 					break;
 				}
 				
@@ -225,6 +229,7 @@ package catfishqa.admin.roadmap
 			{
 				_projectLinkSelect = ComboBox(e.target).selectedItem.link;
 				_roadmapSprintsSelectProject = ComboBox(e.target).selectedItem.label;
+				UpdateList();
 			}
 		}
 		
@@ -278,7 +283,7 @@ package catfishqa.admin.roadmap
 		/* ПАНЕЛЬ ЛИСТА  ==================================================*/
 		private function ToolbarList():void
 		{
-			var bSprintIcon:Bitmap = new Resource.ImageUserDatabaseIcon();
+			var bSprintIcon:Bitmap = new Resource.ImageDatabaseIcon();
 			bSprintIcon.x = 10;
 			bSprintIcon.y = 40;
 			_newWindow.stage.addChild(bSprintIcon);
@@ -322,7 +327,7 @@ package catfishqa.admin.roadmap
 		private function CreateList():void
 		{
 			_list = new List();
-			//_list.addEventListener(ListEvent.ITEM_CLICK, onListClick);
+			_list.addEventListener(ListEvent.ITEM_CLICK, onListClick);
 			_list.setSize(225, _newWindow.height - 135); 
 			_list.move(10, 90);
 			_list.rowHeight = 20;
@@ -346,7 +351,7 @@ package catfishqa.admin.roadmap
 			}
 			_label1.text = "Спринт: " + _roadmapSprintsSelectName;
 			
-			//QueryTeamUsersSelect();
+			QueryTasksSelect();
 		}
 		
 		private function UpdateList():void
@@ -427,6 +432,229 @@ package catfishqa.admin.roadmap
 		{
 			if (Resource.myStatus == Resource.ADMIN && _roadmapSprintsSelectName != "") new RoadmapSprintRemove(_roadmapSprintsSelectID.toString(), _roadmapSprintsSelectName);
 		}
+		
+		private function onListClick(e:ListEvent):void 
+		{
+			var list:List = e.target as List;
+			_roadmapSprintsSelectID = list.dataProvider.getItemAt(e.index).ID;
+			_roadmapSprintsSelectName = list.dataProvider.getItemAt(e.index).label;
+			_roadmapSprintsSelectDate = list.dataProvider.getItemAt(e.index).date;
+			_roadmapSprintsSelectProject = list.dataProvider.getItemAt(e.index).project;
+			
+			_label1.text = "Спринт: " + _roadmapSprintsSelectName;
+			UpdateDataGrid();
+		}
+		/* ================================================================*/
+		
+		/* ================================================================
+		 * 
+		 *  ТАБЛИЦА
+		 * 
+		 * ================================================================*/
+		
+		
+		/* Получить данные с сервера ======================================*/
+		private function QueryTasksSelect():void
+		{
+			var _query:Query;
+			var sqlCommand:String = "SELECT * FROM roadmap_tasks WHERE roadmap_tasks_sprint_id = " + _roadmapSprintsSelectID + "";
+			_query = new Query();
+			_query.performRequest(Server.serverPath + "roadmap_tasks_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.addEventListener("complete", onQueryTeamUserComplete);
+		}
+		
+		private function onQueryTeamUserComplete(event:Object):void 
+		{
+			_roadmapTasksArray = [];
+			
+			var json_str:String = (event.target.getResult as String);
+			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
+			
+			for (var i:Object in json_data) 
+			{
+				for (var k:Object in json_data[i].roadmap) 
+				{
+					_roadmapTasksArray.push( { 
+						N:i+1,
+						ID:json_data[i].roadmap[k].roadmap_tasks_id,
+						Релиз:json_data[i].roadmap[k].roadmap_tasks_release,
+						Версия:json_data[i].roadmap[k].roadmap_tasks_version,
+						Задача:json_data[i].roadmap[k].roadmap_tasks_name,
+						Ссылка:json_data[i].roadmap[k].roadmap_tasks_link,
+						Изменить: (ButtonCellEdit),
+						Удалить: (ButtonCellDelete),
+						DEV_Begin:json_data[i].roadmap[k].roadmap_tasks_dev_begin,
+						DEV_End:json_data[i].roadmap[k].roadmap_tasks_dev_end,
+						QA_Begin:json_data[i].roadmap[k].roadmap_tasks_qa_begin,
+						QA_End:json_data[i].roadmap[k].roadmap_tasks_qa_end,
+						Проект:json_data[i].roadmap[k].roadmap_tasks_sprint_id 
+					} );
+					
+				}
+			}
+		
+			ButtonAdd();
+			CreateDataGrid();
+		}
+		/* ================================================================*/
+		
+		/* Кнопка =================================================================*/
+		private function ButtonAdd():void
+		{
+			var buserIcon:Bitmap = new Resource.ImageCalendarIcon();
+			buserIcon.x = 245;
+			buserIcon.y = 60;
+			_newWindow.stage.addChild(buserIcon);
+			
+			_buttonAdd.label = "Добавить задачу";
+			_buttonAdd.x = 270; 
+			_buttonAdd.y = 60;
+			_buttonAdd.width = 150;
+			_buttonAdd.addEventListener(MouseEvent.CLICK, onButtonAddMouseClick);
+			_newWindow.stage.addChild(_buttonAdd);
+		}
+		
+		private function onButtonAddMouseClick(e:MouseEvent):void 
+		{
+			if (Resource.myStatus == Resource.ADMIN && _roadmapSprintsSelectName != "")
+			{
+				new RoadmapTaskNew(_roadmapSprintsSelectProject, _roadmapSprintsSelectID.toString());
+			}else {
+				new MessageBox("Вы не выбрали спринт!", "Сообщение");
+			}
+		}
+		/* ================================================================*/
+		
+		/* ТАБЛИЦА СОТРУДНИКОВ КОМАНДЫ ====================================*/
+		private function CreateDataGrid():void
+		{
+			_dataGrid = new DataGrid();
+			
+			_dataGrid.addEventListener(ListEvent.ITEM_CLICK, onDataGridClick);
+			
+			_dataGrid.columns = [ "...", "N", "Релиз", "Версия", "Задача", "Изменить", "Удалить", "..."];
+			
+			var indexCellButton:Number = _dataGrid.getColumnIndex("Изменить");
+            _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellEdit;
+			indexCellButton = _dataGrid.getColumnIndex("Удалить");
+            _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellDelete;
+           	
+			
+			_dataGrid.dataProvider = new DataProvider(_roadmapTasksArray); 
+			
+			_dataGrid.setSize(_newWindow.width - 265, 200);
+			_dataGrid.move(240, 90);
+			_dataGrid.rowHeight = 20;
+			
+			_dataGrid.columns[0].width = 25;
+			_dataGrid.columns[1].width = 50;
+			_dataGrid.columns[2].width = 150;
+			_dataGrid.columns[3].width = 150;
+			_dataGrid.columns[4].width = 100;
+			_dataGrid.columns[5].width = 80;
+			_dataGrid.columns[6].width = 80;
+			
+			_dataGrid.resizableColumns = true; 
+			_dataGrid.selectable = false;
+			_dataGrid.editable = false;
+			
+			
+			_dataGrid.verticalScrollPolicy = ScrollPolicy.AUTO; // полоса прокрутки
+			_dataGrid.horizontalScrollPolicy = ScrollPolicy.AUTO; // полоса прокрутки
+			
+			_newWindow.stage.addChild(_dataGrid);
+			
+			TimerStart();
+		}
+		
+		private function UpdateDataGrid():void
+		{
+			_timer.stop();
+			var _query:Query;
+			var sqlCommand:String = "SELECT * FROM roadmap_tasks WHERE roadmap_tasks_sprint_id = " + _roadmapSprintsSelectID + "";
+			_query = new Query();
+			_query.performRequest(Server.serverPath + "roadmap_tasks_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.addEventListener("complete", onUpdateDataGridComplete);
+		}
+		
+		private function onUpdateDataGridComplete(event:Event):void 
+		{
+			_roadmapTasksArray = [];
+			
+			var json_str:String = (event.target.getResult as String);
+			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
+			
+			for (var i:Object in json_data) 
+			{
+				for (var k:Object in json_data[i].roadmap) 
+				{
+					_roadmapTasksArray.push( { 
+						N:i+1,
+						ID:json_data[i].roadmap[k].roadmap_tasks_id,
+						Релиз:json_data[i].roadmap[k].roadmap_tasks_release,
+						Версия:json_data[i].roadmap[k].roadmap_tasks_version,
+						Задача:json_data[i].roadmap[k].roadmap_tasks_name,
+						Ссылка:json_data[i].roadmap[k].roadmap_tasks_link,
+						Изменить: (ButtonCellEdit),
+						Удалить: (ButtonCellDelete),
+						DEV_Begin:json_data[i].roadmap[k].roadmap_tasks_dev_begin,
+						DEV_End:json_data[i].roadmap[k].roadmap_tasks_dev_end,
+						QA_Begin:json_data[i].roadmap[k].roadmap_tasks_qa_begin,
+						QA_End:json_data[i].roadmap[k].roadmap_tasks_qa_end,
+						Проект:json_data[i].roadmap[k].roadmap_tasks_sprint_id 
+					} );
+					
+				}
+			}
+			
+			_dataGrid.dataProvider = new DataProvider(_roadmapTasksArray);
+			_timer.start();
+		}
+		
+		private function onDataGridClick(e:ListEvent):void 
+		{
+			var dg:DataGrid = e.target as DataGrid;
+			if (Resource.myStatus == Resource.ADMIN)
+			{
+				if (dg.columns[e.columnIndex].headerText == "Изменить")
+				{
+					/*var data:Array = [];
+					data.push({
+						ID:dg.dataProvider.getItemAt(e.index).ID, 
+						Имя:dg.dataProvider.getItemAt(e.index).Имя, 
+						Логин:dg.dataProvider.getItemAt(e.index).Логин,
+						Права:dg.dataProvider.getItemAt(e.index).Права == "Чтение" ? "r" : "w",
+						Команда:dg.dataProvider.getItemAt(e.index).Команда
+					});
+					new TeamUserEdit(_tempGroupsSelectName, data);*/
+				}
+				if (dg.columns[e.columnIndex].headerText == "Удалить")
+				{
+					//new TeamUserRemove(dg.dataProvider.getItemAt(e.index).ID, _tempGroupsSelectName, dg.dataProvider.getItemAt(e.index).Имя);
+				}
+			}
+		}
+		/* ================================================================*/
+		
+		/* ТАЙМЕР (запрос к серверу на получение обновлённых данных) ======*/
+		private function TimerStart():void
+		{
+			_timer.addEventListener(TimerEvent.TIMER, timerHandler);
+            _timer.addEventListener(TimerEvent.TIMER_COMPLETE, completeHandler);
+            _timer.start();
+		}
+				
+		private function timerHandler(e:TimerEvent):void
+		{
+			//...
+		}
+
+		private function completeHandler(e:TimerEvent):void
+		{
+			Server.checkTableUpdate(Server.ROADMAP_SPRINTS);
+			Server.checkTableUpdate(Server.ROADMAP_TASKS);
+		} 
+		/* ================================================================*/
 		
 		
 	}

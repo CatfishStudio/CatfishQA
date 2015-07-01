@@ -104,7 +104,7 @@ package catfishqa.admin.roadmap.roadmapSprintEdit
 			type = NativeWindowType.NORMAL; 
      
 			_newWindow = new NativeWindow(this); 
-			_newWindow.title = "Новый спринт"; 
+			_newWindow.title = "Редактировать спринт"; 
 			_newWindow.width = 350; 
 			_newWindow.height = 200; 
 			_newWindow.stage.color = 0xDDDDDD;

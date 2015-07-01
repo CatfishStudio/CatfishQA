@@ -12,7 +12,7 @@
 	
 		if(!$query) 
 		{
-			echo "SET DATA [team_groups]: Error: ".mysql_error();
+			echo "SET DATA [roadmap_sprints]: Error: ".mysql_error();
 			mysql_close();
 			exit;
 		}else {
