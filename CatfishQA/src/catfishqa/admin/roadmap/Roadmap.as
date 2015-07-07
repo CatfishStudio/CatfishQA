@@ -41,6 +41,8 @@ package catfishqa.admin.roadmap
 	import catfishqa.admin.roadmap.roadmapSprintRemove.RoadmapSprintRemove;
 	import catfishqa.admin.roadmap.roadmapSprintEdit.RoadmapSprintEdit;
 	import catfishqa.admin.roadmap.roadmapTaskNew.RoadmapTaskNew;
+	import catfishqa.admin.roadmap.roadmapTaskEdit.RoadmapTaskEdit;
+	import catfishqa.admin.roadmap.roadmapTaskRemove.RoadmapTaskRemove;
 	import catfishqa.admin.buttons.ButtonCellEdit;
 	import catfishqa.admin.buttons.ButtonCellDelete;
 	
@@ -547,10 +549,10 @@ package catfishqa.admin.roadmap
 			_dataGrid.rowHeight = 20;
 			
 			_dataGrid.columns[0].width = 25;
-			_dataGrid.columns[1].width = 50;
+			_dataGrid.columns[1].width = 25;
 			_dataGrid.columns[2].width = 150;
-			_dataGrid.columns[3].width = 150;
-			_dataGrid.columns[4].width = 100;
+			_dataGrid.columns[3].width = 50;
+			_dataGrid.columns[4].width = 200;
 			_dataGrid.columns[5].width = 80;
 			_dataGrid.columns[6].width = 80;
 			
@@ -618,19 +620,24 @@ package catfishqa.admin.roadmap
 			{
 				if (dg.columns[e.columnIndex].headerText == "Изменить")
 				{
-					/*var data:Array = [];
+					var data:Array = [];
 					data.push({
 						ID:dg.dataProvider.getItemAt(e.index).ID, 
-						Имя:dg.dataProvider.getItemAt(e.index).Имя, 
-						Логин:dg.dataProvider.getItemAt(e.index).Логин,
-						Права:dg.dataProvider.getItemAt(e.index).Права == "Чтение" ? "r" : "w",
-						Команда:dg.dataProvider.getItemAt(e.index).Команда
+						Релиз:dg.dataProvider.getItemAt(e.index).Релиз, 
+						Версия:dg.dataProvider.getItemAt(e.index).Версия,
+						Задача:dg.dataProvider.getItemAt(e.index).Задача,
+						Ссылка:dg.dataProvider.getItemAt(e.index).Ссылка,
+						DEV_Begin:dg.dataProvider.getItemAt(e.index).DEV_Begin,
+						DEV_End:dg.dataProvider.getItemAt(e.index).DEV_End,
+						QA_Begin:dg.dataProvider.getItemAt(e.index).QA_Begin,
+						QA_End:dg.dataProvider.getItemAt(e.index).QA_End,
+						Проект:dg.dataProvider.getItemAt(e.index).Проект
 					});
-					new TeamUserEdit(_tempGroupsSelectName, data);*/
+					new RoadmapTaskEdit(_roadmapSprintsSelectProject, _roadmapSprintsSelectID.toString(), data);
 				}
 				if (dg.columns[e.columnIndex].headerText == "Удалить")
 				{
-					//new TeamUserRemove(dg.dataProvider.getItemAt(e.index).ID, _tempGroupsSelectName, dg.dataProvider.getItemAt(e.index).Имя);
+					new RoadmapTaskRemove(dg.dataProvider.getItemAt(e.index).ID, dg.dataProvider.getItemAt(e.index).Задача);
 				}
 			}
 		}
