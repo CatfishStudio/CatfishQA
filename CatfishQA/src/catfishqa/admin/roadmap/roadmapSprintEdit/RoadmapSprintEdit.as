@@ -293,23 +293,6 @@ package catfishqa.admin.roadmap.roadmapSprintEdit
 			
 			if ((_query.getResult as String) == "complete")
 			{
-				var sqlCommand:String = "UPDATE roadmap_tasks SET "
-								+ "roadmap_tasks_sprint_id = '" + _comboBoxProject.selectedItem.ID + "' "
-								+ "WHERE roadmap_tasks_sprint_id = '" + _data[0].ID + "'";
-			
-				_query = new Query();
-				_query.performRequest(Server.serverPath + "roadmap_tasks_set.php?client=1&sqlcommand=" + sqlCommand);
-				_query.addEventListener("complete", onQuery2Complete);
-			}else {
-				new MessageBox((_query.getResult as String), "Сообщение");
-			}
-		}
-		
-		private function onQuery2Complete(e:Event):void 
-		{
-			
-			if ((_query.getResult as String) == "complete")
-			{
 				_newWindow.close();
 			}else {
 				new MessageBox((_query.getResult as String), "Сообщение");

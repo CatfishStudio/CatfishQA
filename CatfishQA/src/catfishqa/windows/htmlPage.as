@@ -21,7 +21,7 @@ package catfishqa.windows
 	public class htmlPage extends NativeWindowInitOptions 
 	{
 		private var _newWindow:NativeWindow;
-		private var _movieClip:Sprite;
+		private var _movieClip:MovieClip;
 		private var _link:String;
 		private var _htmlLoader:HTMLLoader;
 		private var _scrollBarH:ScrollBar;
@@ -105,7 +105,7 @@ package catfishqa.windows
 			_newWindow.stage.addChild(_scrollBarH);
 			
 			
-			_movieClip = new Sprite();
+			_movieClip = new MovieClip();
 			_htmlLoader = new HTMLLoader();
 			_htmlLoader.y = 25;
 			_htmlLoader.width = _newWindow.stage.stageWidth - 16;

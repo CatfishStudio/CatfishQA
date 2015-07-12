@@ -43,8 +43,10 @@ package catfishqa.admin.roadmap
 	import catfishqa.admin.roadmap.roadmapTaskNew.RoadmapTaskNew;
 	import catfishqa.admin.roadmap.roadmapTaskEdit.RoadmapTaskEdit;
 	import catfishqa.admin.roadmap.roadmapTaskRemove.RoadmapTaskRemove;
+	import catfishqa.admin.roadmap.htmlTable.HtmlTable;
 	import catfishqa.admin.buttons.ButtonCellEdit;
 	import catfishqa.admin.buttons.ButtonCellDelete;
+	import catfishqa.admin.buttons.ButtonCellOpenLink;
 	
 	public class Roadmap extends NativeWindowInitOptions 
 	{
@@ -73,6 +75,7 @@ package catfishqa.admin.roadmap
 		
 		private var _buttonAdd:Button = new Button();
 		private var _dataGrid:DataGrid;
+		private var _htmlTable:HtmlTable = new HtmlTable();
 		
 		public function Roadmap() 
 		{
@@ -84,8 +87,8 @@ package catfishqa.admin.roadmap
      
 			_newWindow = new NativeWindow(this); 
 			_newWindow.title = "Роадмап"; 
-			_newWindow.width = 900; 
-			_newWindow.height = 560; 
+			_newWindow.width = 1000; 
+			_newWindow.height = 600; 
 			_newWindow.stage.color = 0xA8ABC6;
 			_newWindow.alwaysInFront = true; // всегда поверх других окон
 			
@@ -112,6 +115,7 @@ package catfishqa.admin.roadmap
 		{
 			_list.setSize(225, _newWindow.height - 135);
 			_dataGrid.setSize(_newWindow.width - 265, 200);
+			_htmlTable.setSize(_newWindow.width - 270.0, _newWindow.height -340.0);
 		}
 		
 		private function onServerEvents(event:ServerEvents):void 
@@ -459,7 +463,7 @@ package catfishqa.admin.roadmap
 		private function QueryTasksSelect():void
 		{
 			var _query:Query;
-			var sqlCommand:String = "SELECT * FROM roadmap_tasks WHERE roadmap_tasks_sprint_id = " + _roadmapSprintsSelectID + "";
+			var sqlCommand:String = "SELECT * FROM roadmap_tasks WHERE roadmap_tasks_sprint_id = " + _roadmapSprintsSelectID + " ORDER BY roadmap_tasks_dev_begin ASC";
 			_query = new Query();
 			_query.performRequest(Server.serverPath + "roadmap_tasks_get.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryTeamUserComplete);
@@ -485,6 +489,7 @@ package catfishqa.admin.roadmap
 						Ссылка:json_data[i].roadmap[k].roadmap_tasks_link,
 						Изменить: (ButtonCellEdit),
 						Удалить: (ButtonCellDelete),
+						Открыть: (ButtonCellOpenLink),
 						DEV_Begin:json_data[i].roadmap[k].roadmap_tasks_dev_begin,
 						DEV_End:json_data[i].roadmap[k].roadmap_tasks_dev_end,
 						QA_Begin:json_data[i].roadmap[k].roadmap_tasks_qa_begin,
@@ -527,20 +532,21 @@ package catfishqa.admin.roadmap
 		}
 		/* ================================================================*/
 		
-		/* ТАБЛИЦА СОТРУДНИКОВ КОМАНДЫ ====================================*/
+		/* ТАБЛИЦА ========================================================*/
 		private function CreateDataGrid():void
 		{
 			_dataGrid = new DataGrid();
 			
 			_dataGrid.addEventListener(ListEvent.ITEM_CLICK, onDataGridClick);
 			
-			_dataGrid.columns = [ "...", "N", "Релиз", "Версия", "Задача", "Изменить", "Удалить", "..."];
+			_dataGrid.columns = [ "...", "N", "Релиз", "Версия", "Задача", "Изменить", "Удалить", "Открыть", "..."];
 			
 			var indexCellButton:Number = _dataGrid.getColumnIndex("Изменить");
             _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellEdit;
 			indexCellButton = _dataGrid.getColumnIndex("Удалить");
             _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellDelete;
-           	
+           	indexCellButton = _dataGrid.getColumnIndex("Открыть");
+            _dataGrid.getColumnAt(indexCellButton).cellRenderer = ButtonCellOpenLink;
 			
 			_dataGrid.dataProvider = new DataProvider(_roadmapTasksArray); 
 			
@@ -555,6 +561,7 @@ package catfishqa.admin.roadmap
 			_dataGrid.columns[4].width = 200;
 			_dataGrid.columns[5].width = 80;
 			_dataGrid.columns[6].width = 80;
+			_dataGrid.columns[7].width = 80;
 			
 			_dataGrid.resizableColumns = true; 
 			_dataGrid.selectable = false;
@@ -566,14 +573,14 @@ package catfishqa.admin.roadmap
 			
 			_newWindow.stage.addChild(_dataGrid);
 			
-			TimerStart();
+			CreateHtmlTable();
 		}
 		
 		private function UpdateDataGrid():void
 		{
 			_timer.stop();
 			var _query:Query;
-			var sqlCommand:String = "SELECT * FROM roadmap_tasks WHERE roadmap_tasks_sprint_id = " + _roadmapSprintsSelectID + "";
+			var sqlCommand:String = "SELECT * FROM roadmap_tasks WHERE roadmap_tasks_sprint_id = " + _roadmapSprintsSelectID + " ORDER BY roadmap_tasks_dev_begin ASC";
 			_query = new Query();
 			_query.performRequest(Server.serverPath + "roadmap_tasks_get.php?client=1&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onUpdateDataGridComplete);
@@ -599,6 +606,7 @@ package catfishqa.admin.roadmap
 						Ссылка:json_data[i].roadmap[k].roadmap_tasks_link,
 						Изменить: (ButtonCellEdit),
 						Удалить: (ButtonCellDelete),
+						Открыть: (ButtonCellOpenLink),
 						DEV_Begin:json_data[i].roadmap[k].roadmap_tasks_dev_begin,
 						DEV_End:json_data[i].roadmap[k].roadmap_tasks_dev_end,
 						QA_Begin:json_data[i].roadmap[k].roadmap_tasks_qa_begin,
@@ -639,7 +647,24 @@ package catfishqa.admin.roadmap
 				{
 					new RoadmapTaskRemove(dg.dataProvider.getItemAt(e.index).ID, dg.dataProvider.getItemAt(e.index).Задача);
 				}
+				if (dg.columns[e.columnIndex].headerText == "Открыть")
+				{
+					new htmlPage(dg.dataProvider.getItemAt(e.index).Ссылка);
+				}
 			}
+		}
+		/* ================================================================*/
+		
+		/* ТАБЛИЦА (HTML) =================================================*/
+		private function CreateHtmlTable():void
+		{
+			_htmlTable.x = 240;
+			_htmlTable.y = 300;
+			_newWindow.stage.addChild(_htmlTable);
+			_htmlTable.setSize(_newWindow.width - 270.0, _newWindow.height -340.0);
+			_htmlTable.setData(_roadmapTasksArray);
+			
+			TimerStart();
 		}
 		/* ================================================================*/
 		
