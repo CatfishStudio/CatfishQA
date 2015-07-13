@@ -12,9 +12,9 @@ package catfishqa.admin.roadmap.htmlTable
 		public function HtmlTable() 
 		{
 			super();
+			name = "htmlTable";
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemoveStage);
-			
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -23,7 +23,7 @@ package catfishqa.admin.roadmap.htmlTable
 			_htmlLoader = new HTMLLoader();
 			_htmlLoader.width = stage.stageWidth;
 			_htmlLoader.height = stage.stageHeight;
-			_htmlLoader.loadString("<html><body><h1>Таблица</h1></body></html>");
+			_htmlLoader.loadString("<html><body><h1>...</h1></body></html>");
 			addChild(_htmlLoader);
 		}
 		
@@ -36,7 +36,9 @@ package catfishqa.admin.roadmap.htmlTable
 		public function setSize(_width:Number, _height:Number):void
 		{
 			_htmlLoader.width = _width;
+			trace(_htmlLoader.width);
 			_htmlLoader.height = _height;
+			trace(_htmlLoader.height);
 		}
 		
 		public function setData(data:Array):void
@@ -239,7 +241,7 @@ package catfishqa.admin.roadmap.htmlTable
 			+"</body>"
 			+"</html>";
 			
-			trace(page);
+			//trace(page);
 			_htmlLoader.loadString(page);
 		}
 		

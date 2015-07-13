@@ -75,7 +75,8 @@ package catfishqa.admin.roadmap
 		
 		private var _buttonAdd:Button = new Button();
 		private var _dataGrid:DataGrid;
-		private var _htmlTable:HtmlTable = new HtmlTable();
+		
+		private var _htmlTable:HtmlTable;
 		
 		public function Roadmap() 
 		{
@@ -619,6 +620,7 @@ package catfishqa.admin.roadmap
 			
 			_dataGrid.dataProvider = new DataProvider(_roadmapTasksArray);
 			_timer.start();
+			CreateHtmlTable();
 		}
 		
 		private function onDataGridClick(e:ListEvent):void 
@@ -658,12 +660,13 @@ package catfishqa.admin.roadmap
 		/* ТАБЛИЦА (HTML) =================================================*/
 		private function CreateHtmlTable():void
 		{
+			if (_newWindow.stage.getChildByName("htmlTable") != null) _newWindow.stage.removeChild(_newWindow.stage.getChildByName("htmlTable"));
+			_htmlTable = new HtmlTable();
 			_htmlTable.x = 240;
 			_htmlTable.y = 300;
 			_newWindow.stage.addChild(_htmlTable);
 			_htmlTable.setSize(_newWindow.width - 270.0, _newWindow.height -340.0);
-			_htmlTable.setData(_roadmapTasksArray);
-			
+			if(_roadmapTasksArray.length > 0) _htmlTable.setData(_roadmapTasksArray);
 			TimerStart();
 		}
 		/* ================================================================*/
