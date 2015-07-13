@@ -35,14 +35,22 @@ package catfishqa.admin.roadmap.htmlTable
 		
 		public function setSize(_width:Number, _height:Number):void
 		{
-			_htmlLoader.width = _width;
-			trace(_htmlLoader.width);
-			_htmlLoader.height = _height;
-			trace(_htmlLoader.height);
+			
+			if (_width < 730 || _height < 260)
+			{
+				_htmlLoader.width = 730;
+				_htmlLoader.height = 260;
+			}else{
+				_htmlLoader.width = _width;
+				_htmlLoader.height = _height;
+			}
 		}
 		
 		public function setData(data:Array):void
 		{
+			var tableMainWidth:int = _htmlLoader.width - 30;
+			var divDivheadWidth:int = _htmlLoader.width - 230;
+			var divHorizontalScrollWidth:int = _htmlLoader.width - 27;
 			
 			var dateTable:Array = [];
 			dateTable = buildingDateTable(data);
@@ -54,13 +62,13 @@ package catfishqa.admin.roadmap.htmlTable
 			+"<head id=\"Head1\" runat=\"server\">"
 			+"<title></title>"
 			+"<style type=\"text/css\">"
-			+"table.main {width: 700px; height: 221px; table-layout: fixed;}"
+			+"table.main {width: " + tableMainWidth.toString() + "px; height: 221px; table-layout: fixed;}"
 			+"table.root {table-layout: fixed;}"
 			+"table.content {table-layout: fixed; width: 1890px; }"
 			+"table.head {table-layout: fixed; width: 100%;}" // изменения
 			+"table.frozen {table-layout: fixed;}"
 			+"td {line-height: 15px;}"
-			+"div.horizontal-scroll {width: 703px; height: 22px; overflow: hidden; overflow-x: scroll; border: solid 1px #666;}"
+			+"div.horizontal-scroll {width: " + divHorizontalScrollWidth.toString() + "px; height: 22px; overflow: hidden; overflow-x: scroll; border: solid 1px #666;}"
 			+"div.horizontal-scroll div {width: 5000px; height: 1px;}" // изменения
 			+"div.vertical-scroll {height: 227px; width: 22px; overflow: hidden; overflow-y: scroll; border: solid 1px #666;}"
 			+"div.vertical-scroll div {height: 377px; width: 1px;}"
@@ -74,11 +82,11 @@ package catfishqa.admin.roadmap.htmlTable
 			+".toprow {border-top: 0px;}"
 			+"div.root {margin-left: 0px; overflow: hidden; width: 200px; height: 28px; border-bottom: 1px solid #666;}"
 			+"div.frozen {overflow: hidden; width: 200px; height: 200px;}"
-			+"div.divhead {overflow: hidden; height: 28px; width: 500px; border-left: 1px solid #666; border-right: 1px solid #666; border-bottom: 1px solid #666;}"
-			+"div.content {overflow: hidden; width: 500px; height: 200px; border-left: 1px solid #666; border-right: 1px solid #666;}"
+			+"div.divhead {overflow: hidden; height: 28px; width: " + divDivheadWidth.toString() + "px; border-left: 1px solid #666; border-right: 1px solid #666; border-bottom: 1px solid #666;}"
+			+"div.content {overflow: hidden; height: 200px; border-left: 1px solid #666; border-right: 1px solid #666;}"
 			+"td.tablefrozencolumn {width: 200px; border-right: 3px solid #666;}"
-			+"td.tablecontent {width: 501px;}"
-			+"td.tableverticalscroll {width: 24px;}"
+			+"td.tablecontent {}"
+			+"td.tableverticalscroll {width: 0px;}"
 			+"div.ff-fill {height: 23px; width: 23px; background-color: #ccc; border-right: 1px solid #666; border-bottom: 1px solid #666;}"
 			+"</style>"
 			+"</head>"
@@ -241,7 +249,7 @@ package catfishqa.admin.roadmap.htmlTable
 			+"</body>"
 			+"</html>";
 			
-			//trace(page);
+			trace(page);
 			_htmlLoader.loadString(page);
 		}
 		

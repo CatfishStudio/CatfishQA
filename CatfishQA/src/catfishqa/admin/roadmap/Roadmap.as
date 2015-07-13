@@ -116,7 +116,7 @@ package catfishqa.admin.roadmap
 		{
 			_list.setSize(225, _newWindow.height - 135);
 			_dataGrid.setSize(_newWindow.width - 265, 200);
-			_htmlTable.setSize(_newWindow.width - 270.0, _newWindow.height -340.0);
+			CreateHtmlTable();
 		}
 		
 		private function onServerEvents(event:ServerEvents):void 
@@ -574,6 +574,7 @@ package catfishqa.admin.roadmap
 			
 			_newWindow.stage.addChild(_dataGrid);
 			
+			TimerStart();
 			CreateHtmlTable();
 		}
 		
@@ -667,7 +668,6 @@ package catfishqa.admin.roadmap
 			_newWindow.stage.addChild(_htmlTable);
 			_htmlTable.setSize(_newWindow.width - 270.0, _newWindow.height -340.0);
 			if(_roadmapTasksArray.length > 0) _htmlTable.setData(_roadmapTasksArray);
-			TimerStart();
 		}
 		/* ================================================================*/
 		
