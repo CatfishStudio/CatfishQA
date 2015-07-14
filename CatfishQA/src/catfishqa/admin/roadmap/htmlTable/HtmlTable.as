@@ -52,6 +52,13 @@ package catfishqa.admin.roadmap.htmlTable
 			var divDivheadWidth:int = _htmlLoader.width - 230;
 			var divHorizontalScrollWidth:int = _htmlLoader.width - 27;
 			
+			var tableMainHeight:int = _htmlLoader.height - 60;
+			var divFrozenHeight:int = _htmlLoader.height - 60; 			// height: 200px
+			var divContentHeight:int = _htmlLoader.height - 60 ;		// height: 200px 
+			var divVerticalScrollHeight:int = _htmlLoader.height - 33;	// height: 227px
+			var divVerticalScrollDiv:int = 50 * data.length;			// height: 337px
+			
+			
 			var dateTable:Array = [];
 			dateTable = buildingDateTable(data);
 			var dataTable:Array = [];
@@ -62,7 +69,8 @@ package catfishqa.admin.roadmap.htmlTable
 			+"<head id=\"Head1\" runat=\"server\">"
 			+"<title></title>"
 			+"<style type=\"text/css\">"
-			+"table.main {width: " + tableMainWidth.toString() + "px; height: 221px; table-layout: fixed;}"
+			//+"table.main {width: " + tableMainWidth.toString() + "px; height: 221px; table-layout: fixed;}"
+			+"table.main {width: " + tableMainWidth.toString() + "px; height: " + tableMainHeight.toString() + "px; table-layout: fixed;}"
 			+"table.root {table-layout: fixed;}"
 			+"table.content {table-layout: fixed; width: 1890px; }"
 			+"table.head {table-layout: fixed; width: 100%;}" // изменения
@@ -70,8 +78,8 @@ package catfishqa.admin.roadmap.htmlTable
 			+"td {line-height: 15px;}"
 			+"div.horizontal-scroll {width: " + divHorizontalScrollWidth.toString() + "px; height: 22px; overflow: hidden; overflow-x: scroll; border: solid 1px #666;}"
 			+"div.horizontal-scroll div {width: 5000px; height: 1px;}" // изменения
-			+"div.vertical-scroll {height: 227px; width: 22px; overflow: hidden; overflow-y: scroll; border: solid 1px #666;}"
-			+"div.vertical-scroll div {height: 377px; width: 1px;}"
+			+"div.vertical-scroll {height: " + divVerticalScrollHeight.toString() + "px; width: 22px; overflow: hidden; overflow-y: scroll; border: solid 1px #666;}"
+			+"div.vertical-scroll div {height: " + divVerticalScrollDiv.toString() + "px; width: 1px;}"
 			+"td.inner {border-left: 1px solid #666; border-bottom: 1px solid #666; padding: 3px; height: 28px;}"
 			+"td.frozencol {border-right: 1px double #666; width: 200px;}"
 			+"td.col1 {/*border-left: none;*/ width: 50px;}" // изменения
@@ -81,9 +89,9 @@ package catfishqa.admin.roadmap.htmlTable
 			+".rightcol {border-right: 1px solid #666;}"
 			+".toprow {border-top: 0px;}"
 			+"div.root {margin-left: 0px; overflow: hidden; width: 200px; height: 28px; border-bottom: 1px solid #666;}"
-			+"div.frozen {overflow: hidden; width: 200px; height: 200px;}"
+			+"div.frozen {overflow: hidden; width: 200px; height: " + divFrozenHeight.toString() + "px;}"
 			+"div.divhead {overflow: hidden; height: 28px; width: " + divDivheadWidth.toString() + "px; border-left: 1px solid #666; border-right: 1px solid #666; border-bottom: 1px solid #666;}"
-			+"div.content {overflow: hidden; height: 200px; border-left: 1px solid #666; border-right: 1px solid #666;}"
+			+"div.content {overflow: hidden; height: " + divContentHeight.toString() + "px; border-left: 1px solid #666; border-right: 1px solid #666;}"
 			+"td.tablefrozencolumn {width: 200px; border-right: 3px solid #666;}"
 			+"td.tablecontent {}"
 			+"td.tableverticalscroll {width: 0px;}"
@@ -234,22 +242,14 @@ package catfishqa.admin.roadmap.htmlTable
 			+""
 			+"<script language='javascript' type='text/javascript'>"
 			+"function reposHead(e) {var h = document.getElementById('headscroll'); h.scrollLeft = e.scrollLeft; var f = document.getElementById('divfrozen'); f.scrollTop = e.scrollTop;}"
-			+"function reposHorizontal(e) {var h = document.getElementById('headscroll'); var c = document.getElementById('contentscroll'); h.scrollLeft = e.scrollLeft; c.scrollLeft = e.scrollLeft; var sh = document.getElementById('hscrollpos'); sh.innerHTML = e.scrollLeft; var ch = document.getElementById('contentwidth'); var ic = document.getElementById('innercontent');  ch.innerHTML = ic.clientWidth; var ch2 = document.getElementById('contentheight'); ch2.innerHTML = ic.clientHeight; var sp = document.getElementById('scrollwidth'); sp.innerHTML = e.scrollWidth;}"
-			+"function reposVertical(e) {var h = document.getElementById('divfrozen'); var c = document.getElementById('contentscroll'); h.scrollTop = e.scrollTop; c.scrollTop = e.scrollTop; var sh = document.getElementById('vscrollpos'); sh.innerHTML = e.scrollTop; var ch = document.getElementById('contentheight'); ch.innerHTML = c.scrollHeight; var sp = document.getElementById('scrollheight'); sp.innerHTML = e.scrollHeight;}"
+			+"function reposHorizontal(e) {var h = document.getElementById('headscroll'); var c = document.getElementById('contentscroll'); h.scrollLeft = e.scrollLeft; c.scrollLeft = e.scrollLeft; var ic = document.getElementById('innercontent');}"
+			+"function reposVertical(e) {var h = document.getElementById('divfrozen'); var c = document.getElementById('contentscroll'); h.scrollTop = e.scrollTop; c.scrollTop = e.scrollTop;}"
 			+"</script>"
-			+"<br />"
-			+"<br />"
-			/*+"Horizonal scroll pos:<span id='hscrollpos'>0</span>px<br />"
-			+"Vertical scroll pos:<span id='vscrollpos'>0</span>px<br />"
-			+"Height of inner content elt:<span id='contentheight'>0</span>px<br />"
-			+"Width of inner content elt:<span id='contentwidth'>0</span>px<br />"
-			+"Height of scroll elt:<span id='scrollheight'>0</span>px<br />"
-			+"Width of scroll elt:<span id='scrollwidth'>0</span>px<br />"*/
 			+"</form>"
 			+"</body>"
 			+"</html>";
 			
-			trace(page);
+			trace("\n\n\n" + page);
 			_htmlLoader.loadString(page);
 		}
 		
