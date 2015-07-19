@@ -249,7 +249,6 @@ package catfishqa.admin.roadmap.htmlTable
 			+"</body>"
 			+"</html>";
 			
-			trace("\n\n\n" + page);
 			_htmlLoader.loadString(page);
 		}
 		

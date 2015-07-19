@@ -174,7 +174,48 @@
 			/*==================================================================*/
 			
 			
+			/*Создание таблицы Тест-план (test_plan_sprints) ============== */
+			$query = mysql_query("CREATE TABLE test_plan_sprints (
+				test_plan_sprints_id int(8) NOT NULL AUTO_INCREMENT,
+				test_plan_sprints_date datetime NOT NULL,
+				test_plan_sprints_name varchar(255) NOT NULL,
+				test_plan_sprints_project varchar(255) NOT NULL,
+				PRIMARY KEY (test_plan_sprints_id)
+			)", $db);
+			/* Проверка успешности выполнения */
+			if(!$query){
+				echo "<br><br>ERROR!!! Table \"test_plan_sprints\" - error! ";
+				echo "<br><br>Error: ", mysql_error();
+				$query = mysql_query("DROP DATABASE ".$database, $db);
+				exit;
+			}else{
+				echo "<br><br>Create table \"test_plan_sprints\" - complete!";
+			}
 			
+			$query = mysql_query("CREATE TABLE test_plan_tasks (
+				test_plan_tasks_id int(8) NOT NULL AUTO_INCREMENT,
+				test_plan_tasks_testing_begin datetime NOT NULL,
+				test_plan_tasks_name varchar(255) NOT NULL,
+				test_plan_tasks_link varchar(255) NOT NULL,
+				test_plan_tasks_create_test_case_qa varchar(255) NOT NULL,
+				test_plan_tasks_testing_qa varchar(255) NOT NULL,
+				test_plan_tasks_link_test_case int(10),
+				test_plan_tasks_result_android varchar(50) NOT NULL,
+				test_plan_tasks_result_ios varchar(50) NOT NULL,
+				test_plan_tasks_result_web varchar(50) NOT NULL,
+				test_plan_tasks_sprint_id varchar(255) NOT NULL,
+				PRIMARY KEY (test_plan_tasks_id)
+			)", $db);
+			/* Проверка успешности выполнения */
+			if(!$query){
+				echo "<br><br>ERROR!!! Table \"test_plan_tasks\" - error! ";
+				echo "<br><br>Error: ", mysql_error();
+				$query = mysql_query("DROP DATABASE ".$database, $db);
+				exit;
+			}else{
+				echo "<br><br>Create table \"test_plan_tasks\" - complete!";
+			}
+			/*==================================================================*/
 			
 			
 			
@@ -206,7 +247,9 @@
 				(2, 'team_groups', '".date("Y-m-d H:i:s")."'),
 				(3, 'team_users', '".date("Y-m-d H:i:s")."'),
 				(4, 'roadmap_sprints', '".date("Y-m-d H:i:s")."'),
-				(5, 'roadmap_tasks', '".date("Y-m-d H:i:s")."')", $db);
+				(5, 'roadmap_tasks', '".date("Y-m-d H:i:s")."'),
+				(6, 'test_plan_sprints', '".date("Y-m-d H:i:s")."'),
+				(7, 'test_plan_tasks', '".date("Y-m-d H:i:s")."')", $db);
 			/* Проверка успешности выполнения */
 			if(!$query){
 				echo "<br><br>ERROR!!! Add item in table \"history_update\" - error! ";

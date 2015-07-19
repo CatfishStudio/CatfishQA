@@ -400,6 +400,8 @@ package catfishqa.admin.roadmap
 			}
 			_label1.text = "Спринт: " + _roadmapSprintsSelectName;
 			_timer.start();
+			
+			UpdateDataGrid();
 		}
 		
 		private function checkSelectSprint():Boolean
