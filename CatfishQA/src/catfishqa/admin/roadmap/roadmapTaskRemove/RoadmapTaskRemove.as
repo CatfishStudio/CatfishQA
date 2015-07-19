@@ -77,7 +77,7 @@ package catfishqa.admin.roadmap.roadmapTaskRemove
 			var sqlCommand:String = "DELETE FROM roadmap_tasks WHERE roadmap_tasks_id = " + _taskID;
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "roadmap_tasks_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "roadmap_tasks_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQuery1Complete);
 		}
 		

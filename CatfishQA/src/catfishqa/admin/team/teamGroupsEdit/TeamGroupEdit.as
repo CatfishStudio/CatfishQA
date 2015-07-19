@@ -110,7 +110,7 @@ package catfishqa.admin.team.teamGroupsEdit
 								+ "WHERE team_groups_id = " + _data[0].ID;
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "team_groups_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "team_groups_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQuery1Complete);
 		}
 		
@@ -124,7 +124,7 @@ package catfishqa.admin.team.teamGroupsEdit
 								+ "WHERE team_users_groups_name = '" + _data[0].Name + "'";
 			
 				_query = new Query();
-				_query.performRequest(Server.serverPath + "team_users_set.php?client=1&sqlcommand=" + sqlCommand);
+				_query.performRequest(Server.serverPath + "team_users_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 				_query.addEventListener("complete", onQuery2Complete);
 			}else {
 				new MessageBox((_query.getResult as String), "Сообщение");

@@ -109,7 +109,7 @@ package catfishqa.admin.team.teamGroupsNew
 								
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "team_groups_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "team_groups_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		

@@ -157,7 +157,7 @@ package catfishqa.admin.roadmap.roadmapTaskNew
 			var sqlCommand:String = "SELECT * FROM roadmap_sprints WHERE (roadmap_sprints_project = '" + _projectSelect + "')";
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "roadmap_sprints_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "roadmap_sprints_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQuerySprintsComplete);
 		}
 		
@@ -488,7 +488,7 @@ package catfishqa.admin.roadmap.roadmapTaskNew
 								
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "roadmap_tasks_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "roadmap_tasks_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		

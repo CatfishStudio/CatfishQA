@@ -199,7 +199,7 @@ package catfishqa.admin
 		
 		private function onButton4MouseClick(e:MouseEvent):void 
 		{
-			
+			dispatchEvent(new Navigation(Navigation.CHANGE_SCREEN, { id: Resource.TEST_PLAN }, true));
 		}
 		
 		private function onButton5MouseClick(e:MouseEvent):void 

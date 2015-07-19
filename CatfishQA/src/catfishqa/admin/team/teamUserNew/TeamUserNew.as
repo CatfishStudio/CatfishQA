@@ -84,7 +84,7 @@ package catfishqa.admin.team.teamUserNew
 			var sqlCommand:String = "SELECT * FROM system_users";
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "system_users_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onFillUsersComplete);
 		}
 		
@@ -119,7 +119,7 @@ package catfishqa.admin.team.teamUserNew
 		{
 			var sqlCommand:String = "SELECT * FROM team_groups";
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "team_groups_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "team_groups_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onFillTeamsComplete);
 		}
 		
@@ -273,7 +273,7 @@ package catfishqa.admin.team.teamUserNew
 								
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "team_users_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "team_users_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		

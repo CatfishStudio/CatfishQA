@@ -12,7 +12,7 @@
 	
 		if(!$query) 
 		{
-			echo "GET DATA [team_users]: Error: ".mysql_error();
+			echo "GET DATA [test_plan_sprints]: Error: ".mysql_error();
 			mysql_close();
 			exit;
 		}else {
@@ -26,14 +26,13 @@
 				else $data_array_json .= "{";
 
 				$data_array_json .= ""
-					."\"id\": "."\"".$row['team_users_id']."\"".","
-					."\"team\": ["
+					."\"id\": "."\"".$row['test_plan_sprints_id']."\"".","
+					."\"testplane\": ["
 					."{"
-						."\"team_users_id\": "."\"".$row['team_users_id']."\"".","
-						."\"team_users_name\": "."\"".$row['team_users_name']."\"".","
-						."\"team_users_login\": "."\"".$row['team_users_login']."\"".","
-						."\"team_users_rights\": "."\"".$row['team_users_rights']."\"".","
-						."\"team_users_groups_name\": "."\"".$row['team_users_groups_name']."\""
+						."\"test_plan_sprints_id\": "."\"".$row['test_plan_sprints_id']."\"".","
+						."\"test_plan_sprints_name\": "."\"".$row['test_plan_sprints_name']."\"".","
+						."\"test_plan_sprints_date\": "."\"".$row['test_plan_sprints_date']."\"".","
+						."\"test_plan_sprints_project\": "."\"".$row['test_plan_sprints_project']."\""
 					."}]}"; 
 				$index++;
 			}

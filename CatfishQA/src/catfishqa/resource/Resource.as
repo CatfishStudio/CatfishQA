@@ -30,6 +30,7 @@ package catfishqa.resource
 		public static const SYSTEM_USERS:String = "systemUsers"; // окно системные пользователи
 		public static const TEAM:String = "team"; // окно проектов и команд
 		public static const ROADMAP:String = "roadmap"; // окно роадмап
+		public static const TEST_PLAN:String = "testPlan"; // окно тест плана
 		
 		/* ПРАВА ПОЛЬЗОВАТЕЛЯ */
 		public static var myStatus:String = "";

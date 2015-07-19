@@ -77,7 +77,7 @@ package catfishqa.admin.roadmap.roadmapSprintRemove
 			var sqlCommand:String = "DELETE FROM roadmap_sprints WHERE roadmap_sprints_id = " + _id.toString();
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "roadmap_sprints_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "roadmap_sprints_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQuery1Complete);
 		}
 		
@@ -87,7 +87,7 @@ package catfishqa.admin.roadmap.roadmapSprintRemove
 			{
 				var sqlCommand:String = "DELETE FROM roadmap_tasks WHERE (roadmap_tasks_sprint_id = " + _id.toString() + ")";
 				_query = new Query();
-				_query.performRequest(Server.serverPath + "roadmap_tasks_set.php?client=1&sqlcommand=" + sqlCommand);
+				_query.performRequest(Server.serverPath + "roadmap_tasks_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 				_query.addEventListener("complete", onQuery2Complete);
 			}else {
 				new MessageBox((_query.getResult as String), "Сообщение");

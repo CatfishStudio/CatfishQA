@@ -12,6 +12,7 @@ package catfishqa.windows
 	import flash.net.URLRequest;
 	
 	import catfishqa.resource.Resource;
+	import catfishqa.server.Server;
 	
 	/**
 	 * ...
@@ -45,7 +46,7 @@ package catfishqa.windows
 			_htmlLoader.width = newWindow.stage.stageWidth;
 			_htmlLoader.height = newWindow.stage.stageHeight;
 			newWindow.stage.addChild(_htmlLoader);
-			_htmlLoader.load(new URLRequest(Resource.server + "system_users_get.php?client=1"));
+			_htmlLoader.load(new URLRequest(Resource.server + "system_users_get.php?client=" + Server.client));
 			
 			//activate and show the new window 
 			newWindow.activate(); 

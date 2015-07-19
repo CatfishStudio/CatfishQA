@@ -2,7 +2,7 @@
 	$client = $_GET['client'];
 	$sqlcommand = $_GET['sqlcommand'];
 	
-	if($client == 1)
+	if($client == "JGH37VB900D0IJ9D7VA027BA6")
 	{
 		include "config.php";
 

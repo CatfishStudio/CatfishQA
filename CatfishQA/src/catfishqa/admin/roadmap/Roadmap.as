@@ -162,7 +162,7 @@ package catfishqa.admin.roadmap
 			var sqlCommand:String = "SELECT * FROM team_groups";
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "team_groups_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "team_groups_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryTeamGroupComplete);
 		}
 		
@@ -260,7 +260,7 @@ package catfishqa.admin.roadmap
 			var sqlCommand:String = "SELECT * FROM roadmap_sprints WHERE (roadmap_sprints_project = '" + _roadmapSprintsSelectProject + "')";
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "roadmap_sprints_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "roadmap_sprints_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQuerySprintsComplete);
 		}
 		
@@ -354,7 +354,7 @@ package catfishqa.admin.roadmap
 				_roadmapSprintsSelectID = 0;
 				_roadmapSprintsSelectName = "";
 				_roadmapSprintsSelectDate = "";
-				_roadmapSprintsSelectProject = "";
+				//_roadmapSprintsSelectProject = "";
 			}
 			_label1.text = "Спринт: " + _roadmapSprintsSelectName;
 			
@@ -367,7 +367,7 @@ package catfishqa.admin.roadmap
 			var _query:Query;
 			var sqlCommand:String = "SELECT * FROM roadmap_sprints WHERE (roadmap_sprints_project = '" + _roadmapSprintsSelectProject + "')";
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "roadmap_sprints_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "roadmap_sprints_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onUpdateListComplete);
 		}
 		
@@ -396,7 +396,7 @@ package catfishqa.admin.roadmap
 				_roadmapSprintsSelectID = 0;
 				_roadmapSprintsSelectName = "";
 				_roadmapSprintsSelectDate = "";
-				_roadmapSprintsSelectProject = "";
+				//_roadmapSprintsSelectProject = "";
 			}
 			_label1.text = "Спринт: " + _roadmapSprintsSelectName;
 			_timer.start();
@@ -468,7 +468,7 @@ package catfishqa.admin.roadmap
 			var _query:Query;
 			var sqlCommand:String = "SELECT * FROM roadmap_tasks WHERE roadmap_tasks_sprint_id = " + _roadmapSprintsSelectID + " ORDER BY roadmap_tasks_dev_begin ASC";
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "roadmap_tasks_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "roadmap_tasks_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryTeamUserComplete);
 		}
 		
@@ -586,7 +586,7 @@ package catfishqa.admin.roadmap
 			var _query:Query;
 			var sqlCommand:String = "SELECT * FROM roadmap_tasks WHERE roadmap_tasks_sprint_id = " + _roadmapSprintsSelectID + " ORDER BY roadmap_tasks_dev_begin ASC";
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "roadmap_tasks_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "roadmap_tasks_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onUpdateDataGridComplete);
 		}
 		

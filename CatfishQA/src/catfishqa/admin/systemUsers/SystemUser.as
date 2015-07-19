@@ -134,7 +134,7 @@ package catfishqa.admin.systemUsers
 			var _query:Query;
 			var sqlCommand:String = "SELECT * FROM system_users";
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "system_users_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		
@@ -260,7 +260,7 @@ package catfishqa.admin.systemUsers
 			var _query:Query;
 			var sqlCommand:String = "SELECT * FROM system_users";
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "system_users_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onUpdateDataGridComplete);
 		}
 		

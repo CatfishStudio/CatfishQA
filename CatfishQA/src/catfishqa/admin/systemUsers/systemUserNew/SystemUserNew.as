@@ -148,7 +148,7 @@ package catfishqa.admin.systemUsers.systemUserNew
 								
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "system_users_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "system_users_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		

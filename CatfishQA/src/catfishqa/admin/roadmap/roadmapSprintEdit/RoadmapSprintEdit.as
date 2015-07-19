@@ -124,7 +124,7 @@ package catfishqa.admin.roadmap.roadmapSprintEdit
 			var sqlCommand:String = "SELECT * FROM team_groups";
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "team_groups_get.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "team_groups_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryTeamGroupComplete);
 		}
 		
@@ -284,7 +284,7 @@ package catfishqa.admin.roadmap.roadmapSprintEdit
 								+ "WHERE roadmap_sprints_id = " + _data[0].ID;
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "roadmap_sprints_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "roadmap_sprints_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQuery1Complete);
 		}
 		

@@ -74,7 +74,7 @@ package catfishqa.admin.team.teamUserRemove
 			var sqlCommand:String = "DELETE FROM team_users WHERE team_users_id = " + _id;
 			
 			_query = new Query();
-			_query.performRequest(Server.serverPath + "team_users_set.php?client=1&sqlcommand=" + sqlCommand);
+			_query.performRequest(Server.serverPath + "team_users_set.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
 			_query.addEventListener("complete", onQueryComplete);
 		}
 		

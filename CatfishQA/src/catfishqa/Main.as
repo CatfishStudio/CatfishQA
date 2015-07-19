@@ -29,6 +29,7 @@ package catfishqa
 	import catfishqa.admin.systemUsers.SystemUser;
 	import catfishqa.admin.team.Team;
 	import catfishqa.admin.roadmap.Roadmap;
+	import catfishqa.admin.testplan.TestPlan;
 	
 	public class Main extends Sprite 
 	{
@@ -41,6 +42,7 @@ package catfishqa
 		private var _systemUsers:SystemUser;
 		private var _team:Team;
 		private var _roadmap:Roadmap;
+		private var _testplan:TestPlan;
 		
 		private var _client:Client;
 		
@@ -188,6 +190,11 @@ package catfishqa
 			_roadmap = new Roadmap();
 		}
 		
+		private function TestplanShow():void
+		{
+			_testplan = new TestPlan();
+		}
+		
 		private function onChangeScreen(event:Navigation):void 
 		{
 			switch(event.param.id)
@@ -212,6 +219,17 @@ package catfishqa
 					break;
 				}
 				
+				case Resource.ROADMAP: 
+				{
+					RoadmapShow();
+					break;
+				}
+				
+				case Resource.TEST_PLAN: 
+				{
+					break;
+				}
+				
 				case Resource.CLIENT: 
 				{
 					LoginClose();
@@ -220,11 +238,7 @@ package catfishqa
 					break;
 				}
 				
-				case Resource.ROADMAP: 
-				{
-					RoadmapShow();
-					break;
-				}
+				
 				
 				case Resource.EXIT_SYSTEM: 
 				{

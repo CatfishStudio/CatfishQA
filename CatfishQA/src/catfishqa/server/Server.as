@@ -9,8 +9,8 @@ package catfishqa.server
 		 
 	public class Server
 	{
-		//private static var _query:Query;
-				
+		public static var client:String = "JGH37VB900D0IJ9D7VA027BA6";
+		
 		/* ПУТЬ К СЕРВЕРУ */
 		public static var serverPath:String =  ""; //"http://localhost/cf/catfishqa/"; //"http://catfishstudio.besaba.com/catfishqa/";
 		
@@ -35,6 +35,14 @@ package catfishqa.server
 		public static const ROADMAP_TASKS_UPDATE:String = "roadmap_tasks_update"; // событие обновления таблицы
 		public static const ROADMAP_TASKS_NOT_UPDATE:String = "roadmap_tasks_not_update"; // событие обновления таблицы
 		
+		public static const TESTPLAN_SPRINTS:String = "test_plan_sprints"; // имя таблицы
+		public static const TESTPLAN_SPRINTS_UPDATE:String = "test_plan_sprints_update"; // событие обновления таблицы
+		public static const TESTPLAN_SPRINTS_NOT_UPDATE:String = "test_plan_sprints_not_update"; // событие обновления таблицы
+		
+		public static const TESTPLAN_TASKS:String = "test_plan_tasks"; // имя таблицы
+		public static const TESTPLAN_TASKS_UPDATE:String = "test_plan_tasks_update"; // событие обновления таблицы
+		public static const TESTPLAN_TASKS_NOT_UPDATE:String = "test_plan_tasks_not_update"; // событие обновления таблицы
+		
 		
 		/* ПОСЛЕНИЕ ОБНОВЛЕНИЯ */
 		public static var last_update_system_users:String;
@@ -42,7 +50,8 @@ package catfishqa.server
 		public static var last_update_team_users:String;
 		public static var last_update_roadmap_sprints:String;
 		public static var last_update_roadmap_tasks:String;
-		
+		public static var last_update_testplan_sprints:String;
+		public static var last_update_testplan_tasks:String;
 		
 		
 		private static var dispatcher:EventDispatcher = new EventDispatcher();
@@ -70,38 +79,51 @@ package catfishqa.server
 			if (tableName == SYSTEM_USERS)
 			{
 				_query = new Query();
-				_query.performRequest(serverPath + "history_update_get.php?client=1&tableName=" + SYSTEM_USERS);
+				_query.performRequest(serverPath + "history_update_get.php?client=" + client + "&tableName=" + SYSTEM_USERS);
 				_query.addEventListener("complete", onQuerySystemUsersComplete);
 			}
 			if (tableName == TEAM_GROUPS)
 			{
 				_query = new Query();
-				_query.performRequest(serverPath + "history_update_get.php?client=1&tableName=" + TEAM_GROUPS);
+				_query.performRequest(serverPath + "history_update_get.php?client=" + client + "&tableName=" + TEAM_GROUPS);
 				_query.addEventListener("complete", onQueryTeamGroupsComplete);
 			}
 			if (tableName == TEAM_USERS)
 			{
 				_query = new Query();
-				_query.performRequest(serverPath + "history_update_get.php?client=1&tableName=" + TEAM_USERS);
+				_query.performRequest(serverPath + "history_update_get.php?client=" + client + "&tableName=" + TEAM_USERS);
 				_query.addEventListener("complete", onQueryTeamUsersComplete);
 			}
 			if (tableName == ROADMAP_SPRINTS)
 			{
 				_query = new Query();
-				_query.performRequest(serverPath + "history_update_get.php?client=1&tableName=" + ROADMAP_SPRINTS);
+				_query.performRequest(serverPath + "history_update_get.php?client=" + client + "&tableName=" + ROADMAP_SPRINTS);
 				_query.addEventListener("complete", onQueryRoadmapSprintsComplete);
 			}
 			if (tableName == ROADMAP_TASKS)
 			{
 				_query = new Query();
-				_query.performRequest(serverPath + "history_update_get.php?client=1&tableName=" + ROADMAP_TASKS);
+				_query.performRequest(serverPath + "history_update_get.php?client=" + client + "&tableName=" + ROADMAP_TASKS);
 				_query.addEventListener("complete", onQueryRoadmapTasksComplete);
 			}
+			if (tableName == TESTPLAN_SPRINTS)
+			{
+				_query = new Query();
+				_query.performRequest(serverPath + "history_update_get.php?client=" + client + "&tableName=" + TESTPLAN_SPRINTS);
+				_query.addEventListener("complete", onQueryTestplanSprintsComplete);
+			}
+			if (tableName == TESTPLAN_TASKS)
+			{
+				_query = new Query();
+				_query.performRequest(serverPath + "history_update_get.php?client=" + client + "&tableName=" + TESTPLAN_TASKS);
+				_query.addEventListener("complete", onQueryTestplanTasksComplete);
+			}
+			
+			
 		}
 		
 		private static function onQuerySystemUsersComplete(event:Object):void 
 		{
-			//var json_str:String = (_query.getResult as String);
 			var json_str:String = (event.target.getResult as String);
 			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
 			
@@ -121,7 +143,6 @@ package catfishqa.server
 		
 		private static function onQueryTeamGroupsComplete(event:Event):void 
 		{
-			//var json_str:String = (_query.getResult as String);
 			var json_str:String = (event.target.getResult as String);
 			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
 			
@@ -141,7 +162,6 @@ package catfishqa.server
 		
 		private static function onQueryTeamUsersComplete(event:Event):void 
 		{
-			//var json_str:String = (_query.getResult as String);
 			var json_str:String = (event.target.getResult as String);
 			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
 			
@@ -196,6 +216,48 @@ package catfishqa.server
 				}
 			}
 		}
+		
+		private static function onQueryTestplanSprintsComplete(event:Event):void 
+		{
+			var json_str:String = (event.target.getResult as String);
+			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
+			
+			if (json_data[0].table[0].history_update_name == TESTPLAN_SPRINTS)
+			{
+				if (json_data[0].table[0].history_update_datetime != last_update_testplan_sprints) //нужно обновиться
+				{
+					last_update_testplan_sprints = json_data[0].table[0].history_update_datetime;
+					dispatchEvent(new ServerEvents(ServerEvents.TABLE_UPDATE, { id: TESTPLAN_SPRINTS_UPDATE }, true)); 
+				}
+				else
+				{
+					dispatchEvent(new ServerEvents(ServerEvents.TABLE_UPDATE, { id: TESTPLAN_SPRINTS_NOT_UPDATE }, true)); 
+				}
+			}
+		}
+		
+		private static function onQueryTestplanTasksComplete(event:Event):void 
+		{
+			var json_str:String = (event.target.getResult as String);
+			var json_data:Array = catfishqa.json.JSON.decode(json_str); 
+			
+			if (json_data[0].table[0].history_update_name == TESTPLAN_TASKS)
+			{
+				if (json_data[0].table[0].history_update_datetime != last_update_testplan_tasks) //нужно обновиться
+				{
+					last_update_testplan_tasks = json_data[0].table[0].history_update_datetime;
+					dispatchEvent(new ServerEvents(ServerEvents.TABLE_UPDATE, { id: TESTPLAN_TASKS_UPDATE }, true)); 
+				}
+				else
+				{
+					dispatchEvent(new ServerEvents(ServerEvents.TABLE_UPDATE, { id: TESTPLAN_TASKS_NOT_UPDATE }, true)); 
+				}
+			}
+		}
+		
+		
+		
+		
 		/*=========================================================================================*/
 	}
 
