@@ -469,10 +469,10 @@ package catfishqa.admin.roadmap
 			var sqlCommand:String = "SELECT * FROM roadmap_tasks WHERE roadmap_tasks_sprint_id = " + _roadmapSprintsSelectID + " ORDER BY roadmap_tasks_dev_begin ASC";
 			_query = new Query();
 			_query.performRequest(Server.serverPath + "roadmap_tasks_get.php?client=" + Server.client + "&sqlcommand=" + sqlCommand);
-			_query.addEventListener("complete", onQueryTeamUserComplete);
+			_query.addEventListener("complete", onQueryTasksComplete);
 		}
 		
-		private function onQueryTeamUserComplete(event:Object):void 
+		private function onQueryTasksComplete(event:Object):void 
 		{
 			_roadmapTasksArray = [];
 			

@@ -12,7 +12,7 @@
 	
 		if(!$query) 
 		{
-			echo "SET DATA [roadmap_tasks]: Error: ".mysql_error();
+			echo "SET DATA [test_plan_tasks]: Error: ".mysql_error();
 			mysql_close();
 			exit;
 		}else {

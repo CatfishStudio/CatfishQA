@@ -91,7 +91,7 @@ package catfishqa.admin.roadmap.htmlTable
 			+"div.root {margin-left: 0px; overflow: hidden; width: 200px; height: 28px; border-bottom: 1px solid #666;}"
 			+"div.frozen {overflow: hidden; width: 200px; height: " + divFrozenHeight.toString() + "px;}"
 			+"div.divhead {overflow: hidden; height: 28px; width: " + divDivheadWidth.toString() + "px; border-left: 1px solid #666; border-right: 1px solid #666; border-bottom: 1px solid #666;}"
-			+"div.content {overflow: hidden; width: 500px; height: " + divContentHeight.toString() + "px; border-left: 1px solid #666; border-right: 1px solid #666;}"
+			+"div.content {overflow: hidden; width: " + divDivheadWidth.toString() + "px; height: " + divContentHeight.toString() + "px; border-left: 1px solid #666; border-right: 1px solid #666;}"
 			+"td.tablefrozencolumn {width: 200px; border-right: 3px solid #666;}"
 			+"td.tablecontent {}"
 			+"td.tableverticalscroll {width: 0px;}"
@@ -249,7 +249,7 @@ package catfishqa.admin.roadmap.htmlTable
 			+"</body>"
 			+"</html>";
 			
-			trace("\n\n\n" + page);
+			//trace("\n\n\n" + page);
 			_htmlLoader.loadString(page);
 		}
 		

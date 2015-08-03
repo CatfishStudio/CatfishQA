@@ -227,6 +227,7 @@ package catfishqa
 				
 				case Resource.TEST_PLAN: 
 				{
+					TestplanShow();
 					break;
 				}
 				

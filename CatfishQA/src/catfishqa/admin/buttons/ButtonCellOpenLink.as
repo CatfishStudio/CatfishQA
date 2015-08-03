@@ -23,11 +23,20 @@ package catfishqa.admin.buttons
 		public function set data(d:Object):void  
         {  
             _data = d;  
+			
         }  
           
         public function get data():Object  
         {  
-            return _data;  
+			/*
+			for(var prop:String in _data)
+			{
+				trace(prop + ":" + _data[prop]);
+			}
+			*/
+			
+			//trace(_data.Ссылка);
+			return _data;  
         }  
           
         public function get listData():ListData  

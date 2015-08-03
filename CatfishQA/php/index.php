@@ -180,7 +180,8 @@
 				test_plan_sprints_date datetime NOT NULL,
 				test_plan_sprints_name varchar(255) NOT NULL,
 				test_plan_sprints_project varchar(255) NOT NULL,
-				PRIMARY KEY (test_plan_sprints_id)
+				PRIMARY KEY (test_plan_sprints_id),
+				UNIQUE KEY test_plan_sprints_name (test_plan_sprints_name)
 			)", $db);
 			/* Проверка успешности выполнения */
 			if(!$query){
@@ -200,10 +201,11 @@
 				test_plan_tasks_create_test_case_qa varchar(255) NOT NULL,
 				test_plan_tasks_testing_qa varchar(255) NOT NULL,
 				test_plan_tasks_link_test_case int(10),
+				test_plan_tasks_status varchar(50) NOT NULL,
 				test_plan_tasks_result_android varchar(50) NOT NULL,
 				test_plan_tasks_result_ios varchar(50) NOT NULL,
 				test_plan_tasks_result_web varchar(50) NOT NULL,
-				test_plan_tasks_sprint_id varchar(255) NOT NULL,
+				test_plan_tasks_sprint_name varchar(255) NOT NULL,
 				PRIMARY KEY (test_plan_tasks_id)
 			)", $db);
 			/* Проверка успешности выполнения */

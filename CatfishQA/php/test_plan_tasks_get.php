@@ -36,10 +36,11 @@
 						."\"test_plan_tasks_create_test_case_qa\": "."\"".$row['test_plan_tasks_create_test_case_qa']."\"".","
 						."\"test_plan_tasks_testing_qa\": "."\"".$row['test_plan_tasks_testing_qa']."\"".","
 						."\"test_plan_tasks_link_test_case\": "."\"".$row['test_plan_tasks_link_test_case']."\"".","
+						."\"test_plan_tasks_status\": "."\"".$row['test_plan_tasks_status']."\"".","
 						."\"test_plan_tasks_result_android\": "."\"".$row['test_plan_tasks_result_android']."\"".","
 						."\"test_plan_tasks_result_ios\": "."\"".$row['test_plan_tasks_result_ios']."\"".","
 						."\"test_plan_tasks_result_web\": "."\"".$row['test_plan_tasks_result_web']."\"".","
-						."\"test_plan_tasks_sprint_id\": "."\"".$row['test_plan_tasks_sprint_id']."\""
+						."\"test_plan_tasks_sprint_name\": "."\"".$row['test_plan_tasks_sprint_name']."\""
 					."}]}"; 
 				$index++;
 			}
