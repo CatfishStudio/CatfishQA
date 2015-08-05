@@ -384,7 +384,8 @@ package catfishqa.admin.testplan.testplanSprintNew
 			
 			if ((_query.getResult as String) == "complete")
 			{
-				QueryTasksInsert();
+				if (_tasksArray.length != 0) QueryTasksInsert();
+				else _newWindow.close();
 			}else {
 				new MessageBox((_query.getResult as String), "Сообщение");
 			}
@@ -392,7 +393,7 @@ package catfishqa.admin.testplan.testplanSprintNew
 		
 		private function QueryTasksInsert():void
 		{
-			
+			if(_tasksArray != null)
 			var sqlCommand:String = "INSERT INTO test_plan_tasks (test_plan_tasks_testing_begin, test_plan_tasks_name, test_plan_tasks_link, test_plan_tasks_create_test_case_qa, test_plan_tasks_testing_qa, test_plan_tasks_link_test_case, test_plan_tasks_status, test_plan_tasks_result_android, test_plan_tasks_result_ios, test_plan_tasks_result_web, test_plan_tasks_sprint_name) VALUES ";
 			var n:int = _sprintsArray.length;
 			for (var i:int = 0; i < n; i++)
